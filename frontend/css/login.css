@@ -38,7 +38,7 @@
 }
 
 .over {
-    background-image: url('./images/Mask\ group.png');
+    background-image: url('../images/Mask.png');
     background-size: cover;
     background-position: center;
     width: 100%;
