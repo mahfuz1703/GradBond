@@ -1,0 +1,27 @@
+.baton{
+    background-color: #230939;
+    color: #fff;
+    display: inline-block;
+    
+}
+.custom{
+    width: 75%;
+    border: 1px solid white;
+    background-color: #230939;
+}
+.write{
+    color: #230939;
+    font-weight: 700;
+    font-size: 18px;
+}
+.writee{
+    color: #230939;
+}
+.main{
+    background-color: #FFFFFF;
+    margin-top: 100px;
+}
+.image{
+    width: 100%;
+    height: 100%;
+}
