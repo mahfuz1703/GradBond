@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign In</title>
     <!-- bootstrap link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -18,9 +18,40 @@
 </head>
 
 <body class="bg-secondary">
+    <nav class="navbar navbar-expand-lg mt-5">
+        <div class="container p-4 bg-light">
+            <img src="./images/Group.png" alt="">
+            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item me-5">
+                        <a class="nav-link active fs-5 fw-bolder" aria-current="page" href="desktop7.html">Find Alumni</a>
+                    </li>
+                    <li class="nav-item me-5">
+                        <a class="nav-link fs-5 fw-bolder" aria-current="page" href="Gallary.html">Gallary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="desktop5.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="login.html"><button type="button" class="btn btn-light fs-5 fw-bolder">Login</button></a>
+                            <a href="registration.html"><button type="button" class="btn btn-warning fs-5 fw-bolder">Registration</button></a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="login">
-        <div class="container-fluid mt-5">
+        <div class="container-fluid">
             <div class="container fram">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-12 bg-light p-4">
@@ -28,7 +59,7 @@
                         <div class="over col-lg-4 col-md-6 col-12 ">
                             <h3 class="fs-4 fw-bolder head">Find Alumni</h3>
                             <p class="fs-5">Of Your University</p>
-                            <a href="#" class="btn btn-light btn-outline-primary text-dark btn-lg">Registration</a>
+                            <a href="registration.html" class="btn btn-light btn-outline-primary text-dark btn-lg">Registration</a>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-6 col-12 bgcolor">
@@ -61,13 +92,13 @@
                             <div class="row text-center">
                                 <div
                                     class="col-lg-12 col-md-12 co-12 col-lg-text-center col-md-text-center col-text-center">
-                                    <button herf="#" class="btn btn-light border border-light border-2 d-inline-block col-md-mt-5 col-mt-5 mt-2"><i
-                                            class="fa-brands fa-google"></i>
-                                        <samp class="ms-1">Login with Google</samp></button>
-                                    <button herf="#" class="btn btn-light border border-light border-2 ms-2 d-inline-block col-md-mt-5 col-mt-5 mt-2"><i
+                                    <a href="https://www.google.com/" class="btn btn-light border border-light border-2 d-inline-block col-md-mt-5 col-mt-5 mt-2"><i
+                                        class="fa-brands fa-google"></i>
+                                    <samp class="ms-1">Login with Google</samp></a>
+                                        <a href="https://www.facebook.com/" class="btn btn-light border border-light border-2 ms-2 d-inline-block col-md-mt-5 col-mt-5 mt-2"> <i
                                             class="fa-brands fa-facebook-f"></i>
-                                        <samp class="ms-1">Login with Facebook</samp></button>
-                                </div>
+                                        <samp class="ms-1">Login with Facebook</samp></a>
+                                </div><br>
 
                             </div>
                         </div>

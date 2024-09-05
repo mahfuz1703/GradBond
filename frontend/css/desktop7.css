@@ -1,0 +1,20 @@
+.foot{
+    background-color: #3D2462;
+}
+.foot p{
+    color: #e2dede;
+    padding-top: 50px;
+}
+.main{
+    background-color: #FFF2EB;
+    margin-top: -8px;
+}
+.baton{
+    width: 300px;
+    height: 60px;
+    background-color: #3D2462;
+}
+.box{
+    height: 60px;
+    background-color: #E9DBD9;
+}

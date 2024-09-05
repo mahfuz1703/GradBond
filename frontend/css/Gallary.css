@@ -1,0 +1,22 @@
+.foot{
+    background-color: #3D2462;
+}
+.foot p{
+    color: #e2dede;
+    padding-top: 50px;
+}
+
+.gallary{
+    background-color:#FFF2EB;
+    margin-top: -8px;
+}
+.gallary h1{
+    color: #38224B;
+    padding-top: 50px;
+}
+p{
+    color: #38224B;
+    font-size: 18px;
+    font-weight: bolder;
+    margin-top: 10px;
+}
