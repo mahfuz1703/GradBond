@@ -1,0 +1,58 @@
+.login {
+    margin-top: 100px;
+
+}
+
+.fram {
+    border: 1px solid white;
+}
+
+.bgcolor {
+    background-color: rgb(35, 9, 57);
+}
+
+.my {
+    width: 200px;
+    height: 55px;
+}
+.or-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.or-separator::before,
+.or-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 2px solid #8c8b8b;
+}
+
+.or-separator:not(:empty)::before {
+    margin-right: .75em;
+}
+
+.or-separator:not(:empty)::after {
+    margin-left: .75em;
+}
+
+.over {
+    background-image: url('../images/Mask.png');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 550px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    justify-content: space-between;
+    text-align: center;
+    padding: 50px;
+    border-radius: 10px;
+    color: white;
+    font-family: Arial, sans-serif;
+    position: relative;
+}
+.head{
+    margin-top: 270px;
+}
