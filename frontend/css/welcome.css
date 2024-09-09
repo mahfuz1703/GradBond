@@ -2,7 +2,7 @@
     color: #3D2462;
 }
 .my{
-    background-color: #B051AA26;
+    background-color: #f3e5f2;
 }
 .pic{
     background-color: #3D2462;
@@ -30,6 +30,7 @@ input{
 }
 .search{
     background-image: url('../images/baground.png');
+    margin-top: -8px;
 }
 .btncolor{
     background-color: #38224B;
@@ -40,4 +41,8 @@ input{
 }
 .lorem{
     background-color: #E1CDFF;
+    width: 90%;
+}
+.writep{
+    width: 90%;
 }
