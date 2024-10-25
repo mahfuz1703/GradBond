@@ -1,43 +1,624 @@
-.resent{
-    color: #3D2462;
+body {
+    overflow-x: hidden;
+    
 }
-.my{
-    background-color: #B051AA26;
+.container {
+    width: 100%;
+    overflow-x: hidden;
+  }
+/*navbar*/
+.navbar {
+    background-color: white;
+    
 }
-.pic{
-    background-color: #3D2462;
+.navbar-brand{
+    color: #ff6a28;
 }
-.foot{
-    background-color: #3D2462;
+.navbar-nav .nav-link {
+    color: #fff;
 }
-.foot p{
-    color: #e2dede;
-    padding-top: 50px;
+
+.navbar-brand{
+    padding:7%;
+    color: #FF8235 !important;
+    font-weight: bold;
 }
-.icon{
+.nav-item{
+    color: black;
+    margin-right: 5rem;
+    font-weight: bold;
+}
+
+/*hero section*/
+.hero-section {
+    background-image: url('../images/heroBG.png');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+    height: 590px;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; 
+    margin: 30px auto; 
+    background-color: #fff; 
+    padding: 10px;
+    border-radius: 10px; 
+    max-width: 600px; 
+    width: 100%; 
+}
+
+
+.search-bar {
+    flex: 1; /* Take equal width */
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+.search-bar input::placeholder {
+    color: #230939;
+}
+.search-bar input:focus {
+    outline: 2px solid #230939;;
+}
+.search-bar input:hover{
+    color: #230939;;
+}
+.form-control{
+    border-style: none;
+}
+
+.divider {
+    width: 2px;
+    height: 50px; /* Adjust height of the divider */
+    background-color: #000;
+    margin: 0 10px; /* Space around divider */
+}
+
+.btn{
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background-color: #230939;; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.badge-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Space between badges */
+    padding: 10px;
+    
+}
+
+.custom-badge {
+    width: 150px;
+    color: white;
+    height: 2rem;
+    background-color: #38224B;
+    padding: 0.5rem 1rem;
+    border-radius: 25px !important;
+    text-decoration: none; 
+    transition: background-color 0.3s, color 0.3s; 
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    line-height: 1.5rem  !important;
+}
+
+.custom-badge:hover {
+    background-color: purple; 
+    color: #000; 
+}
+
+.custom-badge-img {
+    margin-left: 8px; /* Adjust the margin as needed */
+    width: 1rem; /* Set width of the icon */
+    height: 1rem; /* Set height of the icon */
+}
+
+
+/*Service*/
+.service-section {
+    padding: 30px 0;
+    text-align: center;
+}
+
+.text-container h1{
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.top-badges, .bottom-badges{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.unique-badges{
+    font-weight: normal !important;
+    font-size: 1rem !important;
+    background-color: white;;
+    color: black;
+    width: 270px;
+}
+
+.unique-badges:hover{
+    color: #38224B;
+}
+
+.custom-badges img{
     width: 50px;
     height: 50px;
 }
 
-.btns{
-    width: 80px;
-    height: 80px;
-    background-color: #3D2462;
-    margin-left: -10px;
-}
-input{
-    height: 80px;
-}
-.search{
-    background-image: url('../images/baground.png');
-}
-.btncolor{
-    background-color: #38224B;
-    opacity: 50%;
-}
-.service{
-    width: 200px;
-}
-.lorem{
+.info-box{
     background-color: #E1CDFF;
+    padding: 15px;
+    height: 20%;
+}
+
+.service-btn{
+    background-color: #3D2462;
+    color: white;
+    border-radius: 20px;
+    margin-top: 20px;
+    font-size: 1.5rem;
+    width: 292px;
+    height: 59px;
+}
+
+.card {
+    margin: 15px 0;
+}
+
+/* events */
+.recent-events {
+    background-color: #e4c2e1c5;
+    padding: 40px 20px;
+}
+
+.container-events {
+    padding: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.container-events h2 {
+    font-weight: bold;
+    color: #5d3e97;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.card {
+    background-color: #5d3e97 !important;
+    color: #fff;
+    border-radius: 1rem !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    height: 450px;
+    width: 70%;
+    margin-left: 60px;
+}
+
+.card .card-img-top {
+    padding: 20px;
+    border: 5px;
+    border-radius: 30px;
+    height: 222px; /* Adjust height for the image */
+    object-fit: cover;
+}
+
+.card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px; /* Adjust padding */
+}
+
+.card .card-title {
+    font-weight: bold;
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.card .card-text {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.card .btn-primary {
+    margin-bottom: 25px;
+    width: 150px;
+    align-self: center !important;
+    background-color: #e0e0e0;
+    color: #5d3e97;
+    border: 5px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.card .btn-primary:hover {
+    background-color: #d5d5d5;
+    color: purple;
+}
+
+/*carsol*/
+.alumniheader{
+    color: #3D2462;
+    font: Lexend;
+    font-weight: 700;
+    size: 48px;
+    line-height: 60px;
+}
+
+/* Banner Section */
+.banner {
+    margin-top: 100px;
+    background-color: #FF7133;
+    color: white;
+    padding: 50px 20px;
+    text-align: center; 
+    margin-bottom: 50px; 
+    z-index: 2;
+    position: relative;
+    height: 200px;
+    border-radius: 20px;
+    bottom: 150px;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 0; /* Remove bottom margin */
+}
+
+.banner-row{
+    padding-left: 3.5rem !important;
+    padding-top: 1rem;
+}
+
+.banner h2 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.banner p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.find-alumni-btn {
+    display: inline-block;
+    background-color: #fff; 
+    color: #000; 
+    width: 300px; 
+    height: 70px; 
+    border-radius: 8px; 
+    text-align: center;
+    line-height: 50px; 
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+
+.banner-btn {
+    padding-top: 1rem !important;
+    
+}
+.banner-btn a{
+    font-weight: bold;
+    padding-top: 1.5rem;
+}
+
+
+
+/* Footer Section */
+footer {
+    align-items: center;
+    margin-top: 50px;
+    background-color: #3B265E;
+    color: white;
+    padding: 100px 20px 50px 20px;
+    position: relative;
+    z-index: 0;
+    padding-right: 20px; /* Adjust this for right padding */
+    padding-left: 30px; /* Add left padding to move content right */
+}
+
+footer h4 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+footer h4:hover{
+    color: #ff6a28;
+    
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #FF7133;
+    text-decoration: none;
+}
+
+footer p {
+    margin-bottom: 10px;
+}
+
+footer .fab {
+    font-size: 1.5rem;
+    color: white;
+    margin-right: 15px;
+}
+
+footer .fab:hover {
+    color: #FF7133;
+}
+
+footer ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 10px;
+}
+
+
+
+
+@media (max-width: 768px){
+
+
+    /* Navbar */
+.navbar {
+    background-color: white;
+}
+
+.navbar-brand {
+    color: #FF8235 !important;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+}
+
+.nav-item {
+    color: black;
+    margin-right: 0; /* Remove margin on small screens */
+    font-weight: bold;
+}
+
+
+
+/* Hero Section */
+.hero-section {
+    background-image: url(heroBG.png);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 30px 10px; /* Reduce padding for smaller screens */
+    text-align: center;
+    height: auto; /* Adjust height for better responsiveness */
+    padding: 20px;
+}
+
+.hero-section h1{
+    font-size: 20px;
+}
+
+.hero-section p{
+    font-size: 14px;
+};
+
+.text-container{
+    padding: 10px;
+}
+
+.info-box{
+    padding: 5px;
+}
+
+
+
+.search-container {
+    flex-direction: column; /* Stack search bars vertically */
+    gap: 10px;
+    padding: 10px;
+    margin: 10px auto;
+    max-width: 100%;
+}
+
+.search-container .divider {
+    display: none;
+}
+
+.search-bar {
+    width: 100%; /* Full width for search bars */
+}
+
+.btn {
+    padding: 8px 16px; /* Adjust padding for smaller screens */
+    font-size: 10px !important; /* Smaller font size for buttons */
+}
+
+
+.badge-container {
+    display: flex; /* Enable flexbox layout */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Space between items */
+}
+
+/* Control item size if needed */
+.badge-container > * {
+    flex: 1 1 calc(50% - 10px); /* Adjust the width of items to fit two per row, considering the gap */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.custom-badge {
+    width: auto; /* Adjust width to fit content */
+    font-size: 0.9rem;
+    padding: 0.5rem;
+}
+
+/* Service Section */
+.service-section {
+    padding: 20px 10px; /* Adjust padding */
+}
+
+.text-container h1 {
+    font-size: 1.5rem; /* Smaller font size */
+}
+
+.unique-badges {
+    width: 70%; /* Full width for badges */
+    font-size: 0.85rem !important;
+}
+
+.info-box {
+    padding: 10px;
+    height: auto; /* Adjust height for better responsiveness */
+}
+
+.service-btn {
+    width: 100%; /* Full width for buttons */
+    height: auto; /* Adjust height */
+    padding: 10px;
+    font: 14px;
+}
+
+.image-container img{
+    width: 380px !important;
+}
+
+/* Events */
+.card {
+    width: 100%; /* Full width for cards */
+    margin-left: 0; /* Remove left margin */
+}
+
+.card .card-img-top {
+    height: auto; /* Adjust image height */
+    padding: 10px;
+}
+
+.card .card-body {
+    padding: 10px; /* Adjust padding */
+}
+
+.card .card-title {
+    font-size: 1.2rem; /* Smaller font size */
+}
+
+.card .card-text {
+    font-size: 1rem; /* Smaller font size */
+}
+
+/* Carousel */
+.alumniheader {
+    font-size: 1.5rem; /* Smaller font size */
+}
+
+/* Banner Section */
+.banner {
+    
+    position: absolute; /* or absolute */
+    z-index: 2; /* Ensure it's above the footer */
+    background-color: #FF7133;
+    color: white;
+    padding: 20px 10px; 
+    height: auto; 
+    bottom: 200px; /* Adjust this value to position the banner above the footer */
+    margin-bottom: 0; 
+}
+.banner-row {
+    padding-left: 0; 
+}
+
+.banner h2 {
+    font-size: 1.5rem;
+}
+
+.banner p {
+    font-size: 1rem;
+}
+
+.find-alumni-btn {
+    font-size: 1rem;
+    width: auto; 
+    height: 50px; 
+    line-height: normal;
+}
+
+.find-alumni-btn a{
+    padding-bottom: 100px !important;
+}
+
+/* Footer Section */
+
+
+footer {
+   padding: none;
+}
+
+footer h4 {
+    font-size: 1.2rem;
+    
+}
+
+footer ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 5px;
+}
+
+footer .fab {
+    font-size: 1.2rem; 
+}
+
+.d-flex {
+    flex-direction: column; /* Stack items vertically on mobile */
+    align-items: center; /* Center items horizontally */
+}
+
+.d-flex > div {
+    margin-bottom: 1rem; /* Space between stacked items */
+}
+
+.d-flex > div:last-child {
+    margin-bottom: 0; /* Remove margin for the last item */
+}
+
 }
