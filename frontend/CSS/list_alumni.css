@@ -1,14 +1,16 @@
-.foot{
+.footer{
     background-color: #3D2462;
 }
-.foot p{
+.footp{
     color: #e2dede;
     padding-top: 50px;
-}
-.pic{
-    background-color: #3D2462;
 }
 .main{
     background-color: #FFF2EB;
     margin-top: -8px;
+}
+.writeh1{
+    font-size: 50px;
+    font-weight: 900;
+    color: #3D2462;
 }
