@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumni List</title>
+    <title>List of Alumni</title>
+    <link rel="stylesheet" href="./CSS/list_alumni.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/list_alumni.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body class="bg-secondary">
 
-    <nav class="navbar navbar-expand-lg mt-5">
+</head>
+
+<body>
+    <!-- Navbar part start -->
+    <nav class="navbar navbar-expand-lg">
         <div class="container p-4 bg-light">
             <a href="index.html"><img src="./images/Group.png" alt=""></a>
             <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -25,7 +28,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item me-5">
-                        <a class="nav-link active text-warning fs-5 fw-bolder" aria-current="page" href="find_alumni.html">Find Alumni</a>
+                        <a class="nav-link active fs-5 fw-bolder" aria-current="page" href="find_alumni.html">Find
+                            Alumni</a>
                     </li>
                     <li class="nav-item me-5">
                         <a class="nav-link fs-5 fw-bolder" aria-current="page" href="Gallary.html">Gallary</a>
@@ -35,8 +39,10 @@
                     </li>
                     <li class="nav-item">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="login.html"><button type="button" class="btn btn-light fs-5 fw-bolder">Login</button></a>
-                            <a href="registration.html"><button type="button" class="btn btn-warning fs-5 fw-bolder">Registration</button></a>
+                            <a href="login.html"><button type="button"
+                                    class="btn btn-light fs-5 fw-bolder">Login</button></a>
+                            <a href="registration.html"><button type="button"
+                                    class="btn btn-danger btn-outline-warning fs-5 fw-bolder">Registration</button></a>
                         </div>
                     </li>
 
@@ -44,128 +50,132 @@
             </div>
         </div>
     </nav>
-    <div class="container main">
-        <div class="row text-center pt-5 fw-bolder">
-            <h1>Alumni List</h1>
-        </div>
-        <div class="row mt-3 d-flex justify-content-center">
-            <div class="col-lg-5 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="width: 30rem;">
-                    <img src="./images/Rectangle 30.png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h1 class="card-title text-light fw-bolder">AI Shaker</h1>
-                        <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
-                        <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
-                        <div class="row d-flex justify-content-around">
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
-                            </div>
-                        </div><br><br>
-                    </div>
-                </div>
+    <!-- Navbar part end -->
+    <div class="container-fluid main">
+        <div class="container main">
+            <div class="row text-center pt-5 fw-bolder">
+                <h1 class="writeh1">Alumni List</h1>
             </div>
-            <div class="col-lg-5 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="width: 30rem;">
-                    <img src="./images/Rectangle 30 (1).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h1 class="card-title text-light fw-bolder">AI Shaker</h1>
-                        <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
-                        <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
-                        <div class="row d-flex justify-content-around">
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
-                            </div>
+            <div class="row mt-3 d-flex justify-content-center">
+                <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                    <div class="card rounded-4" style="background-color: #3D2462;">
+                        <img src="./images/Rectangle 30.png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
+                        <div class="card-body text-center">
+                            <h1 class="card-title text-light fw-bolder">AI Shaker</h1>
+                            <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
+                            <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
+                                </div>
+                            </div><br><br>
                         </div>
                     </div>
                 </div>
-            </div><br><br>
-        </div>
-        <div class="row mt-3 d-flex justify-content-center">
-            <div class="col-lg-5 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="width: 30rem;">
-                    <img src="./images/Rectangle 30 (2).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h1 class="card-title text-light fw-bolder">Margaret Hamilton</h1>
-                        <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
-                        <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
-                        <div class="row d-flex justify-content-around">
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
-                            </div>
-                        </div><br><br>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="width: 30rem;">
-                    <img src="./images/Rectangle 30 (3).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h1 class="card-title text-light fw-bolder">Hedy Lamarr</h1>
-                        <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
-                        <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
-                        <div class="row d-flex justify-content-around">
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
+                <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                    <div class="card rounded-4 pic" style="background-color: #3D2462;">
+                        <img src="./images/Rectangle 30 (1).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
+                        <div class="card-body text-center">
+                            <h1 class="card-title text-light fw-bolder">AI Shaker</h1>
+                            <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
+                            <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div><br><br>
-        </div>
-        <div class="row mt-3 d-flex justify-content-center">
-            <div class="col-lg-5 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="width: 30rem;">
-                    <img src="./images/Rectangle 30 (4).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h1 class="card-title text-light fw-bolder">AI Shaker</h1>
-                        <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
-                        <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
-                        <div class="row d-flex justify-content-around">
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
-                            </div>
-                        </div><br><br>
-                    </div>
-                </div>
+                </div><br><br>
             </div>
-            <div class="col-lg-5 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="width: 30rem;">
-                    <img src="./images/Rectangle 30 (5).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h1 class="card-title text-light fw-bolder">AI Shaker</h1>
-                        <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
-                        <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
-                        <div class="row d-flex justify-content-around">
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
-                            </div>
+            <div class="row mt-3 d-flex justify-content-center">
+                <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                    <div class="card rounded-4 pic" style="background-color: #3D2462;">
+                        <img src="./images/Rectangle 30 (2).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
+                        <div class="card-body text-center">
+                            <h1 class="card-title text-light fw-bolder">Margaret Hamilton</h1>
+                            <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
+                            <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
+                                </div>
+                            </div><br><br>
                         </div>
                     </div>
                 </div>
-            </div><br><br>
+                <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                    <div class="card rounded-4 pic" style="background-color: #3D2462;">
+                        <img src="./images/Rectangle 30 (3).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
+                        <div class="card-body text-center">
+                            <h1 class="card-title text-light fw-bolder">Hedy Lamarr</h1>
+                            <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
+                            <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br><br>
+            </div>
+            <div class="row mt-3 d-flex justify-content-center">
+                <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                    <div class="card rounded-4 pic" style="background-color: #3D2462;">
+                        <img src="./images/Rectangle 30 (4).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
+                        <div class="card-body text-center">
+                            <h1 class="card-title text-light fw-bolder">AI Shaker</h1>
+                            <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
+                            <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
+                                </div>
+                            </div><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                    <div class="card rounded-4 pic" style="background-color: #3D2462;">
+                        <img src="./images/Rectangle 30 (5).png" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
+                        <div class="card-body text-center">
+                            <h1 class="card-title text-light fw-bolder">AI Shaker</h1>
+                            <h3 class="card-title text-light fw-bolder">Sr. Software Engineer</h3>
+                            <p class="card-text text-light fs-5 fw-semibold">Bangladesh University of Business and Technology(BUBT)</p><br>
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3">Email</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-10">
+                                    <a href="#" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3">Linkedin</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br><br>
+            </div>
         </div>
     </div>
+    
 
-    <footer class="footer">
-        <div class="container foot pt-5">
+    <div class="container-fluid footer">
+        <div class="container">
             <div class="row d-flex justify-content-around ms-5 gx-5 pt-5">
                 <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
                     <div class="information">
@@ -235,17 +245,17 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-center">
-                <div class="col-sm-8 col-md-8 mt-4 col-lg-3 text-center text-sm-start">
+                <div class="col-sm-8 col-md-8 col-lg-3 text-center text-sm-start">
                     <div class="information text-center pt-4">
-                        <img src="./images/Group.png" alt="" class="p-3">
+                        <a href="index.html"><img src="./images/Group.png" alt="" class="p-3"></a>
                     </div>
                 </div>
-                <div class="col-sm-8 col-md-8 mt-4 col-lg-5 text-center text-sm-start">
-                    <div class="text-center text-light ">
-                        <p>© 2024 Alumni Finder . All Rights Reserved. </p>
+                <div class="col-sm-8 col-md-8 col-lg-5 text-center text-sm-start">
+                    <div class="text-center text-light justify-content-center">
+                        <p class="footp">© 2024 Alumni Finder . All Rights Reserved. </p>
                     </div>
                 </div>
-                <div class="col-sm-8 col-md-8 mt-4 col-lg-3 text-center text-sm-start">
+                <div class="col-sm-8 col-md-8  col-lg-3 text-center text-sm-start">
                     <div class="social pt-4">
                         <ul class="list-inline my-4 text-center">
                             <li class="list-inline-item"><a href="#"><i
@@ -259,10 +269,11 @@
                 </div>
             </div>
         </div>
-    </footer>
-    
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
