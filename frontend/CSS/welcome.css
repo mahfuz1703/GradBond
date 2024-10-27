@@ -1,0 +1,73 @@
+.reg{
+    background-color: tomato;
+}
+.search{
+    background-image: url('../images/baground.png');
+}
+.btns{
+    width: 80px;
+    height: 80px;
+    background-color: #3D2462;
+    margin-left: -10px;
+}
+.btncolor{
+    background-color: #38224B;
+    opacity: 50%;
+}
+.searchh{
+    width: 100%;
+}
+.inputbg{
+    background-color: #D9D9D9;
+    margin-left: 12%;
+    margin-right: 9px;
+}
+.service{
+    width: 300px;
+    height: 70px;
+    background-color: #38224B;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 28px;
+    text-decoration: none;
+}
+.service{
+    width: 250px;
+    font-weight: 900;
+}
+.service:hover{
+    background-color: yellow;
+    color: black;
+    font-weight: 900;
+}
+.lorem{
+    background-color: #E1CDFF;
+    width: 100%;
+}
+.main{
+    margin-top: -8px;
+}
+.writep{
+    width: 100%;
+}
+.my{
+    background-color: #F3E5F2;
+}
+.pic{
+    background-color: #3D2462;
+}
+
+.footer{
+    background-color: #3D2462;
+}
+
+.carosolbg{
+    background-color: #FFFFFF;
+}
+.searchh form{
+    width: 100%;
+    text-align: center;
+}
+.footp{
+    margin-top: 50px;
+}

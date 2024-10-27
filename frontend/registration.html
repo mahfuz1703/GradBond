@@ -4,95 +4,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <link rel="FavIcon" href="./images/GradBondFavIcon.png" type="image/x-icon">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="./CSS/registration.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/registration.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
-<body class="bg-dark">
+<body>
+    <!-- Navbar part start -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container p-4 bg-light">
+            <a href="index.html"><img src="./images/Group.png" alt=""></a>
+            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item me-5">
+                        <a class="nav-link active fs-5 fw-bolder" aria-current="page" href="find_alumni.html">Find
+                            Alumni</a>
+                    </li>
+                    <li class="nav-item me-5">
+                        <a class="nav-link fs-5 fw-bolder" aria-current="page" href="Gallary.html">Gallary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="event.html">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="login.html"><button type="button"
+                                    class="btn btn-light fs-5 fw-bolder">Login</button></a>
+                            <a href="registration.html"><button type="button"
+                                    class="btn btn-danger btn-outline-warning fs-5 fw-bolder">Registration</button></a>
+                        </div>
+                    </li>
 
-    <div class="container ">
-        <div class="row main">
-            <!-- Left part -->
-            <div class="col-lg-8 col-md-12 order-lg-1 order-md-2 order-2">
-                <h1 class="text-center mt-5 p-5 fs-1 fw-bolder writee">Registration As A Alumni</h1>
-                <form action="login.html">
-                    <div class="row ms-4 me-4">
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="fname" class="write">First Name</label><br>
-                            <input type="text" name="fname" id="fname" required class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="lname" class="write">Last Name</label><br>
-                            <input type="text" name="lname" id="lname" class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar part end -->
+    <div class="container-fluid main">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 col-lg-8 col-md-12 col-12 bg-light border border-2 left order-xl-1 order-lg-1 order-md-2 order-2">
+                    <div class="text-center mt-5">
+                        <h1>Registration As A Alumni</h1>
                     </div>
-                    <div class="row ms-4 me-4">
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="email" class="write">Email Address</label><br>
-                            <input type="email" name="email" id="email" required class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="phone" class="write">Phone Number</label><br>
-                            <input type="number" name="phone" id="phone" required class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                    </div>
-                    <div class="row ms-4 me-4">
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="university" class="write">University</label><br>
-                            <input type="text" name="university" id="university" required class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="id" class="write">University ID</label><br>
-                            <input type="number" name="id" id="id" required class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                    </div>
-                    <div class="row ms-4 me-4">
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="country" class="write">Country</label><br>
-                            <input type="text" name="country" required id="country" class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="job" class="write">Job Title</label><br>
-                            <input type="text" name="job" id="job" class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                    </div>
-                    <div class="row ms-4 me-4">
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="github" class="write">Github</label><br>
-                            <input type="url" name="github" id="github" class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                        <div class="col-lg-6 col-md-12 col-12">
-                            <label for="linkdin" class="write">Linkedin</label><br>
-                            <input type="url" name="linkdin" id="linkdin" class="rounded-3 w-100 p-2 border border-light-subtle bg-light">
-                        </div>
-                    </div>
-                    <div class="row m-4">
-                        <div class="col-lg-6 col-md-12 col-12 text-center">
-                            <div class="custom-file p-4">
-                                <input type="file" class="custom-file-input" id="customFile" required class="custom">
+                    <form action="login.html" class="ms-5">
+                        <div class="row mt-5">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="fname" class="fs-3 fw-bolder">First Name</label><br>
+                                <input type="text" name="fname" id="fname" class="box">
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="lname" class="fs-3 fw-bolder">Last Name</label><br>
+                                <input type="text" name="lname" id="lname" class="box">
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-12 col-12 text-center col-md-mt-5">
-                            <input type="submit" value="Register" class="rounded-3 w-75 p-4 baton">
+                        <div class="row mt-2">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="email" class="fs-3 fw-bolder">Email Address</label><br>
+                                <input type="email" name="email" id="email" class="box">
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="number" class="fs-3 fw-bolder">Phone Number</label><br>
+                                <input type="number" name="number" id="number" class="box">
+                            </div>
                         </div>
-                    </div>
-                </form><br><br><br>
-            </div>
-            <!-- Right part -->
-            <div class="col-lg-4 col-md-12 order-lg-2 order-md-1 order-1">
-                <a href="login.html"><img src="./images/right.png" class="img-fluid image" alt="..."></a>
+                        <div class="row mt-2">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="univrsity" class="fs-3 fw-bolder">University Name</label><br>
+                                <input type="text" name="univrsity" id="univrsity" class="box">
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="id" class="fs-3 fw-bolder">University ID</label><br>
+                                <input type="number" name="id" id="id" class="box">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="country" class="fs-3 fw-bolder">Country Name</label><br>
+                                <input type="text" name="country" id="country" class="box">
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="title" class="fs-3 fw-bolder">Job Title</label><br>
+                                <input type="text" name="title" id="title" class="box">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="github" class="fs-3 fw-bolder">Github Account</label><br>
+                                <input type="url" name="github" id="github" class="box">
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <label for="linkedin" class="fs-3 fw-bolder">Linkedin</label><br>
+                                <input type="url" name="linkedin" id="linkedin" class="box">
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <input type="file" name="" id="">
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12 mt-xl-0 mt-lg-0 mt-md-0 mt-2">
+                                <button type="submit" class="baton fs-3 fw-bolder">Register</button>
+                            </div>
+                        </div>
+                    </form><br><br><br>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-12 col-12 order-xl-2 order-lg-2 order-md-1 order-1 text-md-center">
+                    <a href="login.html" class="imgg"><img src="./images/right.png" alt="" class="img-fluid"></a>
+                </div>
             </div>
         </div>
     </div>
 
-
+    <div class="container-fluid footer">
+        <div class="container">
+            <div class="row d-flex justify-content-around ms-5 gx-5 pt-5">
+                <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
+                    <div class="information">
+                        <h6 class="footer-heading text-uppercase text-white fw-bold">Navigation</h6>
+                        <ul class="list-unstyled footer-link mt-4">
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Home</a>
+                            </li>
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Find
+                                    Alumni</a></li>
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">I'm
+                                    Alumni</a></li>
+                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Event</a></li>
+                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
+                    <div class="information">
+                        <h6 class="footer-heading text-uppercase text-white fw-bold">Whar We Do</h6>
+                        <ul class="list-unstyled footer-link mt-4">
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Encouraging
+                                    Testing</a></li>
+                            <li class="mb-1"><a href="#"
+                                    class="text-white text-decoration-none fw-semibold">Strengthening Advocacy</a></li>
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Sharing
+                                    Information</a></li>
+                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Building
+                                    Leadership</a></li>
+                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Engaging With
+                                    Global Fund</a></li>
+                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Shining a
+                                    Light</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
+                    <div class="information">
+                        <h6 class="footer-heading text-uppercase text-white fw-bold">LEGAL</h6>
+                        <ul class="list-unstyled footer-link mt-4">
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">General
+                                    Info</a></li>
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Privacy
+                                    Policy</a></li>
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Terms of
+                                    Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
+                    <div class="information">
+                        <h6 class="footer-heading text-uppercase text-white fw-bold">TALK TO US</h6>
+                        <ul class="list-unstyled footer-link mt-4">
+                            <li class="mb-1"><a href="#"
+                                    class="text-white text-decoration-none fw-semibold">support@ercom.com</a></li>
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">+66 2399
+                                    1145</a></li>
+                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Contact
+                                    Us</a></li>
+                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Facebook</a>
+                            </li>
+                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Linkedin</a>
+                            </li>
+                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Twitter</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-sm-8 col-md-8 col-lg-3 text-center text-sm-start">
+                    <div class="information text-center pt-4">
+                        <a href="index.html"><img src="./images/Group.png" alt="" class="p-3"></a>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-8 col-lg-5 text-center text-sm-start">
+                    <div class="text-center text-light justify-content-center">
+                        <p class="footp">© 2024 Alumni Finder . All Rights Reserved. </p>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-md-8  col-lg-3 text-center text-sm-start">
+                    <div class="social pt-4">
+                        <ul class="list-inline my-4 text-center">
+                            <li class="list-inline-item"><a href="#"><i
+                                        class="fa-brands fa-square-facebook fs-3 ms-4 text-light"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i
+                                        class="fa-brands fa-linkedin fs-3 ms-4 text-light"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i
+                                        class="fa-brands fa-square-twitter fs-3 ms-4 text-light"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
 </body>
 
 </html>
