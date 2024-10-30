@@ -1,0 +1,128 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f8ede9;
+}
+
+.navbar {
+  background-color: #ffffff;
+}
+
+.navbar-nav .nav-item {
+  margin: 0 85px; /* Adjust the space as needed */
+}
+
+.navbar-brand {
+  font-size: 24px;
+  color: #ff8235;
+}
+
+.navbar-nav .nav-link {
+  color: #3c096c;
+  font-weight: 500;
+}
+
+.navbar-nav .nav-link.active {
+  color: #ff8235;
+}
+
+.btn-register {
+  background-color: #ff8235;
+  color: #ffffff;
+}
+
+.main-heading {
+  color: #3c096c;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+.form-control {
+  background-color: #f5f5f5;
+  border: none;
+  padding: 15px;
+}
+
+.find-now-btn {
+  background-color: #3c096c;
+  color: white;
+  font-size: 18px;
+  padding: 10px 40px;
+  border: none;
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 15px;
+}
+
+/* Center banner section within a container */
+.banner-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Gap between Find Now button and banner */
+  margin-bottom: 20px; /* Gap between banner and footer */
+}
+
+.banner-section {
+  background-color: #ff8235;
+  color: white;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%; /* Centered smaller width */
+  
+}
+
+.banner-text {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.banner-subtext {
+  font-size: 16px;
+}
+
+.banner-btn {
+  background-color: white;
+  color: black;
+  padding: 15px 30px;
+  border: none;
+}
+
+.footer {
+  background-color: #3c096c;
+  color: white;
+  padding: 40px 0;
+}
+
+.footer h5 {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer .social-icons a {
+  color: white;
+  margin-right: 10px;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: white;
+}
