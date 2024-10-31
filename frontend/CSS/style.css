@@ -23,16 +23,13 @@
     margin-right: 9px;
 }
 .service{
-    width: 300px;
+    width: 250px;
     height: 70px;
     background-color: #38224B;
     color: #fff;
     border-radius: 20px;
     font-size: 28px;
     text-decoration: none;
-}
-.service{
-    width: 200px;
 }
 .service:hover{
     background-color: yellow;
@@ -47,6 +44,8 @@
 }
 .writep{
     width: 100%;
+    text-align: justify;
+    text-justify: inter-word;
 }
 .my{
     background-color: #F3E5F2;
