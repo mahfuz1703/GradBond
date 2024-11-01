@@ -23,7 +23,7 @@
     margin-right: 9px;
 }
 .service{
-    width: 250px;
+    width: 300px;
     height: 70px;
     background-color: #38224B;
     color: #fff;
@@ -31,9 +31,14 @@
     font-size: 28px;
     text-decoration: none;
 }
+.service{
+    width: 250px;
+    font-weight: 900;
+}
 .service:hover{
     background-color: yellow;
     color: black;
+    font-weight: 900;
 }
 .lorem{
     background-color: #E1CDFF;
@@ -44,10 +49,8 @@
 }
 .writep{
     width: 100%;
-    text-align: justify;
-    text-justify: inter-word;
 }
-.my-1{
+.my{
     background-color: #F3E5F2;
 }
 .pic{

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Signup | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid main">
+    <div class="container">
+        <div class="row login-banner">
+
+            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
+                <div class="write text-center">
+                    <h1 class="text-light pt-5">Create a new Account</h1>
+                </div>
+                <form action="welcome.html" class="ms-5 mt-5 ps-2">
+                    <label for="userType" class="fs-5 fw-bolder text-light">I am a/an</label> <br>
+                    <select id="userType" name="userType" onchange="toggleFields()"
+                        class="box form-select form-select-lg" required>
+                        <option selected>Choose your option</option>
+                        <option value="student">Student</option>
+                        <option value="alumni">Alumni</option>
+                    </select><br>
+
+                    <label for="fullname" class="fs-5 fw-bolder text-light">Full Name</label><br>
+                    <input type="text" name="fullname" id="fullname" class="box" required placeholder="Ex. John Doe"><br><br>
+
+                    <label for="uniName" class="fs-5 fw-bolder text-light">University</label><br>
+                    <input type="text" name="uniName" id="uniName" class="box" required placeholder="Ex. Bangladesh University of Business and Technology"><br><br>
+
+                    <label for="studentId" class="fs-5 fw-bolder text-light">Student ID 
+                        <span style="font-size: small;">(For user security it will only be used by authority)</span>
+                    </label><br>
+                    <input type="text" name="studentId" id="studentId" class="box" required placeholder="Ex. abcd-1234"><br><br>
+
+                    <label for="email" class="fs-5 fw-bolder text-light">Email</label><br>
+                    <input type="email" name="email" id="email" class="box" required placeholder="Ex. example@gmail.com"><br><br>
+
+
+                    <!-- Extra field for alumni -->
+                    <div class="extra-fields" style="display: none;" id="alumniFields">
+                        <label for="graduationYear" class="fs-5 fw-bolder text-light">Graduation Year</label>
+                        <input type="text" id="graduationYear" name="graduationYear" class="box" required placeholder="Ex. 2024"><br><br>
+
+                        <label for="company" class="fs-5 fw-bolder text-light">Company</label>
+                        <input type="text" id="company" name="company" class="box" required placeholder="Ex. Therap BD"><br><br>
+
+                        <label for="jobTitle" class="fs-5 fw-bolder text-light">Job Title</label>
+                        <input type="text" id="jobTitle" name="jobTitle" class="box" required placeholder="Ex. Software Engineer"><br><br>
+
+                        <label for="linkedin" class="fs-5 fw-bolder text-light">LinkedIn Url</label>
+                        <input type="text" id="linkedin" name="linkedin" class="box" required placeholder="Ex. https://www.linkedin.com/in/John-Doe/"><br><br>
+                    </div>
+
+
+                    <label for="pass1" class="fs-5 fw-bolder text-light">Password</label><br>
+                    <input type="password" name="pass1" id="pass1" class="box"><br>
+                    <br>
+                    <label for="pass2" class="fs-5 fw-bolder text-light">Confirm Password</label><br>
+                    <input type="password" name="pass2" id="pass2" class="box"><br>
+                    <br>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn batonn fs-3 fw-bolder">Signup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><br><br>
+</div>
+
+<script>
+    function toggleFields() {
+        var userType = document.getElementById('userType').value;
+        var alumniFields = document.getElementById('alumniFields');
+        if (userType === 'alumni') {
+            alumniFields.style.display = 'block';
+        } else {
+            alumniFields.style.display = 'none';
+        }
+    }
+</script>
+
+{% endblock %}

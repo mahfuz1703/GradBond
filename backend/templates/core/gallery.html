@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Gallary | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/Gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid my">
+    <div class="container">
+        <div class="write text-center pt-5">
+            <h1 class="fs-1 fw-bolder">Alumni Gallary</h1>
+        </div>
+        <div class="row d-flex justify-content-around mt-5">
+            <div class="col-lg-6 col-md-12 col-12">
+                <img src="{% static './images/Rectangle 28.png' %}" class="img-fluid" alt="">
+                <p>Publish 10 December 2023</p>
+            </div>
+            <div class="col-lg-6 col-md-12 col-12">
+                <img src="{% static './images/Rectangle 28 (1).png' %}" class="img-fluid" alt="">
+                <p>Publish 10 December 2023</p>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-around mt-5">
+            <div class="col-lg-6 col-md-12 col-12">
+                <img src="{% static './images/Rectangle 28 (2).png' %}" class="img-fluid" alt="">
+                <p>Publish 10 December 2023</p>
+            </div>
+            <div class="col-lg-6 col-md-12 col-12">
+                <img src="{% static './images/Rectangle 28 (3).png' %}" class="img-fluid" alt="">
+                <p>Publish 10 December 2023</p>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+{% endblock %}

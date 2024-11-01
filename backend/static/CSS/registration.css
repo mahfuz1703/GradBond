@@ -1,0 +1,33 @@
+.main{
+    background-color: #230939;
+}
+.box{
+    width: 90%;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #E9E6EB;
+}
+.left{
+    background-color: #FFF2EB;
+}
+.baton{
+    background-color: #3D2462;
+    color: #fff;
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+}
+.baton:hover{
+    background-color: rgb(204, 204, 90);
+    color: black;
+}
+.imgg{
+    margin-left: -10px;
+}
+.footer{
+    background-color: #3D2462;
+}
+.footp{
+    color: #e2dede;
+    padding-top: 50px;
+}

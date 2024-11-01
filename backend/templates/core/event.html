@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Events | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/event.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid my">
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="mt-5 fs-1 fw-bolder resent">Event / Workshop</h1>
+        </div>
+        <div class="row mt-5 d-flex justify-content-center">
+            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                <div class="card rounded-4 " style="background-color: #3D2462;">
+                    <img src="{% static './images/Rectangle 18 (4).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
+                    <div class="card-body text-center">
+                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
+                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde esse, facilis nam fuga necessitatibus libero nisi! Odit, soluta! Cum, dolorum.</p><br>
+                        <a href="#" class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                <div class="card rounded-4 pic" style="background-color: #3D2462;">
+                    <img src="{% static './images/Rectangle 18 (1).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
+                    <div class="card-body text-center">
+                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
+                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur dolorem blanditiis nulla. Autem laboriosam voluptatibus repellat veniam nihil sequi voluptas.</p><br>
+                        <a href="#" class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 d-flex justify-content-center">
+            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                <div class="card rounded-4 pic" style="background-color: #3D2462;">
+                    <img src="{% static './images/Rectangle 18 (2).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
+                    <div class="card-body text-center">
+                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
+                        <p class="writep card-text text-secondary fs-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta aut illum quis libero. Rerum suscipit ipsum nisi asperiores illum autem?</p><br>
+                        <a href="#" class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
+                <div class="card rounded-4 pic" style="background-color: #3D2462;">
+                    <img src="{% static './images/Rectangle 18 (3).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
+                    <div class="card-body text-center">
+                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
+                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque ea quisquam dicta quibusdam a quos aut dolore labore corrupti dolorem.</p><br>
+                        <a href="#" class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><br><br><br>
+</div>
+
+{% endblock %}
