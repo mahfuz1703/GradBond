@@ -5,8 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- title  -->
     <title>{% block title %}Home | GradBond{% endblock %}</title>
-    <link rel="FavIcon" href="./images/GradBondFavIcon.png" type="image/x-icon">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/GradBondFavIcon.png' %}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -90,19 +95,19 @@
                     <div class="information">
                         <h6 class="footer-heading text-uppercase text-white fw-bold">Navigation</h6>
                         <ul class="list-unstyled footer-link mt-4">
-                            <li class="mb-1"><a href="index.html"
+                            <li class="mb-1"><a href="{% url 'home' %}"
                                     class="text-white text-decoration-none fw-semibold">Home</a>
                             </li>
-                            <li class="mb-1"><a href="find_alumni.html"
+                            <li class="mb-1"><a href="{% url 'find-alumni' %}"
                                     class="text-white text-decoration-none fw-semibold">Find
                                     Alumni</a></li>
-                            <li class="mb-1"><a href="Gallary.html"
+                            <li class="mb-1"><a href="{% url 'gallery' %}"
                                     class="text-white text-decoration-none fw-semibold">Gallary</a></li>
-                            <li class=""><a href="event.html"
+                            <li class=""><a href="{% url 'events' %}"
                                     class="text-white text-decoration-none fw-semibold">Event</a></li>
-                            <li class=""><a href="login.html"
+                            <li class=""><a href="{% url 'login' %}"
                                     class="text-white text-decoration-none fw-semibold">Login</a></li>
-                            <li class=""><a href="signup.html"
+                            <li class=""><a href="{% url 'signup' %}"
                                     class="text-white text-decoration-none fw-semibold">Signup</a></li>
                         </ul>
                     </div>
