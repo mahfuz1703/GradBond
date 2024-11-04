@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Profile | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <br> <br> <br>
+
+    <h1>Profile details: </h1> <br>
+    <h3><strong>Name: </strong> {{details.full_name}} </h3>
+    <h3><strong>University: </strong> {{details.university}} </h3>
+    <h3><strong>Student ID: </strong> {{details.student_id}} </h3>
+    <h3><strong>Email: </strong> {{details.email}} </h3>
+
+    {% if isAlumni %}
+    <h3><strong>Graduation Year: </strong> {{details.graduation_year}} </h3>
+    <h3><strong>Company: </strong> {{details.company}} </h3>
+    <h3><strong>Job Title: </strong> {{details.job_title}} </h3>
+    <h3><strong>LinkedIn: </strong>
+        <a href="{{details.linkedin}}" target="_blank">{{details.linkedin}}</a>
+    </h3>
+    {% endif %}
+
+
+    <br> <br> <br>
+</div>
+
+{% endblock %}

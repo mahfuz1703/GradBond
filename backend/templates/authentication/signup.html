@@ -17,7 +17,8 @@
                 <div class="write text-center">
                     <h1 class="text-light pt-5">Create a new Account</h1>
                 </div>
-                <form action="welcome.html" class="ms-5 mt-5 ps-2">
+                <form method="POST" class="ms-5 mt-5 ps-2">
+                    {% csrf_token %}
                     <label for="userType" class="fs-5 fw-bolder text-light">I am a/an</label> <br>
                     <select id="userType" name="userType" onchange="toggleFields()"
                         class="box form-select form-select-lg" required>
@@ -29,13 +30,13 @@
                     <label for="fullname" class="fs-5 fw-bolder text-light">Full Name</label><br>
                     <input type="text" name="fullname" id="fullname" class="box" required placeholder="Ex. John Doe"><br><br>
 
-                    <label for="uniName" class="fs-5 fw-bolder text-light">University</label><br>
-                    <input type="text" name="uniName" id="uniName" class="box" required placeholder="Ex. Bangladesh University of Business and Technology"><br><br>
+                    <label for="university" class="fs-5 fw-bolder text-light">University</label><br>
+                    <input type="text" name="university" id="university" class="box" required placeholder="Ex. Bangladesh University of Business and Technology"><br><br>
 
-                    <label for="studentId" class="fs-5 fw-bolder text-light">Student ID 
+                    <label for="student_id" class="fs-5 fw-bolder text-light">Student ID 
                         <span style="font-size: small;">(For user security it will only be used by authority)</span>
                     </label><br>
-                    <input type="text" name="studentId" id="studentId" class="box" required placeholder="Ex. abcd-1234"><br><br>
+                    <input type="text" name="student_id" id="student_id" class="box" required placeholder="Ex. abcd-1234"><br><br>
 
                     <label for="email" class="fs-5 fw-bolder text-light">Email</label><br>
                     <input type="email" name="email" id="email" class="box" required placeholder="Ex. example@gmail.com"><br><br>
@@ -43,17 +44,17 @@
 
                     <!-- Extra field for alumni -->
                     <div class="extra-fields" style="display: none;" id="alumniFields">
-                        <label for="graduationYear" class="fs-5 fw-bolder text-light">Graduation Year</label>
-                        <input type="text" id="graduationYear" name="graduationYear" class="box" required placeholder="Ex. 2024"><br><br>
+                        <label for="graduation_year" class="fs-5 fw-bolder text-light">Graduation Year</label>
+                        <input type="text" id="graduation_year" name="graduation_year" class="box" placeholder="Ex. 2024"><br><br>
 
                         <label for="company" class="fs-5 fw-bolder text-light">Company</label>
-                        <input type="text" id="company" name="company" class="box" required placeholder="Ex. Therap BD"><br><br>
+                        <input type="text" id="company" name="company" class="box" placeholder="Ex. Therap BD"><br><br>
 
-                        <label for="jobTitle" class="fs-5 fw-bolder text-light">Job Title</label>
-                        <input type="text" id="jobTitle" name="jobTitle" class="box" required placeholder="Ex. Software Engineer"><br><br>
+                        <label for="job_title" class="fs-5 fw-bolder text-light">Job Title</label>
+                        <input type="text" id="job_title" name="job_title" class="box" placeholder="Ex. Software Engineer"><br><br>
 
                         <label for="linkedin" class="fs-5 fw-bolder text-light">LinkedIn Url</label>
-                        <input type="text" id="linkedin" name="linkedin" class="box" required placeholder="Ex. https://www.linkedin.com/in/John-Doe/"><br><br>
+                        <input type="text" id="linkedin" name="linkedin" class="box" placeholder="Ex. https://www.linkedin.com/in/John-Doe/"><br><br>
                     </div>
 
 

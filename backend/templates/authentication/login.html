@@ -24,7 +24,8 @@
                 <div class="write text-center">
                     <h1 class="text-light pt-5">Log in to your Account</h1>
                 </div>
-                <form action="welcome.html" class="ms-5 mt-5 ps-2">
+                <form method="POST" class="ms-5 mt-5 ps-2">
+                    {% csrf_token %}
                     <label for="email" class="fs-3 fw-bolder text-light"> Emal Address</label><br>
                     <input type="email" name="email" id="email" class="box"><br>
                     <label for="pass" class="fs-3 fw-bolder text-light">Password</label><br>
