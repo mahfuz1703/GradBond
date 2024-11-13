@@ -22,7 +22,7 @@ def search_alumni(request):
             alumni = alumni.filter(university__icontains=university)
         
         if dept:
-            alumni = alumni.filter(user__profile__department__icontains=dept)
+            alumni = alumni.filter(dept__icontains=dept)
         
         if company:
             alumni = alumni.filter(company__icontains=company)

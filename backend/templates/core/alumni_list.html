@@ -11,6 +11,7 @@
 
 <div class="container-fluid main">
     <div class="container main">
+        {% if alumni_list %}
         <div class="row text-center pt-5 fw-bolder">
             <h1 class="writeh1">Alumni List</h1>
         </div>
@@ -18,7 +19,7 @@
             {% for alumni in alumni_list %}
             <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
                 <div class="card rounded-4 pic" style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 30 (2).png' %}" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
+                    <img src="{% static './images/Rectangle 30.png' %}" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
                     <div class="card-body text-center">
                         <h1 class="card-title text-light fw-bolder">{{alumni.full_name}}</h1>
                         <h3 class="card-title text-light fw-bolder">{{alumni.job_title}}</h3>
@@ -36,6 +37,10 @@
             </div>
             {% endfor %}
         </div>
+        {% else %}
+        <div class="row text-center pt-5 fw-bolder">
+            <h1 style="padding-bottom: 100px; padding-top: 100px;">No alumni found matching your criteria.</h1> <br> <br> <br>
+        {% endif %}
     </div>
 </div>
 
