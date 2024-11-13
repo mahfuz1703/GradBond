@@ -17,6 +17,7 @@ def signup(request):
         userType = request.POST['userType']
         fullname = request.POST['fullname']
         university = request.POST['university']
+        dept = request.POST['dept']
         student_id = request.POST['student_id']
         email = request.POST['email']
         if userType == 'alumni':
@@ -46,10 +47,10 @@ def signup(request):
             user.save()
 
             if userType == 'alumni':
-                alumni = alumniProfile(user=user, full_name=fullname, university=university, student_id=student_id, email=email, graduation_year=graduation_year, company=company, job_title=job_title, linkedin=linkedin)
+                alumni = alumniProfile(user=user, full_name=fullname, university=university, dept=dept, student_id=student_id, email=email, graduation_year=graduation_year, company=company, job_title=job_title, linkedin=linkedin)
                 alumni.save()
             elif userType == 'student':
-                student = studentProfile(user=user, full_name=fullname, university=university, student_id=student_id, email=email)
+                student = studentProfile(user=user, full_name=fullname, university=university, dept=dept, student_id=student_id, email=email)
                 student.save()
             
             messages.success(request, 'Account created successfully. Please login.')
