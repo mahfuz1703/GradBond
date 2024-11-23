@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Event Details | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/event.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid my">
+    <div class="container d-flex justify-content-center">
+        <div class="card mt-4 mb-4" style="width: 50rem;">
+            {% if event.image %}
+            <img class="card-img-top" src="{{event.image.url}}" alt="{{event.title}}">
+            {% else %}
+            <img src="/media/events/default.png" class="card-img-top" alt="{{event.title}}">
+            {% endif %}
+            <div class="card-body" style="margin-left: 30px;">
+                <h2 class="card-title">{{event.title}}</h2>
+                <p class="card-text">{{event.description}}</p>
+                <h4 class="card-title">{{event.date | date:"F d, Y"}} | {{event.time | time:"h:i A"}}</h4>
+                <h3 class="card-title">
+                    Registration:
+                    {% if user.is_authenticated %}
+                    <a href="{{event.regLink}}" target="_blank">Link</a>
+                    {% else %}
+                    <a href="{% url 'signin' %}">Link</a>
+                    {% endif %}
+                </h3>
+                <h4 class="card-title">Location: {{event.location}}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

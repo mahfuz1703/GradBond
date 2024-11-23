@@ -18,20 +18,32 @@
         <div class="row mt-3 d-flex justify-content-center">
             {% for alumni in alumni_list %}
             <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 30.png' %}" class="card-img-top img-rounded pt-5 ps-5 pe-5" alt="...">
+                <div class="card rounded-4 pic" style="background-color: #3D2462; width: 500px;">
+                    <img src="{{alumni.image.url}}" class="card-img-top img-rounded pt-3 ps-3 pe-3" alt="{{alumni.full_name}}" height="300px">
                     <div class="card-body text-center">
                         <h1 class="card-title text-light fw-bolder">{{alumni.full_name}}</h1>
-                        <h3 class="card-title text-light fw-bolder">{{alumni.job_title}}</h3>
-                        <p class="card-text text-light fs-5 fw-semibold">{{alumni.university}}</p><br>
+                        <h4 class="card-title text-light fw-bolder">{{alumni.job_title}}
+                            <span style="font-size: 20px;">({{alumni.company}})</span>
+                        </h4>
+                        <p class="card-text text-light fs-5">{{alumni.university}}</p>
+                        <p class="card-text text-light fs-5">{{alumni.dept}}</p><br>
+                        
+                        {% if user.is_authenticated %}
                         <div class="row d-flex justify-content-around">
                             <div class="col-lg-6 col-md-6 col-10">
-                                <a href="{{alumni.email}}" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-3" target="_blank">Email</a>
+                                <a href="mailto:{{alumni.email}}" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-1" target="_blank">Email</a>
                             </div>
                             <div class="col-lg-6 col-md-6 col-10">
-                                <a href="{{alumni.linkedin}}" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-3" target="_blank">Linkedin</a>
+                                <a href="{{alumni.linkedin}}" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-1" target="_blank">Linkedin</a>
                             </div>
                         </div><br><br>
+                        {% else %}
+                        <div class="row d-flex justify-content-around">
+                            <div class="col-lg-6 col-md-6 col-10">
+                                <a href="{% url 'signin' %}" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-1" >Say Hello!!</a>
+                            </div>
+                        </div><br><br>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -14,12 +14,16 @@
             <h1 class="mt-5 fs-1 fw-bolder text-light">Find Alumni Of Your University</h1>
         </div>
         <div class="container searchh mt-5 justify-content-center">
-            <form class="d-flex" role="search">
-                <input class="form-control text-dark fs-5 fw-bolder w-75 inputbg" type="search"
-                    placeholder="Search alumni, keywords, companies   |   Enter University name" aria-label="Search">
+            <form class="d-flex" role="search" action="{% url 'search_alumni' %}" method="GET">
+                {% csrf_token %}
+                <input class="form-control text-dark fs-5 fw-bolder w-75 inputbg" type="text"
+                    placeholder="Search by University | Department | Company | Job Title" aria-label="Search"
+                    id="randomKey" name="randomKey">
                 <button class="ms-1 btn btn-success btns" type="submit"> <i class="fa fa-search"></i></button>
             </form>
         </div><br><br>
+
+        <!-- Popular search -->
         <p class="text-light ps-5 fs-4 fw-bolder">Popular Search</p>
         <div class="d-lg-flex flex-row justify-content-evenly">
             <div class="text-light p-lg-0 p-md-3 p-3">
@@ -55,40 +59,11 @@
             <div class="col-lg-6 col-md-12 col-12 mt-5 pt-5">
                 <h1 class="text-dark fs-1 fw-bolder">The Leading Alumni</h1>
                 <h1 class="text-dark fs-1 fw-bolder">Finding Website .</h1>
-                <p class="text-dark fs-5 writep">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatibus maxime ratione ducimus minus
-                    facere cupiditate veritatis. Tempora, ipsam aut harum delectus et facilis magnam sed? Lorem ipsum
-                    dolor sit, amet consectetur adipisicing elit. Voluptates qui quod cupiditate facere itaque dolore ex
-                    iure, eligendi illo dignissimos exercitationem aut nemo esse fugiat magnam? Facilis asperiores saepe
-                    sunt consectetur ut nemo eligendi? Nemo fuga molestiae possimus ab tempora minus molestias eveniet
-                    assumenda aut</p>
-                <!-- <div class="d-lg-flex d-md-flex justify-content-evenly">
-                    <div>
-                        <p><img src="{% static './images/house.png' %}" alt=""> <a href="#"
-                                class="text-dark  text-decoration-none">Find University Alumni</a></p>
-                    </div>
-                    <div>
-                        <p><img src="{% static './images/house.png' %}" alt=""> <a href="#"
-                                class="text-dark  text-decoration-none">Find University Alumni</a></p>
-                    </div>
-                </div>
-                <div class="d-lg-flex d-md-flex justify-content-evenly">
-                    <div>
-                        <p><img src="{% static './images/house.png' %}" alt=""> <a href="#"
-                                class="text-dark  text-decoration-none">Find University Alumni</a></p>
-                    </div>
-                    <div>
-                        <p><img src="{% static './images/house.png' %}" alt=""> <a href="#"
-                                class="text-dark  text-decoration-none">Find University Alumni</a></p>
-                    </div>
-                </div><br> -->
-                <!-- <div class="d-flex justify-content-around lorem">
-                    <p class="p-3">Lorem Ipsum is simply dummy text of the printing and types industry. Lorem Ipsum
-                        has been the industry's standard dummy</p>
-                </div> -->
-                <div class="text-lg-center text-md-center text-center pt-5">
-                    <!-- <a href="find_alumni" class="service">Find Alumni</a> -->
-                    <a href="./find_alumni.html"><button type="button" href="find_alumni" class="service">Find
+                <p class="text-dark fs-5 writep">
+                    GradBond is a platform designed to connect alumni with current students and peers, fostering a strong professional and social network. It enables users to search for alumni by name, graduation year, department, or job title, and facilitates mentoring, career guidance, and event participation. Perfect for building lasting relationships within the community!</p> <br> <br>
+
+                <div class="">
+                    <a href="{% url 'find-alumni' %}"><button type="button" class="service">Find
                             Alumni</button></a>
                 </div><br><br>
             </div>
@@ -101,71 +76,49 @@
         <div class="row text-center">
             <h1 class="mt-5 fs-1 fw-bolder resent">Resent Event / Workshop</h1>
         </div>
-        <div class="row mt-5 d-flex justify-content-center">
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 " style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 18 (4).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
-                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Unde esse, facilis nam fuga necessitatibus libero nisi! Odit, soluta! Cum,
-                            dolorum.</p><br>
-                        <a href="#"
-                            class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 18 (1).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
-                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Tenetur dolorem blanditiis nulla. Autem laboriosam voluptatibus repellat
-                            veniam nihil sequi voluptas.</p><br>
-                        <a href="#"
-                            class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
-                    </div>
-                </div>
-            </div>
+        <div class="row mt-2 d-flex justify-content-center">
+            <div class="row mt-2 d-flex justify-content-center">
 
-        </div>
-        <div class="row mt-5 d-flex justify-content-center">
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 18 (2).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
-                        <p class="writep card-text text-secondary fs-5">Lorem ipsum, dolor sit amet consectetur
-                            adipisicing elit. Dicta aut illum quis libero. Rerum suscipit ipsum nisi asperiores illum
-                            autem?</p><br>
-                        <a href="#"
-                            class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                {% for event in events %}
+                <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                    <div class="card border border-dark"
+                        style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
+                        {% if event.image %}
+                        <img src="{{event.image.url}}" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}"
+                            height="300px">
+                        {% else %}
+                        <img src="/media/events/default.png" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <h5 class="card-title" style="color: aliceblue;"> {{event.title}} </h5>
+                            <p style="color: aliceblue;">{{event.date | date:"F d, Y"}} | {{event.time | time:"h:i A"}}
+                            </p>
+                            <p class="card-title" style="color: aliceblue;">Organized by <strong>
+                                    {{event.user.first_name}}
+                                </strong></p>
+
+                            {% if user.is_authenticated %}
+                            <a href="{{event.regLink}}" class="btn btn-primary me-3" target="_blank">Registration</a>
+                            {% else %}
+                            <a href="{% url 'signin' %}" class="btn btn-primary me-3">Registration</a>
+                            {% endif %}
+
+                            <a href="{% url 'event-detail' event.id %}" class="mt-2 btn btn-success me-3">More
+                                Details</a>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 18 (3).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
-                    <div class="card-body text-center">
-                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
-                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Cumque ea quisquam dicta quibusdam a quos aut dolore labore corrupti
-                            dolorem.</p><br>
-                        <a href="#"
-                            class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
-                    </div>
-                </div>
-            </div>
+                {% endfor %}
 
-
+            </div>
         </div>
     </div>
 </div>
 <div class="container-fluid carosolbg pt-5"><br><br>
     <div class="container">
         <div class="list-head text-center">
-            <h1 class="fs-1 fw-bolder">Alumnai Student University List</h1>
+            <h1 class="fs-1 fw-bolder">University that include to GradBond</h1>
         </div><br><br><br>
         <div class="university text-center">
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">

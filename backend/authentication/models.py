@@ -13,6 +13,7 @@ class alumniProfile(models.Model):
     company = models.CharField(max_length=100)
     job_title = models.CharField(max_length=100)
     linkedin = models.URLField()
+    image = models.ImageField(upload_to='alumni/', default='alumni/default.png', blank=True, null=True)
 
     def __str__(self):
         return self.user.first_name
@@ -24,6 +25,7 @@ class studentProfile(models.Model):
     dept = models.CharField(max_length=100)
     student_id = models.CharField(max_length=100)
     email = models.EmailField()
+    image = models.ImageField(upload_to='student/', default='student/default.png', blank=True, null=True)
 
     def __str__(self):
         return self.user.first_name

@@ -12,51 +12,78 @@
 <div class="container-fluid my">
     <div class="container">
         <div class="row text-center">
-            <h1 class="mt-5 fs-1 fw-bolder resent">Event / Workshop</h1>
+            {% if events %}
+            <h1 class="mt-5 fs-1 fw-bolder resent">Recent Event</h1>
+            {% else %}
+            <h1 class="mt-5 fs-1 fw-bolder resent">Recent events not found</h1>
+            {% endif %}
         </div>
         <div class="row mt-5 d-flex justify-content-center">
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 " style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 18 (4).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
+            
+            {% for event in events %}
+            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                <div class="card border border-dark"
+                    style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
+                    {% if event.image %}
+                    <img src="{{event.image.url}}" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}" height="300px">
+                    {% else %}
+                    <img src="/media/events/default.png" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
+                    {% endif %} 
                     <div class="card-body text-center">
-                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
-                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde esse, facilis nam fuga necessitatibus libero nisi! Odit, soluta! Cum, dolorum.</p><br>
-                        <a href="#" class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                        <h5 class="card-title" style="color: aliceblue;"> {{event.title}} </h5>
+                        <p style="color: aliceblue;">{{event.date | date:"F d, Y"}} | {{event.time | time:"h:i A"}}</p>
+                        <p class="card-title" style="color: aliceblue;">Organized by <strong> {{event.user.first_name}}
+                            </strong></p>
+
+                        {% if user.is_authenticated %}
+                        <a href="{{event.regLink}}" class="btn btn-primary me-3" target="_blank">Registration</a>
+                        {% else %}
+                        <a href="{% url 'signin' %}" class="btn btn-primary me-3">Registration</a>
+                        {% endif %}
+
+                        <a href="{% url 'event-detail' event.id %}" class="mt-2 btn btn-success me-3">More
+                                Details</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 18 (1).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
+            {% endfor %}
+
+            <!-- <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                <div class="card border border-dark" style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
+                    <img src="{% static './images/Rectangle 18 (1).png' %}"
+                        class="card-img-top pt-2 ps-2 pe-2" alt="...">
                     <div class="card-body text-center">
-                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
-                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur dolorem blanditiis nulla. Autem laboriosam voluptatibus repellat veniam nihil sequi voluptas.</p><br>
-                        <a href="#" class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                        <h5 class="card-title">Debate Competition</h5>
+                        <a href="#" class="btn btn-success me-3">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-5 d-flex justify-content-center">
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 18 (2).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
+
+            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                <div class="card border border-dark" style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
+                    <img src="{% static './images/Rectangle 18 (1).png' %}"
+                        class="card-img-top pt-2 ps-2 pe-2" alt="...">
                     <div class="card-body text-center">
-                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
-                        <p class="writep card-text text-secondary fs-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta aut illum quis libero. Rerum suscipit ipsum nisi asperiores illum autem?</p><br>
-                        <a href="#" class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                        <h5 class="card-title">Debate Competition</h5>
+                        <a href="#" class="btn btn-success me-3">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="background-color: #3D2462;">
-                    <img src="{% static './images/Rectangle 18 (3).png' %}" class="card-img-top pt-5 ps-5 pe-5" alt="...">
+
+            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                <div class="card border border-dark" style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
+                    <img src="{% static './images/Rectangle 18 (1).png' %}"
+                        class="card-img-top pt-2 ps-2 pe-2" alt="...">
                     <div class="card-body text-center">
-                        <h3 class="card-title text-light fw-bolder">Find Best Alumni Near me</h3>
-                        <p class="writep card-text text-secondary fs-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque ea quisquam dicta quibusdam a quos aut dolore labore corrupti dolorem.</p><br>
-                        <a href="#" class="btn btn-light btn-lg ps-5 pe-5 fs-3 fw-bolder btn-outline-success">Details</a><br><br><br>
+                        <h5 class="card-title">Debate Competition</h5>
+                        <a href="#" class="btn btn-success me-3">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
         </div>
     </div><br><br><br>
 </div>

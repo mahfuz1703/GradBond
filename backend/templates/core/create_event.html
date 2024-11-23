@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Signup | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid main">
+    <div class="container">
+        <div class="row login-banner">
+
+            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
+                <div class="write text-center">
+                    <h1 class="text-light pt-5">Create an event</h1>
+                </div>
+                <form method="POST" class="ms-5 mt-5 ps-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <label for="eventTitle" class="fs-5 fw-bolder text-light">Event Title</label><br>
+                    <input type="text" name="eventTitle" id="eventTitle" class="box" required><br><br>
+
+                    <label for="eventDes" class="fs-5 fw-bolder text-light">Event Description</label><br>
+                    <input type="text" name="eventDes" id="eventDes" class="box" required><br><br>
+
+                    <label for="eventDate" class="fs-5 fw-bolder text-light">Event Date</label><br>
+                    <input type="date" name="eventDate" id="eventDate" class="box" required><br><br>
+
+                    <label for="eventTime" class="fs-5 fw-bolder text-light">Event Time</label><br>
+                    <input type="time" name="eventTime" id="eventTime" class="box" required><br><br>
+
+                    <label for="eventRegLink" class="fs-5 fw-bolder text-light">Event Registration Link</label><br>
+                    <input type="text" name="eventRegLink" id="eventRegLink" class="box" required><br><br>
+
+                    <label for="eventLocation" class="fs-5 fw-bolder text-light">Event Location</label><br>
+                    <input type="text" name="eventLocation" id="eventLocation" class="box" required><br><br>
+
+                    <label for="eventImage" class="fs-5 fw-bolder text-light">Event Cover</label><br>
+                    <input type="file" name="eventImage" id="eventImage" required><br><br>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn batonn fs-3 fw-bolder">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><br><br>
+</div>
+
+{% endblock %}

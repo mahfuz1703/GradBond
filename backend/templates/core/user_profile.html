@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Profile | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+<link rel="stylesheet" href="{% static 'CSS/user_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="profile">
+    <div class="container">
+        <div class="main-body">
+
+            <div class="row gutters-sm">
+
+                <!-- profile -->
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="{{details.image.url}}" alt="Admin"
+                                    class="rounded-circle" width="200px" height="200">
+                                <div class="mt-3">
+                                    <h4>{{details.full_name}}</h4>
+                                    <p class="text-secondary mb-1">{{details.job_title}}</p>
+                                    <p class="text-muted font-size-sm">{{details.company}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-github mr-2 icon-inline">
+                                        <path
+                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                        </path>
+                                    </svg>Github</h6>
+                                <span class="text-secondary">bootdey</span>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+
+                <div class="col-lg-8">
+
+                    <!-- profile information -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.full_name}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">University</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.university}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Department</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.dept}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Student ID</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.student_id}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.email}}
+                                </div>
+                            </div>
+                            <hr>
+                            {% if isAlumni %}
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Graduation Year</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.graduation_year}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Company</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.company}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Job Title</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.job_title}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">LinkedIn</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <a href="{{details.linkedin}}" target="_blank">{{details.linkedin}}</a>
+                                </div>
+                            </div>
+                            <hr>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="btn btn-success" href="{% url 'update_profile' %}">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if isAlumni %}
+                    <!-- events -->
+                    <div class="card mb-3 p-5">
+                        <div class="event_head d-flex justify-content-around">
+                            {% if events %}
+                            <h3 class="text-center me-2">My Events</h3>
+                            {% else %}
+                            <h3 class="text-center me-2">You have no events</h3>
+                            {% endif %}
+                            
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="btn btn-info " target="__blank" href="{% url 'add-event' %}">Create
+                                        Event</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center">
+
+                            {% for event in events %}
+                            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                                <div class="card border border-dark" style="width: 22rem;">
+                                    {% if event.image %}
+                                    <img src="{{event.image.url}}" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}" height="300px">
+                                    {% else %}
+                                    <img src="/media/events/default.png" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
+                                    {% endif %}
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"> {{event.title}} </h5>
+                                        <p>{{event.date | date:"F d, Y"}}</p>
+                                        <a href="{% url 'edit_event' event.id %}" class="btn btn-success me-3">Edit</a>
+                                        <a href="{% url 'delete_event' event.id %}" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                    <!-- gellary -->
+                    <!-- <div class="card mb-3 p-5">
+                        <div class="event_head d-flex justify-content-around">
+                            <h3 class="text-center me-2">My Gellary</h3>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="btn btn-info " target="__blank" href="">Create Gellary</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center">
+
+                            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                                <div class="card border border-dark" style="width: 22rem; ">
+                                    <img src="{% static './images/Rectangle 18 (1).png' %}"
+                                        class="card-img-top pt-2 ps-2 pe-2" alt="...">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Debate Competition</h5>
+                                        <a href="#" class="btn btn-success me-3">Edit</a>
+                                        <a href="#" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> -->
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

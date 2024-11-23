@@ -17,7 +17,7 @@
                 <div class="over col-lg-4 col-md-6 col-12 ms-md-5">
                     <h3 class="fs-1 fw-bolder head">Find Alumni</h3>
                     <p class="fs-2">Of Your University</p>
-                    <a href="signup.html" class="btn btn-light btn-outline-warning fs-3 rounded-3 size">Signup</a>
+                    <a href="{% url 'signup' %}" class="btn btn-light btn-outline-warning fs-3 rounded-3 size">Signup</a>
                 </div>
             </div>
             <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
@@ -26,8 +26,8 @@
                 </div>
                 <form method="POST" class="ms-5 mt-5 ps-2">
                     {% csrf_token %}
-                    <label for="email" class="fs-3 fw-bolder text-light"> Emal Address</label><br>
-                    <input type="email" name="email" id="email" class="box"><br>
+                    <label for="email" class="fs-3 fw-bolder text-light"> Email Address</label><br>
+                    <input type="email" name="email" id="email" class="box"><br> <br>
                     <label for="pass" class="fs-3 fw-bolder text-light">Password</label><br>
                     <input type="password" name="pass" id="pass" class="box"><br>
                     <a href="#" class="text-warning fs-5">Forgot Password</a><br><br>
@@ -35,7 +35,7 @@
                         <button type="submit" class="btn batonn fs-3 fw-bolder">Login</button>
                     </div>
                 </form>
-                <div class="container">
+                <!-- <div class="container">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12 ms-5 ">
                             <div class="or-separator text-light fs-3">Or</div>
@@ -58,7 +58,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div><br><br>

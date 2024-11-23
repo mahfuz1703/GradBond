@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Signup | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid main">
+    <div class="container">
+        <div class="row login-banner">
+
+            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
+                <div class="write text-center">
+                    <h1 class="text-light pt-5">Update your profile</h1>
+                </div>
+                <form method="POST" class="ms-5 mt-5 ps-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if isAlumni %}
+                    <label for="full_name" class="fs-5 fw-bolder text-light">Name</label><br>
+                    <input type="text" name="full_name" id="full_name" class="box" required value="{{ details.full_name }}"> <br><br>
+
+                    <label for="university" class="fs-5 fw-bolder text-light">University</label><br>
+                    <input type="text" name="university" id="university" class="box" value="{{ details.university }}"><br><br>
+
+                    <label for="dept" class="fs-5 fw-bolder text-light">Department</label><br>
+                    <input type="text" name="dept" id="dept" class="box" required value="{{ details.dept }}"><br><br>
+
+                    <label for="student_id" class="fs-5 fw-bolder text-light">Student ID</label><br>
+                    <input type="text" name="student_id" id="student_id" class="box" required value="{{ details.student_id }}"><br><br>
+
+                    <label for="graduation_year" class="fs-5 fw-bolder text-light">Graduation Year</label><br>
+                    <input type="text" name="graduation_year" id="graduation_year" class="box" required value="{{ details.graduation_year }}"><br><br>
+
+                     <label for="company" class="fs-5 fw-bolder text-light">Company</label><br>
+                    <input type="text" name="company" id="company" class="box" required value="{{ details.company }}"><br><br>
+
+                    <label for="job_title" class="fs-5 fw-bolder text-light">Job Title</label><br>
+                    <input type="text" name="job_title" id="job_title" class="box" required value="{{ details.job_title }}"><br><br>
+
+                    <label for="linkedin" class="fs-5 fw-bolder text-light">LinkedIn</label><br>
+                    <input type="text" name="linkedin" id="linkedin" class="box" required  value="{{ details.linkedin }}"><br><br>
+
+                    <label for="image" class="fs-5 fw-bolder text-light">Profile Picture</label><br>
+                    <input type="file" name="image" id="image" class="box"><br><br>
+                    {% else %}
+                    <label for="full_name" class="fs-5 fw-bolder text-light">Name</label><br>
+                    <input type="text" name="full_name" id="full_name" class="box" required value="{{ details.full_name }}"> <br><br>
+
+                    <label for="university" class="fs-5 fw-bolder text-light">University</label><br>
+                    <input type="text" name="university" id="university" class="box" value="{{ details.university }}"><br><br>
+
+                    <label for="dept" class="fs-5 fw-bolder text-light">Department</label><br>
+                    <input type="text" name="dept" id="dept" class="box" required value="{{ details.dept }}"><br><br>
+
+                    <label for="student_id" class="fs-5 fw-bolder text-light">Student ID</label><br>
+                    <input type="text" name="student_id" id="student_id" class="box" required value="{{ details.student_id }}"><br><br>
+
+                    <label for="image" class="fs-5 fw-bolder text-light">Profile Picture</label><br>
+                    <input type="file" name="image" id="image" class="box"><br><br>
+                    {% endif %}
+
+                    <div class="text-center">
+                        <button type="submit" class="btn batonn fs-3 fw-bolder">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><br><br>
+</div>
+
+{% endblock %}
