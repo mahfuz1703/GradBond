@@ -13,12 +13,6 @@
         {
             "src": "/static/(.*)",
             "dest": "/static/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "GradBond/wsgi.py"
         }
-    ],
-    "outputDirectory": "staticfiles_build"
-    
+    ]
   }
