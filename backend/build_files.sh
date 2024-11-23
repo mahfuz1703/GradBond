@@ -1,19 +1,15 @@
 #!/bin/bash
 
-set -e  # Exit on error
+set -e  # Exit on any error
 
 echo "BUILD START"
 
-echo "Python Version:"
-python --version || echo "Python not found"
+# Upgrade pip and install requirements
+pip install --upgrade pip
+pip install -r requirements.txt
 
-echo "Pip Version:"
-pip --version || echo "Pip not found"
-
-echo "Installing dependencies..."
-pip install -r requirements.txt || echo "Dependency installation failed"
-
+# Collect static files
 echo "Collecting static files..."
-python manage.py collectstatic --noinput || echo "Static collection failed"
+python manage.py collectstatic --noinput
 
 echo "BUILD END"
