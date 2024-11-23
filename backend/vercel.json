@@ -17,7 +17,8 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "headers": { "Cache-Control": "s-maxage=31536000,immutable" },
+      "dest": "staticfiles_build/static/$1"
     },
     {
       "src": "/(.*)",
