@@ -13,10 +13,6 @@
     ],
     "routes": [
       {
-        "src": "/staticfiles/(.*)",
-        "dest": "/staticfiles/$1"
-      },
-      {
         "src": "/(.*)",
         "dest": "GradBond/wsgi.py"
       }
