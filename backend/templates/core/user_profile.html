@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{details.image.url}}" alt="Admin"
+                                <img src="{{details.image.url}}" alt="{{details.full_name}}"
                                     class="rounded-circle" width="200px" height="200">
                                 <div class="mt-3">
                                     <h4>{{details.full_name}}</h4>
@@ -156,7 +156,7 @@
                             
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info " target="__blank" href="{% url 'add-event' %}">Create
+                                    <a class="btn btn-info " href="{% url 'add-event' %}">Create
                                         Event</a>
                                 </div>
                             </div>
