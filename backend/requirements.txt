@@ -1,5 +1,7 @@
 asgiref==3.8.1
 Django==5.1
+gunicorn==23.0.0
+packaging==24.2
 pillow==11.0.0
 sqlparse==0.5.1
 whitenoise==6.8.2
