@@ -1,0 +1,8 @@
+# ----------For windows----------
+1. pip install virtualenv
+2. python -m venv myenv
+3. myenv\Scripts\activate
+4. Clone - git clone https://github.com/mahfuz1703/GradBond.git
+5. cd GradBond/backend
+6. pip install -r requirements.txt
+7. python manage.py runserver

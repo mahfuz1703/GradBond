@@ -8,12 +8,12 @@
 
 {% block content %}
 
-<div class="container-fluid search">
-    <div class="container justify-content-center">
+<div class="container-fluid search pb-5">
+    <div class="container justify-content-center pt-5">
         <div class="row text-center">
             <h1 class="mt-5 fs-1 fw-bolder text-light">Find Alumni Of Your University</h1>
         </div>
-        <div class="container searchh mt-5 justify-content-center">
+        <div class="container searchh mt-5 justify-content-center pb-5">
             <form class="d-flex" role="search" action="{% url 'search_alumni' %}" method="GET">
                 {% csrf_token %}
                 <input class="form-control text-dark fs-5 fw-bolder w-75 inputbg" type="text"
@@ -24,7 +24,7 @@
         </div><br><br>
 
         <!-- Popular search -->
-        <p class="text-light ps-5 fs-4 fw-bolder">Popular Search</p>
+        <!-- <p class="text-light ps-5 fs-4 fw-bolder">Popular Search</p>
         <div class="d-lg-flex flex-row justify-content-evenly">
             <div class="text-light p-lg-0 p-md-3 p-3">
                 <a href="#" class="btn btn-lg btn-outline-light rounded-pill btncolor ">Ui Ux Design <i
@@ -46,7 +46,7 @@
                 <a href="#" class="btn btn-lg btn-outline-light rounded-pill btncolor">BUET <i
                         class="fa-solid fa-magnifying-glass ms-3"></i></a>
             </div>
-        </div><br><br><br>
+        </div><br><br><br> -->
 
     </div>
 </div>
@@ -74,7 +74,7 @@
 <div class="container-fluid my-1">
     <div class="container">
         <div class="row text-center">
-            <h1 class="mt-5 fs-1 fw-bolder resent">Resent Event / Workshop</h1>
+            <h1 class="mt-5 fs-1 fw-bolder resent">Recent Events / Workshops</h1>
         </div>
         <div class="row mt-2 d-flex justify-content-center">
             <div class="row mt-2 d-flex justify-content-center">
@@ -118,7 +118,7 @@
 <div class="container-fluid carosolbg pt-5"><br><br>
     <div class="container">
         <div class="list-head text-center">
-            <h1 class="fs-1 fw-bolder">University that include to GradBond</h1>
+            <h1 class="fs-1 fw-bolder">University that are included in GradBond</h1>
         </div><br><br><br>
         <div class="university text-center">
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
