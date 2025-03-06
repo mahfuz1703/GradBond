@@ -30,6 +30,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 DEBUG = False
 
+DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
+
+DROPBOX_OAUTH2_TOKEN = os.getenv("DROPBOX_ACCESS_TOKEN")
+
 
 
 # Application definition
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 
     # custom apps
     'authentication',
@@ -134,16 +139,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-INSTALLED_APPS += ["storages"]
-
-DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
-
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
-
-DROPBOX_OAUTH2_TOKEN = env("DROPBOX_ACCESS_TOKEN")
