@@ -141,4 +141,9 @@ INSTALLED_APPS += ["storages"]
 
 DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
 
-DROPBOX_OAUTH2_TOKEN = os.getenv("DROPBOX_ACCESS_TOKEN")
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
+DROPBOX_OAUTH2_TOKEN = env("DROPBOX_ACCESS_TOKEN")
