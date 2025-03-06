@@ -33,6 +33,9 @@ DEBUG = False
 DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
 
 DROPBOX_OAUTH2_TOKEN = os.getenv("DROPBOX_ACCESS_TOKEN")
+DROPBOX_ROOT_PATH = '/media/'
+DROPBOX_TIMEOUT = 300
+DROPBOX_WRITE_MODE = 'add'
 
 
 
