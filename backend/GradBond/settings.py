@@ -83,14 +83,7 @@ WSGI_APPLICATION = 'GradBond.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': load_dotenv("DB_NAME"),
-        'USER': load_dotenv("DB_USER"),
-        'PASSWORD': load_dotenv("DB_PASSWORD"),
-        'HOST': load_dotenv("DB_HOST"),
-        'PORT': load_dotenv("DB_PORT"),
-    }
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
 
 
