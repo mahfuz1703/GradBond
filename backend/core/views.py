@@ -20,7 +20,7 @@ def search_alumni(request):
         dept = request.GET.get('dept')
         company = request.GET.get('company')
         job_title = request.GET.get('job_title')
-        randomKey = request.GET.get('randomKey')
+        randomKey = request.GET.get('randomKey') # bubt
         
         alumni = alumniProfile.objects.all()
         

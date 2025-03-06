@@ -1,0 +1,29 @@
+.footer{
+    background-color: #3D2462;
+}
+.footp{
+    color: #e2dede;
+    padding-top: 50px;
+}
+.main{
+    background-color: #FFF2EB;
+    margin-top: -8px;
+}
+.baton{
+    width: 300px;
+    height: 60px;
+    background-color: #3D2462;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 900;
+}
+.baton:hover{
+    background-color: rgb(202, 202, 7);
+    color: black;
+    font-weight: 900;
+}
+.box{
+    height: 60px;
+    background-color: #E9DBD9;
+}

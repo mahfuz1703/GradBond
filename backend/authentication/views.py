@@ -33,7 +33,7 @@ def signup(request):
             return redirect('signup')
         
         if pass1 != pass2:
-            messages.warning(request, 'Passwords do not ma{{event.regLink}}tch.')
+            messages.warning(request, 'Passwords do not match.')
             return redirect('signup')
         elif len(pass1) < 8:
             messages.warning(request, 'Password must be at least 8 characters long.')

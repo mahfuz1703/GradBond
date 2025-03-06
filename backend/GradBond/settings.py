@@ -21,12 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+vnn%44!^795qvu8jub56-z$q-n8!(y=%tg#^^c7tt_ti!n*oi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,10 +84,15 @@ WSGI_APPLICATION = 'GradBond.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': load_dotenv("DB_NAME"),
+        'USER': load_dotenv("DB_USER"),
+        'PASSWORD': load_dotenv("DB_PASSWORD"),
+        'HOST': load_dotenv("DB_HOST"),
+        'PORT': load_dotenv("DB_PORT"),
     }
 }
+
 
 
 # Password validation
@@ -121,9 +129,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
