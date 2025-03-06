@@ -134,3 +134,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+INSTALLED_APPS += ["storages"]
+
+DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
+
+DROPBOX_OAUTH2_TOKEN = os.getenv("DROPBOX_ACCESS_TOKEN")
