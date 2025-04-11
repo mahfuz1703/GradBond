@@ -7,6 +7,7 @@ from .models import events
 from django.shortcuts import redirect
 from django.contrib import messages
 import os
+from cloudinary.uploader import destroy, upload
 
 # Create your views here.
 def home(request):
@@ -90,15 +91,23 @@ def edit_event(request, id):
         regLink = request.POST.get('eventRegLink')
         location = request.POST.get('eventLocation')
         
-        if 'eventImage' in request.FILES:
-            # Delete the old image
+        if 'image' in request.FILES:
             if event.image:
-                old_image_path = os.path.join(settings.MEDIA_ROOT, event.image.name)
-                if os.path.exists(old_image_path):
-                    os.remove(old_image_path)
+                # Get public_id from the image field
+                public_id = event.image.public_id
+                if public_id != 'default_cover':
+                    destroy(public_id)  # Deletes the old image from Cloudinary
+            # Assign new image
+            result = upload(
+                request.FILES['image'],
+                folder='events',
+                transformation=[
+                    {'quality': 'auto'},
+                    {'fetch_format': 'auto'}
+                ]
+            )
+            event.image = result['public_id']  # or result['secure_url']
 
-            # Save the new image
-            event.image = request.FILES['eventImage']
         
         event.title = title
         event.description = description
@@ -150,12 +159,14 @@ def update_profile(request):
     user = request.user
     email = user.email
     isAlumni = False
+
     if alumniProfile.objects.filter(email=email).exists():
         isAlumni = True
         details = alumniProfile.objects.get(user=user)
+
         if request.method == 'POST':
             details.full_name = request.POST.get('full_name')
-            details.university = request.POST.get('university') 
+            details.university = request.POST.get('university')
             details.dept = request.POST.get('dept')
             details.student_id = request.POST.get('student_id')
             details.email = details.email
@@ -164,33 +175,64 @@ def update_profile(request):
             details.job_title = request.POST.get('job_title')
             details.linkedin = request.POST.get('linkedin')
             user.first_name = details.full_name
-            
+
             if 'image' in request.FILES:
-                old_image_path = os.path.join(settings.MEDIA_ROOT, details.image.name)
-                if os.path.exists(old_image_path):
-                    os.remove(old_image_path)
-                details.image = request.FILES.get('image')
+                # Delete old image from Cloudinary if not default
+                if details.image and hasattr(details.image, 'public_id'):
+                    public_id = details.image.public_id
+                    if public_id != 'default_alumni':
+                        destroy(public_id)
+
+                # Upload compressed image to Cloudinary
+                result = upload(
+                    request.FILES['image'],
+                    folder='alumni',
+                    transformation=[
+                        {'quality': 'auto'},
+                        {'fetch_format': 'auto'}
+                    ]
+                )
+                details.image = result['public_id']  # or result['secure_url']
+
             details.save()
             user.save()
             messages.success(request, 'Profile updated successfully.')
             return redirect('profile')
+
         return render(request, 'core/update_profile.html', {'details': details, 'isAlumni': isAlumni})
+
     else:
         details = studentProfile.objects.get(user=user)
+
         if request.method == 'POST':
             details.full_name = request.POST.get('full_name')
-            details.university = request.POST.get('university') 
+            details.university = request.POST.get('university')
             details.dept = request.POST.get('dept')
             details.student_id = request.POST.get('student_id')
             details.email = details.email
+
             if 'image' in request.FILES:
-                old_image_path = os.path.join(settings.MEDIA_ROOT, details.image.name)
-                if os.path.exists(old_image_path):
-                    os.remove(old_image_path)
-                details.image = request.FILES.get('image')
+                # Delete old image from Cloudinary if not default
+                if details.image and hasattr(details.image, 'public_id'):
+                    public_id = details.image.public_id
+                    if public_id != 'default_ayh3h7':
+                        destroy(public_id)
+
+                # Upload compressed image to Cloudinary
+                result = upload(
+                    request.FILES['image'],
+                    folder='students',
+                    transformation=[
+                        {'quality': 'auto'},
+                        {'fetch_format': 'auto'}
+                    ]
+                )
+                details.image = result['public_id']
+
             details.save()
             messages.success(request, 'Profile updated successfully.')
             return redirect('profile')
+
         return render(request, 'core/update_profile.html', {'details': details, 'isAlumni': isAlumni})
-    
+
     return render(request, 'core/update_profile.html')

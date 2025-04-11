@@ -1,31 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class alumniProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=100)
-    university = models.CharField(max_length=100)
-    dept = models.CharField(max_length=100)
-    student_id = models.CharField(max_length=100)
-    email = models.EmailField()
-    graduation_year = models.IntegerField()
-    company = models.CharField(max_length=100)
-    job_title = models.CharField(max_length=100)
-    linkedin = models.URLField()
-    image = models.ImageField(upload_to='alumni/', default='alumni/default.png', blank=True, null=True)
+    full_name = models.CharField(max_length=100, blank=True, null=True)
+    university = models.CharField(max_length=100, blank=True, null=True)
+    dept = models.CharField(max_length=100, blank=True, null=True)
+    student_id = models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    graduation_year = models.IntegerField(blank=True, null=True)
+    company = models.CharField(max_length=100, blank=True, null=True)
+    job_title = models.CharField(max_length=100, blank=True, null=True)
+    linkedin = models.URLField(blank=True, null=True)
+    image = CloudinaryField('image', folder='alumni', default='default_alumni', blank=True, null=True)
 
     def __str__(self):
         return self.user.first_name
 
 class studentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=100)
-    university = models.CharField(max_length=100)
-    dept = models.CharField(max_length=100)
-    student_id = models.CharField(max_length=100)
-    email = models.EmailField()
-    image = models.ImageField(upload_to='student/', default='student/default.png', blank=True, null=True)
+    full_name = models.CharField(max_length=100, blank=True, null=True)
+    university = models.CharField(max_length=100, blank=True, null=True)
+    dept = models.CharField(max_length=100, blank=True, null=True)
+    student_id = models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    image = CloudinaryField('image', folder='students', default='default_ayh3h7', blank=True, null=True)
 
     def __str__(self):
         return self.user.first_name

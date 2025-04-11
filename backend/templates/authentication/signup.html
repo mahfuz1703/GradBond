@@ -27,7 +27,7 @@
                         <option value="alumni">Alumni</option>
                     </select><br>
 
-                    <label for="fullname" class="fs-5 fw-bolder text-light">Full Name</label><br>
+                    <!-- <label for="fullname" class="fs-5 fw-bolder text-light">Full Name</label><br>
                     <input type="text" name="fullname" id="fullname" class="box" required placeholder="Ex. John Doe"><br><br>
 
                     <label for="university" class="fs-5 fw-bolder text-light">University</label><br>
@@ -40,13 +40,14 @@
                         <span style="font-size: small;">(For user security it will only be used by authority)</span>
                     </label><br>
                     <input type="text" name="student_id" id="student_id" class="box" required placeholder="Ex. abcd-1234"><br><br>
+                    -->
 
                     <label for="email" class="fs-5 fw-bolder text-light">Email</label><br>
                     <input type="email" name="email" id="email" class="box" required placeholder="Ex. example@gmail.com"><br><br>
 
 
                     <!-- Extra field for alumni -->
-                    <div class="extra-fields" style="display: none;" id="alumniFields">
+                    <!-- <div class="extra-fields" style="display: none;" id="alumniFields">
                         <label for="graduation_year" class="fs-5 fw-bolder text-light">Graduation Year</label>
                         <input type="text" id="graduation_year" name="graduation_year" class="box" placeholder="Ex. 2024"><br><br>
 
@@ -58,7 +59,7 @@
 
                         <label for="linkedin" class="fs-5 fw-bolder text-light">LinkedIn Url</label>
                         <input type="text" id="linkedin" name="linkedin" class="box" placeholder="Ex. https://www.linkedin.com/in/John-Doe/"><br><br>
-                    </div>
+                    </div> -->
 
 
                     <label for="pass1" class="fs-5 fw-bolder text-light">Password</label><br>
@@ -77,7 +78,7 @@
     </div><br><br>
 </div>
 
-<script>
+<!-- <script>
     function toggleFields() {
         var userType = document.getElementById('userType').value;
         var alumniFields = document.getElementById('alumniFields');
@@ -87,6 +88,6 @@
             alumniFields.style.display = 'none';
         }
     }
-</script>
+</script> -->
 
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class events(models.Model):
@@ -10,7 +11,7 @@ class events(models.Model):
     time = models.TimeField(blank=True, null=True)
     regLink = models.URLField(blank=True, null=True)
     location = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='events/', default='events/default.png')
+    image = CloudinaryField('image', folder='events', default='default_cover', blank=True, null=True)
 
     def __str__(self):
         return self.title

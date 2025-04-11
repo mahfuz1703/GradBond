@@ -3,13 +3,18 @@ import dj_database_url
 from dotenv import load_dotenv
 from pathlib import Path
 
+# cloudinary imports
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
-DEBUG = False
+DEBUG = os.getenv("DEBUG")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,7 +23,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',  # Django Storages for Dropbox
+
+    # Third-party apps
+    'cloudinary',
+
+    # custom apps
     'authentication',
     'core',
 ]
@@ -79,12 +88,12 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# ✅ Use Dropbox for Media Storage (Uploaded Files)
-DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
-DROPBOX_OAUTH2_TOKEN = os.getenv("DROPBOX_ACCESS_TOKEN")  # Ensure this exists in .env
-DROPBOX_ROOT_PATH = "/media/"
-DROPBOX_TIMEOUT = 300
-DROPBOX_WRITE_MODE = "add"
-
 # ✅ AutoField
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ✅ Cloudinary Configuration
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
+)

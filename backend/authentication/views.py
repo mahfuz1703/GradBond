@@ -15,16 +15,8 @@ def signup(request):
     
     if request.method == 'POST':
         userType = request.POST['userType']
-        fullname = request.POST['fullname']
-        university = request.POST['university']
-        dept = request.POST['dept']
-        student_id = request.POST['student_id']
         email = request.POST['email']
-        if userType == 'alumni':
-            graduation_year = request.POST['graduation_year']
-            company = request.POST['company']
-            job_title = request.POST['job_title']
-            linkedin = request.POST['linkedin']
+
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
 
@@ -43,14 +35,13 @@ def signup(request):
             return redirect('signup')
         else:
             user = User.objects.create_user(username=email, email=email, password=pass1)
-            user.first_name = fullname
             user.save()
 
             if userType == 'alumni':
-                alumni = alumniProfile(user=user, full_name=fullname, university=university, dept=dept, student_id=student_id, email=email, graduation_year=graduation_year, company=company, job_title=job_title, linkedin=linkedin)
+                alumni = alumniProfile(user=user, email=email)
                 alumni.save()
             elif userType == 'student':
-                student = studentProfile(user=user, full_name=fullname, university=university, dept=dept, student_id=student_id, email=email)
+                student = studentProfile(user=user, email=email)
                 student.save()
             
             messages.success(request, 'Account created successfully. Please login.')
