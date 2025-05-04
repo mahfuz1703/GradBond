@@ -184,34 +184,42 @@
 
                         </div>
                     </div>
+                    {% endif %}
 
-                    <!-- gellary -->
-                    <!-- <div class="card mb-3 p-5">
+                    {% if isAlumni %}
+                    <!-- Job Posts -->
+                    <div class="card mb-3 p-5">
                         <div class="event_head d-flex justify-content-around">
-                            <h3 class="text-center me-2">My Gellary</h3>
+                            {% if jobs %}
+                            <h3 class="text-center me-2">My Jobs</h3>
+                            {% else %}
+                            <h3 class="text-center me-2">You have no jobs</h3>
+                            {% endif %}
+                            
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info " target="__blank" href="">Create Gellary</a>
+                                    <a class="btn btn-info " href="{% url 'create_job' %}">Post Job</a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row d-flex justify-content-center">
 
+                            {% for job in jobs %}
                             <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
-                                <div class="card border border-dark" style="width: 22rem; ">
-                                    <img src="{% static './images/Rectangle 18 (1).png' %}"
-                                        class="card-img-top pt-2 ps-2 pe-2" alt="...">
+                                <div class="card border border-dark" style="width: 22rem;">
                                     <div class="card-body text-center">
-                                        <h5 class="card-title">Debate Competition</h5>
-                                        <a href="#" class="btn btn-success me-3">Edit</a>
-                                        <a href="#" class="btn btn-danger">Delete</a>
+                                        <h5 class="card-title"> {{job.title}} </h5>
+                                        <p>{{job.deadline | date:"F d, Y"}}</p>
+                                        <a href="{% url 'edit_job' job.id %}" class="btn btn-success me-3">Edit</a>
+                                        <a href="{% url 'delete_job' job.id %}" class="btn btn-danger">Delete</a>
                                     </div>
                                 </div>
                             </div>
+                            {% endfor %}
 
                         </div>
-                    </div> -->
+                    </div>
                     {% endif %}
                 </div>
             </div>

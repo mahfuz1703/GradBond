@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Job Details | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/event.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid my" style="min-height: 650px;">
+    <div class="container d-flex justify-content-center">
+        <div class="card mt-4 mb-4" style="width: 50rem;">
+            <div class="card-body" style="margin-left: 30px;">
+                
+                <div class="d-flex justify-content-between">
+                    <h2 class="card-title">{{job.title}}</h2>
+                    <h5 class="card-title">
+                        {% if user.is_authenticated %}
+                        <a href="{{job.job_link}}" target="_blank" class="btn btn-success">Apply</a>
+                        {% else %}
+                        <a href="{% url 'signin' %}" class="btn btn-success">Apply</a>
+                        {% endif %}
+                    </h5>
+                </div>
+
+                <h5 class="card-text">{{job.company}}</h5> <br>
+                <h5 class="card-text" style="justify-content: space-between;">{{job.description}}</h5> <br>
+                <h5 class="card-title"> <strong>Deadline: </strong> {{job.deadline | date:"F d, Y"}}</h5>
+                <h5 class="card-title"> <strong>Job type: </strong> {{job.job_type}}</h5>
+                <h5 class="card-title"> <strong>Experience: </strong> {{job.experience}}</h5>
+                <h5 class="card-title"> <strong>Salary: </strong> {{job.salary}} BDT</h5>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

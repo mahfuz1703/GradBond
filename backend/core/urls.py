@@ -17,4 +17,10 @@ urlpatterns = [
     path('delete-event/<int:id>/', views.delete_event, name='delete_event'),
     path('update-profile/', views.update_profile, name='update_profile'),
 
+    path('jobs/', views.view_jobs, name='jobs'),
+    path('post-job/', views.create_job, name='create_job'),
+    path('job-detail/<int:id>/', views.job_detail, name='job_detail'),
+    path('edit-job/<int:id>/', views.edit_job, name='edit_job'),
+    path('delete-job/<int:id>/', views.delete_job, name='delete_job'),
+
 ]

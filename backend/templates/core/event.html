@@ -9,13 +9,13 @@
 
 {% block content %}
 
-<div class="container-fluid my">
+<div class="container-fluid my" style="min-height: 640px;">
     <div class="container">
         <div class="row text-center">
             {% if events %}
-            <h1 class="mt-5 fs-1 fw-bolder resent">Recent Events</h1>
+            <h1 class="mt-5 fs-2 fw-bolder resent">Recent Events</h1>
             {% else %}
-            <h1 class="mt-5 fs-1 fw-bolder resent">Recent events not found</h1>
+            <h1 class="mt-5 fs-2 fw-bolder resent">Recent events not found</h1>
             {% endif %}
         </div>
         <div class="row mt-5 d-flex justify-content-center">
@@ -47,43 +47,6 @@
                 </div>
             </div>
             {% endfor %}
-
-            <!-- <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
-                <div class="card border border-dark" style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
-                    <img src="{% static './images/Rectangle 18 (1).png' %}"
-                        class="card-img-top pt-2 ps-2 pe-2" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Debate Competition</h5>
-                        <a href="#" class="btn btn-success me-3">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
-                <div class="card border border-dark" style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
-                    <img src="{% static './images/Rectangle 18 (1).png' %}"
-                        class="card-img-top pt-2 ps-2 pe-2" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Debate Competition</h5>
-                        <a href="#" class="btn btn-success me-3">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
-                <div class="card border border-dark" style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
-                    <img src="{% static './images/Rectangle 18 (1).png' %}"
-                        class="card-img-top pt-2 ps-2 pe-2" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Debate Competition</h5>
-                        <a href="#" class="btn btn-success me-3">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
-            </div> -->
-
         </div>
     </div><br><br><br>
 </div>

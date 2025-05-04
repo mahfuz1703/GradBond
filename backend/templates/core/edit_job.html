@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Update Job | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid main">
+    <div class="container">
+        <div class="row login-banner">
+
+            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
+                <div class="write text-center">
+                    <h1 class="text-light pt-5">Update your job</h1>
+                </div>
+                <form method="POST" class="ms-5 mt-5 ps-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <label for="jobTitle" class="fs-5 fw-bolder text-light">Job Title</label><br>
+                    <input type="text" name="jobTitle" id="jobTitle" class="box" required value="{{job.title}}"><br><br>
+
+                    <label for="jobDes" class="fs-5 fw-bolder text-light">Job Short Description</label><br>
+                    <input type="text" name="jobDes" id="jobDes" class="box" value="{{job.description}}"><br><br>
+
+                    <label for="companyName" class="fs-5 fw-bolder text-light">Company Name</label><br>
+                    <input type="text" name="companyName" id="companyName" class="box" required  value="{{job.company}}"><br><br>
+
+                    <label for="deadline" class="fs-5 fw-bolder text-light">Application Deadline</label><br>
+                    <input type="datetime-local" name="deadline" id="deadline" class="box" value="{{ job.deadline|date:'Y-m-d\\TH:i' }}"><br><br>
+                    
+
+                    <label for="jobLink" class="fs-5 fw-bolder text-light">Job Apply Link (source link)</label><br>
+                    <input type="text" name="jobLink" id="jobLink" class="box" required value="{{job.job_link}}"><br><br>
+
+                    <label for="jobType" class="fs-5 fw-bolder text-light">Job Type</label><br>
+                    <select name="jobType" id="jobType" class="box" style="padding-left: 10px;" value="{{job.job_type}}">
+                        <option value="" disabled selected>Select job type</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                        <option value="Contract">Contract</option>
+                    <select><br><br>
+
+
+                    <label for="experience" class="fs-5 fw-bolder text-light">Experience Needed</label><br>
+                    <input type="text" name="experience" id="experience" class="box" required value="{{job.experience}}"><br><br>
+
+                    <label for="salary" class="fs-5 fw-bolder text-light">Salary</label><br>
+                    <input type="number" name="salary" id="salary" class="box" required value="{{job.salary}}"><br><br>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn batonn fs-3 fw-bolder">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><br><br>
+</div>
+
+{% endblock %}

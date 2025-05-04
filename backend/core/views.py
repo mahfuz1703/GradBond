@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from GradBond import settings
 from authentication.models import alumniProfile, studentProfile
-from .models import events
+from .models import events, Jobs
 from django.shortcuts import redirect
 from django.contrib import messages
+from datetime import datetime
 import os
 from cloudinary.uploader import destroy, upload
 
@@ -61,7 +62,8 @@ def gallery(request):
     return render(request, 'core/gallery.html')
 
 def view_events(request):
-    all_events = events.objects.all()
+    current_date = datetime.now()
+    all_events = events.objects.filter(date__gte=current_date)
     return render(request, 'core/event.html', {'events': all_events})
 
 def add_event(request):
@@ -90,6 +92,12 @@ def edit_event(request, id):
         time = request.POST.get('eventTime')
         regLink = request.POST.get('eventRegLink')
         location = request.POST.get('eventLocation')
+        
+        if date:
+            date = datetime.strptime(date, "%Y-%m-%dT%H:%M")
+        
+        if time:
+            time = datetime.strptime(time, "%H:%M").time()
         
         if 'image' in request.FILES:
             if event.image:
@@ -140,6 +148,7 @@ def profile(request):
     email = user.email
 
     my_event = events.objects.filter(user=user)
+    my_jobs = Jobs.objects.filter(user=user)
 
     isAlumni = False
     if user.is_superuser:
@@ -149,10 +158,10 @@ def profile(request):
     if alumniProfile.objects.filter(email=email).exists():
         details = alumniProfile.objects.get(user=user)
         isAlumni = True
-        return render(request, 'core/user_profile.html', {'details': details, 'isAlumni': isAlumni, 'events': my_event})
+        return render(request, 'core/user_profile.html', {'details': details, 'isAlumni': isAlumni, 'events': my_event, 'jobs': my_jobs})
     else:
         details = studentProfile.objects.get(user=user)
-        return render(request, 'core/user_profile.html', {'details': details, 'events': my_event})
+        return render(request, 'core/user_profile.html', {'details': details})
     
 
 def update_profile(request):
@@ -236,3 +245,91 @@ def update_profile(request):
         return render(request, 'core/update_profile.html', {'details': details, 'isAlumni': isAlumni})
 
     return render(request, 'core/update_profile.html')
+
+
+def view_jobs(request):
+    # get all jobs that deadline is greater than current date
+    current_date = datetime.now()
+    all_jobs = Jobs.objects.filter(deadline__gte=current_date)
+
+    if request.method == 'GET':
+        titleComapny = request.GET.get('titleCompany')
+        jobType = request.GET.get('jobType')
+
+        if titleComapny:
+            all_jobs = all_jobs.filter(title__icontains=titleComapny)
+        
+        if jobType:
+            all_jobs = all_jobs.filter(job_type__icontains=jobType)
+    return render(request, 'core/jobs.html', {'jobs': all_jobs})
+
+def create_job(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    if request.method == 'POST':
+        title = request.POST.get('jobTitle')
+        company = request.POST.get('companyName')
+        job_link = request.POST.get('jobLink')
+        job_type = request.POST.get('jobType')
+        experience = request.POST.get('experience')
+        salary = request.POST.get('salary')
+        description = request.POST.get('jobDes')
+        deadline = request.POST.get('deadline')
+
+        job = Jobs(user=request.user, title=title, company=company, job_link=job_link, job_type=job_type, experience=experience, salary=salary, description=description, deadline=deadline)
+        job.save()
+        messages.success(request, 'Post your job successfully.')
+        
+        return redirect('profile')
+    return render(request, 'core/post_job.html')
+
+
+def edit_job(request, id):
+    job = Jobs.objects.get(id=id)
+    if request.method == 'POST':
+        title = request.POST.get('jobTitle')
+        company = request.POST.get('companyName')
+        job_link = request.POST.get('jobLink')
+        job_type = request.POST.get('jobType')
+        experience = request.POST.get('experience')
+        salary = request.POST.get('salary')
+        description = request.POST.get('jobDes')
+        deadline = request.POST.get('deadline')
+
+        if deadline:
+            deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M")
+
+        if title:
+            job.title = title
+
+        if company:
+            job.company = company
+        if job_link:
+            job.job_link = job_link
+        
+        if job_type:
+            job.job_type = job_type
+
+        if experience:
+            job.experience = experience
+        if salary:
+            job.salary = salary
+        if description:
+            job.description = description
+        job.save()
+        
+        messages.success(request, 'Job updated successfully.')
+        
+        return redirect('profile')
+    return render(request, 'core/edit_job.html', {'job': job})
+
+def delete_job(request, id):
+    job = Jobs.objects.get(id=id)
+    job.delete()
+    messages.success(request, 'Job deleted successfully.')
+    return redirect('profile')
+
+def job_detail(request, id):
+    job = Jobs.objects.get(id=id)
+    return render(request, 'core/job_details.html', {'job': job})

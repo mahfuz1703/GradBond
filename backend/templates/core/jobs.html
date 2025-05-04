@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Jobs | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/event.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid my" style="min-height: 650px;">
+    <div class="container">
+
+
+        <div class="row">
+            <form action="{% url 'jobs' %}" method="GET">
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <input onchange="this.form.submit()" type="text" name="titleCompany" class="form-control"
+                        placeholder="Search by title or company" value="{{ request.GET.search }}"
+                        style="padding: 10px; border-radius: 5px; width: 300px;">
+                    <select onchange="this.form.submit()" name="jobType" id="jobType" class="box"
+                        style="padding: 10px; border-radius: 5px;">
+                        <option value="" disabled selected>Select job type</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                        <option value="Contract">Contract</option>
+                    <select>
+
+                    <!-- reset buttont -->
+                    <a href="{% url 'jobs' %}" class="btn btn-primary" style="padding-top: 10px;">Reset</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            {% if jobs %}
+            <h1 class="mt-3 fs-5">Found {{jobs.count}} jobs </h1>
+            {% else %}
+            <h1 class="mt-3 fs-5">Jobs not found</h1>
+            {% endif %}
+        </div>
+
+        <div class="row d-flex justify-content-center mt-1">
+
+            {% for job in jobs %}
+            <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-center">
+                <div class="card border border-dark"
+                    style="min-width: 400px; background-color: #09050f; border-radius: 15px;">
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color: aliceblue;"> {{job.title}} </h5>
+                        <p style="color: aliceblue;">{{job.company}}</p>
+
+                        <div style="text-align: left;">
+                            <p style="color: aliceblue;"> <strong>Deadline:</strong> {{job.deadline | date:"F d, Y"}}
+                            </p>
+                            <p style="color: aliceblue;"> <strong>Job Type:</strong> {{job.job_type}}</p>
+                            <p style="color: aliceblue;"> <strong>Salary:</strong> {{job.salary}} BDT</p>
+                            <p class="card-title" style="color: aliceblue;">Post by <strong> {{job.user.first_name}}
+                                </strong></p>
+                        </div>
+
+                        {% if user.is_authenticated %}
+                        <a href="{{job.job_link}}" class="btn btn-primary me-3" target="_blank">Apply</a>
+                        {% else %}
+                        <a href="{% url 'signin' %}" class="btn btn-primary me-3">Apply</a>
+                        {% endif %}
+
+                        <a href="{% url 'job_detail' job.id %}" class="mt-2 btn btn-success me-3">
+                            Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div><br><br><br>
+</div>
+
+{% endblock %}

@@ -52,6 +52,10 @@
                         <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'events' %}">Events</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'jobs' %}">Jobs</a>
+                    </li>
+
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <div class="dropdown">
@@ -109,98 +113,17 @@
 
 
     <!-- Start footer -->
-    <div class="container-fluid footer">
-        <div class="container">
-            <div class="row d-flex justify-content-around ms-5 gx-5 pt-5">
-                <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
-                    <div class="information">
-                        <h6 class="footer-heading text-uppercase text-white fw-bold">Navigation</h6>
-                        <ul class="list-unstyled footer-link mt-4">
-                            <li class="mb-1"><a href="{% url 'home' %}"
-                                    class="text-white text-decoration-none fw-semibold">Home</a>
-                            </li>
-                            <li class="mb-1"><a href="{% url 'find-alumni' %}"
-                                    class="text-white text-decoration-none fw-semibold">Find
-                                    Alumni</a></li>
-                            <!-- <li class="mb-1"><a href="{% url 'gallery' %}"
-                                    class="text-white text-decoration-none fw-semibold">Gallary</a></li> -->
-                            <li class=""><a href="{% url 'events' %}"
-                                    class="text-white text-decoration-none fw-semibold">Event</a></li>
-                            <li class=""><a href="{% url 'signin' %}"
-                                    class="text-white text-decoration-none fw-semibold">Log in</a></li>
-                            <li class=""><a href="{% url 'signup' %}"
-                                    class="text-white text-decoration-none fw-semibold">Sign up</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
-                    <div class="information">
-                        <h6 class="footer-heading text-uppercase text-white fw-bold">What We Do</h6>
-                        <ul class="list-unstyled footer-link mt-4">
-                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Connect alumni and students</a></li>
-                            <li class="mb-1"><a href="#"
-                                    class="text-white text-decoration-none fw-semibold">Find alumni by university and job</a></li>
-                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Explore alumni's educational journey</a></li>
-                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Discover current jobs of alumni</a></li>
-                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Attend alumni-hosted workshops and events</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
-                    <div class="information">
-                        <h6 class="footer-heading text-uppercase text-white fw-bold">LEGAL</h6>
-                        <ul class="list-unstyled footer-link mt-4">
-                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">General
-                                    Info</a></li>
-                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Privacy
-                                    Policy</a></li>
-                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Terms of
-                                    Service</a></li>
-                        </ul>
-                    </div>
-                </div> -->
-                <div class="col-sm-8 col-md-6 mt-4 col-lg-3 text-lg-start text-sm-start text-md-start">
-                    <div class="information">
-                        <h6 class="footer-heading text-uppercase text-white fw-bold">TALK TO US</h6>
-                        <ul class="list-unstyled footer-link mt-4">
-                            <li class="mb-1"><a href="#"
-                                    class="text-white text-decoration-none fw-semibold">gradbond@gmail.com</a></li>
-                            <li class="mb-1"><a href="#"
-                                    class="text-white text-decoration-none fw-semibold">+8801234567812</a></li>
-                            <li class="mb-1"><a href="#" class="text-white text-decoration-none fw-semibold">Contact
-                                    Us</a></li>
-                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Facebook</a>
-                            </li>
-                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Linkedin</a>
-                            </li>
-                            <li class=""><a href="#" class="text-white text-decoration-none fw-semibold">Twitter</a>
-                            </li>
-                        </ul>
-                    </div>
+
+    <div class="row container-fluid footer">
+        <div class=" d-flex justify-content-between">
+            <div class="col-sm-8 col-md-8 col-lg-3">
+                <div class="information  pt-4">
+                    <a href="{% url 'home' %}"><img src="{% static './images/Group.png' %}" alt="" class="p-3"></a>
                 </div>
             </div>
-            <div class="row d-flex justify-content-center">
-                <div class="col-sm-8 col-md-8 col-lg-3 text-center text-sm-start">
-                    <div class="information text-center pt-4">
-                        <a href="{% url 'home' %}"><img src="{% static './images/Group.png' %}" alt="" class="p-3"></a>
-                    </div>
-                </div>
-                <div class="col-sm-8 col-md-8 col-lg-5 text-center text-sm-start">
-                    <div class="text-center text-light justify-content-center">
-                        <p class="footp">© 2024 GradBond . All Rights Reserved. </p>
-                    </div>
-                </div>
-                <div class="col-sm-8 col-md-8  col-lg-3 text-center text-sm-start">
-                    <div class="social pt-4">
-                        <ul class="list-inline my-4 text-center">
-                            <li class="list-inline-item"><a href="#"><i
-                                        class="fa-brands fa-square-facebook fs-3 ms-4 text-light"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i
-                                        class="fa-brands fa-linkedin fs-3 ms-4 text-light"></i></a></li>
-                            <li class="list-inline-item"><a href="#"><i
-                                        class="fa-brands fa-square-twitter fs-3 ms-4 text-light"></i></a></li>
-                        </ul>
-                    </div>
+            <div class="col-sm-8 col-md-8 col-lg-5">
+                <div class="text-light">
+                    <p class="footp">© 2024 GradBond . All Rights Reserved.</p>
                 </div>
             </div>
         </div>
