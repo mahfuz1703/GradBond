@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'authentication',
     'core',
     'apis',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -42,6 +43,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+from corsheaders.defaults import default_headers
+from pathlib import Path
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:54669",
+    "http://localhost:54669",
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "content-type",
+    "authorization",
+    "x-csrftoken",
 ]
 
 ROOT_URLCONF = 'GradBond.urls'
