@@ -1,11 +1,13 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from core.models import *
+from authentication.models import alumniProfile, studentProfile
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 import json
 import jwt
+from .jwt_required import jwt_required
 
 
 # Create your views here.
@@ -58,6 +60,74 @@ def UserLogin(request):
         'status': 401,
         'message': 'Invalid credentials'
     }, status=401)
+
+@csrf_exempt
+def UserSignup(request):
+    # Check if the user is already authenticated
+    if request.user.is_authenticated:
+        return JsonResponse({
+            'status': 400,
+            'message': 'You are already logged in.',
+            'redirect': '/api/profile/'
+        }, status=400)
+
+    if request.method != 'POST':
+        return JsonResponse({
+            'status': 400,
+            'message': 'Invalid request method',
+        }, status=400)
+
+    try:
+        body = json.loads(request.body)
+        userType = body.get('userType')
+        email = body.get('email')
+
+        pass1 = body.get('pass1')
+        pass2 = body.get('pass2')
+    except Exception as e:
+        return JsonResponse({'status': 400, 'message': 'Invalid JSON'}, status=400)
+    if not email or not pass1 or not pass2:
+        return JsonResponse({'status': 400, 'message': 'Please fill in all the fields.'}, status=400)
+    if pass1 != pass2:
+        return JsonResponse({'status': 400, 'message': 'Passwords do not match.'}, status=400)
+    elif len(pass1) < 8:
+        return JsonResponse({'status': 400, 'message': 'Password must be at least 8 characters long.'}, status=400)
+    elif User.objects.filter(email=email).exists():
+        return JsonResponse({'status': 400, 'message': 'Email already exists.'}, status=400)
+    else:
+        user = User.objects.create_user(username=email, email=email, password=pass1)
+        user.save()
+
+        if userType == 'alumni':
+            alumni = alumniProfile(user=user, email=email)
+            alumni.save()
+        elif userType == 'student':
+            student = studentProfile(user=user, email=email)
+            student.save()
+        
+        return JsonResponse({
+            'status': 200,
+            'message': 'Account created successfully. Please login.',
+            'redirect': '/api/login/'
+        }, status=200)
+    
+
+def UserLogout(request):
+    # Clear the JWT cookie
+    response = JsonResponse({
+        'status': 200,
+        'message': 'Logged out successfully',
+        'redirect': '/'
+    }, status=200)
+
+    # Set an expired date to invalidate the token cookie
+    response.delete_cookie(
+        key='token',
+        path='/',             # Make sure the path matches where you set it
+        domain=None,          # If you set a domain while creating, add it here too
+        samesite='None',
+    )
+    return response
 
 
 def eventsApi(request):
