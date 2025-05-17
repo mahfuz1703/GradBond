@@ -4,9 +4,12 @@ cloudinary==1.44.0
 dj-database-url==2.3.0
 Django==5.2
 django-cors-headers==4.7.0
+djangorestframework==3.16.0
+djangorestframework_simplejwt==5.5.0
 dotenv==0.9.9
 pillow==11.1.0
 psycopg2-binary==2.9.10
+PyJWT==2.9.0
 python-dotenv==1.1.0
 six==1.17.0
 sqlparse==0.5.3

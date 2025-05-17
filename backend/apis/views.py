@@ -1,10 +1,65 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from core.models import *
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.conf import settings
+from django.contrib.auth import authenticate, login
+import json
+import jwt
+
 
 # Create your views here.
+@csrf_exempt
+def UserLogin(request):
+    if request.method != 'POST':
+        return JsonResponse({
+            'status': 400,
+            'message': 'Invalid request method',
+        }, status=400)
+
+    try:
+        body = json.loads(request.body)
+        email = body.get('email')
+        password = body.get('password')
+    except Exception as e:
+        return JsonResponse({'status': 400, 'message': 'Invalid JSON'}, status=400)
+
+    user = authenticate(username=email, password=password)
+
+    if user is not None:
+        login(request, user)
+
+        payload = {
+            'user_id': user.id,
+            'email': user.email,
+            'exp': datetime.utcnow() + timedelta(seconds=settings.JWT_EXP_DELTA_SECONDS),
+            'iat': datetime.utcnow()
+        }
+
+        token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
+
+        response = JsonResponse({
+            'status': 200,
+            'message': 'Login successful',
+            'token': token,
+            'redirect': '/api/profile/'
+        })
+
+        response.set_cookie(
+            'token',
+            token,
+            httponly=True,
+            secure=True,           # Required for SameSite=None
+            samesite='None'        # Allows cross-site cookies
+        )        
+        return response
+
+    return JsonResponse({
+        'status': 401,
+        'message': 'Invalid credentials'
+    }, status=401)
+
+
 def eventsApi(request):
     current_date = datetime.now()
     all_events = events.objects.filter(date__gte=current_date)
@@ -32,7 +87,6 @@ def eventsApi(request):
             'status': '404',
             'message': 'No events found'
         }, status = 404)
-
 
 
 def event_detailApi(request, id):

@@ -115,3 +115,9 @@ cloudinary.config(
     api_key=os.getenv("CLOUDINARY_API_KEY"),
     api_secret=os.getenv("CLOUDINARY_API_SECRET")
 )
+
+
+# JWT settings
+JWT_SECRET_KEY = SECRET_KEY  # or use a separate secret
+JWT_ALGORITHM = 'HS256'
+JWT_EXP_DELTA_SECONDS = 3600  # 1 hour
