@@ -32,7 +32,22 @@ INSTALLED_APPS = [
     'core',
     'apis',
     'corsheaders',
+
+    # chatting
+    'channels',
+    'chat',
 ]
+
+ASGI_APPLICATION = 'GradBond.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [os.environ.get("REDIS_URL")],
+        },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
