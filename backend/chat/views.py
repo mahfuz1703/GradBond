@@ -33,11 +33,14 @@ def chat_with_user(request, user_id):
 
     users = User.objects.filter(id__in=user_ids)
 
+    is_new_chat = not messages.exists()
+
     return render(request, 'chatting/chat.html', {
         'room_name': room_name,
         'messages': messages,
         'selected_user': selected_user,
         'users': users,
+        'is_new_chat': is_new_chat,
     })
 
 @login_required
