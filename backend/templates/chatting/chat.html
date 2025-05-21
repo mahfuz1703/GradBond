@@ -139,7 +139,8 @@
         const input = document.getElementById('chat-message-input');
         const chatLog = document.getElementById('chat-log');
 
-        const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+        const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+        const chatSocket = new WebSocket(protocol + window.location.host + '/ws/chat/' + roomName + '/');
 
         chatSocket.onmessage = function (e) {
             const data = JSON.parse(e.data);
