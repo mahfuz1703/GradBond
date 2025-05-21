@@ -12,6 +12,11 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://gradbond.up.railway.app",
+    "https://gradbond.vercel.app",
+]
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'gradbond.up.railway.app']
 DEBUG = os.getenv("DEBUG")
