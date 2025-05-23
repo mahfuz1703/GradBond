@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<div class="container-fluid my" style="min-height: 640px;">
+<div class="container-fluid my" style="min-height: 660px;">
     <div class="container">
         <div class="row text-center">
             {% if events %}
@@ -18,22 +18,30 @@
             <h1 class="mt-5 fs-2 fw-bolder resent">Recent events not found</h1>
             {% endif %}
         </div>
-        <div class="row mt-5 d-flex justify-content-center">
+        <div class="row  d-flex justify-content-center">
             
             {% for event in events %}
-            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+            <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-evenly">
                 <div class="card border border-dark"
-                    style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
+                    style="width: 25rem; background-color: #3D2462; border-radius: 15px;">
                     {% if event.image %}
-                    <img src="{{event.image.url}}" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}" height="300px">
+                    <img src="{{event.image.url}}" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}" height="200px" style="border-radius: 15px;">
                     {% else %}
-                    <img src="/media/events/default.png" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
+                    <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1744399284/default_cover.png" height="200px" style="border-radius: 15px;" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
                     {% endif %} 
                     <div class="card-body text-center">
                         <h5 class="card-title" style="color: aliceblue;"> {{event.title}} </h5>
                         <p style="color: aliceblue;">{{event.date | date:"F d, Y"}} | {{event.time | time:"h:i A"}}</p>
-                        <p class="card-title" style="color: aliceblue;">Organized by <strong> {{event.user.first_name}}
+                        
+                        {% if user.is_authenticated %}
+                        <p class="card-title" style="color: aliceblue;">Organized by <strong> 
+                            <a href="{% url 'about' event.user.id %}" style="text-decoration: none;">{{event.user.first_name}}</a>
                             </strong></p>
+                        {% else %}
+                        <p class="card-title" style="color: aliceblue;">Organized by <strong> 
+                            <a href="{% url 'signin' %}" style="text-decoration: none;">{{event.user.first_name}}</a>
+                            </strong></p>
+                        {% endif %}
 
                         {% if user.is_authenticated %}
                         <a href="{{event.regLink}}" class="btn btn-primary me-3" target="_blank">Registration</a>

@@ -47,7 +47,7 @@ input{
 
 .over {
     /* background-image: url('../images/Mask.png'); */
-    background: url("/static/images/Mask.png");
+    background: url("https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/Mask_mahobo.png");
     background-size: cover;
     background-position: center;
     width: 100%;

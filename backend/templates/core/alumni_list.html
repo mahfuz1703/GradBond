@@ -10,38 +10,38 @@
 {% block content %}
 
 <div class="container-fluid main">
-    <div class="container main" style="min-height: 640px;">
+    <div class="container main" style="min-height: 660px;">
         {% if alumni_list %}
         <div class="row text-center pt-5 fw-bolder">
             <h1 class="writeh1">Alumni List</h1>
         </div>
         <div class="row mt-3 d-flex justify-content-center">
             {% for alumni in alumni_list %}
-            <div class="col-lg-6 col-md-12 col-12 p-4 d-flex justify-content-center">
-                <div class="card rounded-4 pic" style="background-color: #3D2462; width: 500px;">
-                    <img src="{{alumni.image.url}}" class="card-img-top img-rounded pt-3 ps-3 pe-3" alt="{{alumni.full_name}}" height="300px">
+            <div class="col-lg-4 col-md-12 col-12 p-4 d-flex justify-content-evenly">
+                <div class="card rounded-4 pic" style="background-color: #3D2462; width: 350px;">
+                    <img src="{{alumni.image.url}}" class="card-img-top pt-3 ps-3 pe-3" alt="{{alumni.full_name}}" height="250px">
                     <div class="card-body text-center">
-                        <h1 class="card-title text-light fw-bolder">{{alumni.full_name}}</h1>
-                        <h4 class="card-title text-light fw-bolder">{{alumni.job_title}}
-                            <span style="font-size: 20px;">({{alumni.company}})</span>
+                        <h1 class="card-title text-light fs-3 fw-semibold">{{alumni.full_name}}</h1>
+                        <h4 class="card-title text-light fs-6 fw-semibold">{{alumni.job_title}}
+                            <span class="fs-6">({{alumni.company}})</span>
                         </h4>
-                        <p class="card-text text-light fs-5">{{alumni.university}}</p>
-                        <p class="card-text text-light fs-5">{{alumni.dept}}</p><br>
+                        <h4 class="card-text text-light fs-6">{{alumni.university}}</h4>
+                        <p class="card-text text-light fs-6">{{alumni.dept}}</p>
                         
                         {% if user.is_authenticated %}
                         <div class="row d-flex justify-content-around">
                             <div class="col-lg-6 col-md-6 col-10">
-                                <a href="mailto:{{alumni.email}}" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-1" target="_blank">Email</a>
+                                <a href="{% url 'about' alumni.user.id %}" class="btn btn-outline-primary w-75 rounded-3 fs-6 fw-semibold">About Me</a>
                             </div>
                             <div class="col-lg-6 col-md-6 col-10">
                                 <!-- <a href="{{alumni.linkedin}}" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-1" target="_blank">Linkedin</a> -->
-                                <a href="{% url 'chat_with_user' alumni.user.id %}" class="btn btn-primary">Message</a>
+                                <a href="{% url 'chat_with_user' alumni.user.id %}" class="btn btn-outline-success  rounded-3 fs-6 fw-semibold">Message</a>
                             </div>
                         </div><br><br>
                         {% else %}
                         <div class="row d-flex justify-content-around">
                             <div class="col-lg-6 col-md-6 col-10">
-                                <a href="{% url 'signin' %}" class="btn btn-outline-warning w-75 rounded-3 fs-5 fw-bolder mt-1" >Say Hello!!</a>
+                                <a href="{% url 'signin' %}" class="btn btn-outline-success rounded-3 fs-6 fw-semibold" >Say Hello!!</a>
                             </div>
                         </div><br><br>
                         {% endif %}
@@ -51,8 +51,8 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="row text-center pt-5 fw-bolder">
-            <h1 style="padding-bottom: 100px; padding-top: 100px;">No alumni found matching your criteria.</h1> <br> <br> <br>
+        <div class="row fw-semibold d-flex justify-content-center"> 
+            <h1 style="padding-bottom: 100px; padding-top: 100px;">We could not find any alumni matching your criteria. Kindly refine your search parameters and try again.</h1> <br> <br> <br>
         {% endif %}
     </div>
 </div>

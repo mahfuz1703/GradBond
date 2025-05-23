@@ -37,7 +37,7 @@ def chat_with_user(request, user_id):
 
     return render(request, 'chatting/chat.html', {
         'room_name': room_name,
-        'messages': messages,
+        'messagess': messages,
         'selected_user': selected_user,
         'users': users,
         'is_new_chat': is_new_chat,
@@ -85,4 +85,4 @@ def chat_history(request, username):
         } for msg in messages
     ]
 
-    return JsonResponse({'messages': message_data})
+    return JsonResponse({'messagess': message_data})

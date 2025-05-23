@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<div class="container-fluid my" style="min-height: 650px;">
+<div class="container-fluid my" style="min-height: 660px;">
     <div class="container">
 
 
@@ -58,8 +58,16 @@
                             </p>
                             <p style="color: aliceblue;"> <strong>Job Type:</strong> {{job.job_type}}</p>
                             <p style="color: aliceblue;"> <strong>Salary:</strong> {{job.salary}} BDT</p>
-                            <p class="card-title" style="color: aliceblue;">Post by <strong> {{job.user.first_name}}
+                            
+                            {% if user.is_authenticated %}
+                            <p class="card-title" style="color: aliceblue;">Post by <strong> 
+                                <a href="{% url 'about' job.user.id %}" style="text-decoration: none;">{{job.user.first_name}}</a>
                                 </strong></p>
+                            {% else %}
+                            <p class="card-title" style="color: aliceblue;">Post by <strong> 
+                                <a href="{% url 'signin' %}" style="text-decoration: none;">{{job.user.first_name}}</a>
+                                </strong></p>
+                            {% endif %}
                         </div>
 
                         {% if user.is_authenticated %}

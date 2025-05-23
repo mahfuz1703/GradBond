@@ -12,8 +12,16 @@ from cloudinary.uploader import destroy, upload
 
 # Create your views here.
 def home(request):
-    event = events.objects.all()[:4]
-    return render(request, 'core/index.html', {'events': event})
+    current_date = datetime.now()
+
+    # get all events that date is greater than current date
+    # and limit to 3
+    event = events.objects.filter(date__gte=current_date).order_by('date')[:3]
+
+    # get all jobs that deadline is greater than current date
+    all_jobs = Jobs.objects.filter(deadline__gte=current_date)[:3]
+
+    return render(request, 'core/index.html', {'events': event, 'jobs': all_jobs})
 
 
 def search_alumni(request):
@@ -23,6 +31,11 @@ def search_alumni(request):
         company = request.GET.get('company')
         job_title = request.GET.get('job_title')
         randomKey = request.GET.get('randomKey') # bubt
+
+        # make sure user at least enter one field
+        if not university and not dept and not company and not job_title and not randomKey:
+            messages.error(request, 'Please enter at least one field to search.')
+            return redirect('find-alumni')
         
         alumni = alumniProfile.objects.all()
         
@@ -56,10 +69,6 @@ def search_alumni(request):
 
 def find_alumni(request):
     return render(request, 'core/find_alumni.html')
-        
-
-def gallery(request):
-    return render(request, 'core/gallery.html')
 
 def view_events(request):
     current_date = datetime.now()
@@ -162,7 +171,21 @@ def profile(request):
     else:
         details = studentProfile.objects.get(user=user)
         return render(request, 'core/user_profile.html', {'details': details})
-    
+
+
+def about_user(request, id):
+    user = User.objects.get(id=id)
+    isAlumni = False
+    current_date = datetime.now()
+    if alumniProfile.objects.filter(user=user).exists():
+        details = alumniProfile.objects.get(user=user)
+        user_events = events.objects.filter(user=user).filter(date__gte=current_date)
+        user_jobs = Jobs.objects.filter(user=user).filter(deadline__gte=current_date)
+        isAlumni = True
+        return render(request, 'core/about_user.html', {'details': details, 'isAlumni': isAlumni, 'events': user_events, 'jobs': user_jobs})
+    else:
+        details = studentProfile.objects.get(user=user)
+        return render(request, 'core/about_user.html', {'details': details, 'isAlumni': isAlumni})
 
 def update_profile(request):
     user = request.user
@@ -256,9 +279,11 @@ def view_jobs(request):
         titleComapny = request.GET.get('titleCompany')
         jobType = request.GET.get('jobType')
 
+        # filter jobs based on title or company
         if titleComapny:
-            all_jobs = all_jobs.filter(title__icontains=titleComapny)
+            all_jobs = all_jobs.filter(title__icontains=titleComapny) | all_jobs.filter(company__icontains=titleComapny)
         
+        # filter jobs based on job type
         if jobType:
             all_jobs = all_jobs.filter(job_type__icontains=jobType)
     return render(request, 'core/jobs.html', {'jobs': all_jobs})

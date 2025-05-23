@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block extra_css %}
+{% block extra_css %}  
 <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
 {% endblock %}
-
 
 {% block content %}
 
@@ -18,43 +17,18 @@
                 {% csrf_token %}
                 <input class="form-control text-dark fs-5 fw-bolder w-75 inputbg" type="text"
                     placeholder="Search by University | Department | Company | Job Title" aria-label="Search"
-                    id="randomKey" name="randomKey">
+                    id="randomKey" name="randomKey" required>
                 <button class="ms-1 btn btn-success btns" type="submit"> <i class="fa fa-search"></i></button>
             </form>
         </div><br><br>
-
-        <!-- Popular search -->
-        <!-- <p class="text-light ps-5 fs-4 fw-bolder">Popular Search</p>
-        <div class="d-lg-flex flex-row justify-content-evenly">
-            <div class="text-light p-lg-0 p-md-3 p-3">
-                <a href="#" class="btn btn-lg btn-outline-light rounded-pill btncolor ">Ui Ux Design <i
-                        class="fa-solid fa-magnifying-glass ms-3"></i></a>
-            </div>
-            <div class="text-light p-lg-0 p-md-3 p-3">
-                <a href="#" class="btn btn-lg btn-outline-light rounded-pill btncolor">Web Development <i
-                        class="fa-solid fa-magnifying-glass ms-3"></i></a>
-            </div>
-            <div class="text-light p-lg-0 p-md-3 p-3">
-                <a href="#" class="btn btn-lg btn-outline-light rounded-pill btncolor">App Development <i
-                        class="fa-solid fa-magnifying-glass ms-3"></i></a>
-            </div>
-            <div class="text-light p-lg-0 p-md-3 p-3">
-                <a href="#" class="btn btn-lg btn-outline-light rounded-pill btncolor">BUBT<i
-                        class="fa-solid fa-magnifying-glass ms-3"></i></a>
-            </div>
-            <div class="text-light p-lg-0 p-md-3 p-3">
-                <a href="#" class="btn btn-lg btn-outline-light rounded-pill btncolor">BUET <i
-                        class="fa-solid fa-magnifying-glass ms-3"></i></a>
-            </div>
-        </div><br><br><br> -->
-
     </div>
 </div>
+
 <div class="container-fluid bg-light">
     <div class="container mt-3">
         <div class="d-lg-flex justify-content-around">
             <div class="col-lg-6 col-md-12 col-12 text-center p-5">
-                <img src="{% static './images/convocation.png' %}" alt="" class="rounded img-fluid w-lg-100 w-md-100 w-100">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943793/convocation_eekh6j.png" alt="" class="rounded img-fluid w-lg-100 w-md-100 w-100">
             </div>
             <div class="col-lg-6 col-md-12 col-12 mt-5 pt-5 ">
                 <h1 class="text-dark fs-3 fw-bolder">The Leading Alumni Finding Website.</h1>
@@ -71,20 +45,20 @@
 <div class="container-fluid my-1">
     <div class="container">
         <div class="row text-center">
-            <h1 class="mt-5 fs-2 fw-bolder resent">Recent Events / Workshops</h1>
+            <h1 class="mt-5 fs-2 fw-bolder resent">Recent Events</h1>
         </div>
-        <div class="row mt-2 d-flex justify-content-center">
+        <div class="row mt-2 pb-5 d-flex justify-content-center">
             <div class="row mt-2 d-flex justify-content-center">
-
+                {% if events %}
                 {% for event in events %}
-                <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-evenly">
                     <div class="card border border-dark"
-                        style="width: 35rem; background-color: #3D2462; border-radius: 15px;">
+                        style="width: 25rem; background-color: #3D2462; border-radius: 15px;">
                         {% if event.image %}
                         <img src="{{event.image.url}}" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}"
-                            height="300px">
+                            height="200px" style="border-radius: 15px;">
                         {% else %}
-                        <img src="/media/events/default.png" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
+                        <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1744399284/default_cover.png" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
                         {% endif %}
                         <div class="card-body text-center">
                             <h5 class="card-title" style="color: aliceblue;"> {{event.title}} </h5>
@@ -107,42 +81,86 @@
                     </div>
                 </div>
                 {% endfor %}
+                {% else %}
+                <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-center ">
+                    <p style="color: black;">No events available at the moment. 
+                    </p>
+                    <a href="{% url 'events' %}" style="margin-left: 5px;">Events</a>
+                </div>
+                {% endif %}
 
             </div>
         </div>
     </div>
 </div>
-<div class="container-fluid carosolbg pt-2"><br><br>
+
+
+<div class="container-fluid bg-light my-1">
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="mt-5 fs-2 fw-bolder resent">Recent Jobs</h1>
+        </div>
+        <div class="row mt-2 pb-5 d-flex justify-content-center">
+            <div class="row mt-2 d-flex justify-content-center">
+
+                {% if jobs %}
+                {% for job in jobs %}
+            <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-center">
+                <div class="card border border-dark"
+                    style="min-width: 400px; background-color: #09050f; border-radius: 15px;">
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color: aliceblue;"> {{job.title}} </h5>
+                        <p style="color: aliceblue;">{{job.company}}</p>
+
+                        <div style="text-align: left;">
+                            <p style="color: aliceblue;"> <strong>Deadline:</strong> {{job.deadline | date:"F d, Y"}}
+                            </p>
+                            <p style="color: aliceblue;"> <strong>Job Type:</strong> {{job.job_type}}</p>
+                            <p style="color: aliceblue;"> <strong>Salary:</strong> {{job.salary}} BDT</p>
+                            <p class="card-title" style="color: aliceblue;">Post by <strong> {{job.user.first_name}}
+                                </strong></p>
+                        </div>
+
+                        {% if user.is_authenticated %}
+                        <a href="{{job.job_link}}" class="btn btn-primary me-3" target="_blank">Apply</a>
+                        {% else %}
+                        <a href="{% url 'signin' %}" class="btn btn-primary me-3">Apply</a>
+                        {% endif %}
+
+                        <a href="{% url 'job_detail' job.id %}" class="mt-2 btn btn-success me-3">
+                            Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-center">
+                <p style="color: black;">No jobs available at the moment.</p>
+                <a href="{% url 'jobs' %}" style="margin-left: 5px;">Jobs</a>
+            </div>
+            {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid carosolbg pt-2" style="background-color: #f3e5f2;"><br><br>
     <div class="container">
         <div class="list-head text-center">
             <h1 class="fs-2 fw-bolder">University that are included in GradBond</h1>
         </div><br><br><br>
         <div class="university text-center">
-
-            <div class="row">
-                <img src="{% static './images/bubt.png' %}" style="width: 15%; height: 15%;"  alt="...">
-                <img src="{% static './images/DU.png' %}" style="width: 15%; height: 15%;"  alt="...">
-                <img src="{% static './images/aust.png' %}" style="width: 15%; height: 15%;"  alt="...">
-                <img src="{% static './images/jnu.png' %}" style="width: 15%; height: 15%;"  alt="...">
-                <img src="{% static './images/NSU.png' %}" style="width: 15%; height: 15%;"  alt="...">
-                <img src="{% static './images/ju.png' %}" style="width: 15%; height: 15%;"  alt="...">
+            <div class="row d-flex justify-content-evenly">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/bubt_k74z2g.png" style="width: 12%; height: 12%;"  alt="...">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/DU_w4zsxo.png" style="width: 12%; height: 12%;"  alt="...">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/aust_uocu3i.png" style="width: 12%; height: 12%;"  alt="...">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943793/jnu_jsweql.png" style="width: 12%; height: 12%;"  alt="...">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/NSU_q3b7fo.png" style="width: 12%; height: 12%;"  alt="...">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/ju_s82by0.png" style="width: 12%; height: 12%;"  alt="...">
             </div>
         </div>
-        <!-- <div class="noteCard">
-            <div class="row">
-                <div class="col-8">
-                    <div class="cardText">
-                        <h1>Looking for your university alumni?</h1>
-                        <p>We can help you Find Alumni in your curret university</p>
-                    </div>
-                </div>
-                <div class="col-4 btnCard">
-                    <button class="cardButton" onclick="document.location='findAlumni.html'">Find Alumni <span class="arrImg">
-                        <img src="{% static './img/rightArrow.png' %}" alt="">
-                    </span></button>
-                </div>
-            </div>
-        </div> -->
     </div><br><br><br><br>
 </div>
 

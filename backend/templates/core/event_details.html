@@ -9,13 +9,13 @@
 
 {% block content %}
 
-<div class="container-fluid my">
+<div class="container-fluid my" style="min-height: 660px;">
     <div class="container d-flex justify-content-center">
         <div class="card mt-4 mb-4" style="width: 50rem;">
             {% if event.image %}
-            <img class="card-img-top" src="{{event.image.url}}" alt="{{event.title}}">
+            <img height="350px" class="card-img-top" src="{{event.image.url}}" alt="{{event.title}}">
             {% else %}
-            <img src="/media/events/default.png" class="card-img-top" alt="{{event.title}}">
+            <img  src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1744399284/default_cover.png" class="card-img-top" alt="{{event.title}}">
             {% endif %}
             <div class="card-body" style="margin-left: 30px;">
                 <h2 class="card-title">{{event.title}}</h2>

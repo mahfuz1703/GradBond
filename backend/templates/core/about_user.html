@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}Profile | GradBond{% endblock %}</title>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+<link rel="stylesheet" href="{% static 'CSS/user_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="profile" style="min-height: 660px;">
+    <div class="container">
+        <div class="main-body">
+
+            <div class="row gutters-sm">
+
+                <!-- profile -->
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="{{details.image.url}}" alt="{{details.full_name}}"
+                                    class="rounded-circle" width="200px" height="200">
+                                <div class="mt-3">
+                                    <h4>{{details.full_name}}</h4>
+                                    <p class="text-secondary mb-1">{{details.job_title}}</p>
+                                    <p class="text-muted font-size-sm">{{details.company}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+
+                    <!-- profile information -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.full_name}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">University</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.university}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Department</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.dept}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.email}}
+                                </div>
+                            </div>
+                            <hr>
+                            {% if isAlumni %}
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Graduation Year</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.graduation_year}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Company</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.company}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Job Title</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{details.job_title}}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">LinkedIn</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <a href="{{details.linkedin}}" target="_blank">{{details.linkedin}}</a>
+                                </div>
+                            </div>
+                            <hr>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if isAlumni %}
+                    <!-- events -->
+                    <div class="card mb-3 p-5">
+                        <div class="event_head d-flex justify-content-around">
+                            {% if events %}
+                            <h3 class="text-center me-2">Active Events</h3>
+                            {% else %}
+                            <h3 class="text-center me-2">{{details.full_name}} have no events</h3>
+                            {% endif %}
+                        </div>
+
+                        <div class="row d-flex justify-content-center">
+
+                            {% for event in events %}
+                            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                                <div class="card border border-dark" style="width: 22rem;">
+                                    {% if event.image %}
+                                    <img src="{{event.image.url}}" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}" height="300px">
+                                    {% else %}
+                                    <img src="/media/events/default.png" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
+                                    {% endif %}
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"> {{event.title}} </h5>
+                                        <p>{{event.date | date:"F d, Y"}}</p>
+                                        <a href="{% url 'event-detail' event.id %}" class="btn btn-success me-3">Detail</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if isAlumni %}
+                    <!-- Job Posts -->
+                    <div class="card mb-3 p-5">
+                        <div class="event_head d-flex justify-content-around">
+                            {% if jobs %}
+                            <h3 class="text-center me-2">Active Jobs</h3>
+                            {% else %}
+                            <h3 class="text-center me-2">{{details.full_name}} have no jobs</h3>
+                            {% endif %}
+                            
+                        </div>
+
+                        <div class="row d-flex justify-content-center">
+
+                            {% for job in jobs %}
+                            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
+                                <div class="card border border-dark" style="width: 22rem;">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"> {{job.title}} </h5>
+                                        <p>{{job.deadline | date:"F d, Y"}}</p>
+                                        <a href="{% url 'job_detail' job.id %}" class="btn btn-success me-3">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
