@@ -19,7 +19,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'gradbond.up.railway.app']
-DEBUG = os.getenv("DEBUG")
+DEBUG = False
 
 INSTALLED_APPS = [
     'django.contrib.admin',

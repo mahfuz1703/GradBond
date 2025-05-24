@@ -10,3 +10,17 @@ class ChatMessage(models.Model):
     
     def __str__(self):
         return f"{self.sender} to {self.receiver} at {self.timestamp}"
+    
+
+class Notification(models.Model):
+    NOTIFICATION_TYPES = [
+        ('event', 'Event'),
+        ('job', 'Job'),
+        ('chat', 'Chat'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    notification_type = models.CharField(max_length=10, choices=NOTIFICATION_TYPES)
+    message = models.TextField()
+    link = models.URLField(blank=True, null=True)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)

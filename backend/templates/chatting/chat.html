@@ -102,36 +102,49 @@
             const data = JSON.parse(e.data);
             const isSender = data.sender === currentUser;
 
-            // Create message wrapper
+            // Message wrapper
             const messageWrapper = document.createElement('div');
             messageWrapper.classList.add('d-flex', 'mb-2');
             messageWrapper.classList.add(isSender ? 'justify-content-end' : 'justify-content-start');
 
-            // Create message bubble
+            // Message bubble
             const messageBubble = document.createElement('div');
-            messageBubble.classList.add('p-2', 'rounded');
+            messageBubble.classList.add('p-2', 'rounded', 'position-relative');
             messageBubble.classList.add(isSender ? 'bg-success' : 'bg-primary', 'text-white');
 
-            const messageContent = document.createElement('div');
+            // Timestamp and Image
+            const timeImageRow = document.createElement('small');
+            timeImageRow.classList.add('text-muted', 'mb-1');
+            timeImageRow.style.fontSize = '0.75rem';
 
-            if (!isSender && data.sender_image_url) {
+            if (data.sender_image_url) {
                 const avatar = document.createElement('img');
                 avatar.src = data.sender_image_url;
                 avatar.alt = '';
-                avatar.width = 25;
-                avatar.height = 25;
+                avatar.width = 22;
+                avatar.height = 22;
                 avatar.classList.add('rounded-circle', 'me-2');
-                messageContent.appendChild(avatar);
+                timeImageRow.appendChild(avatar);
             }
 
+            const timestamp = document.createElement('span');
+            timestamp.textContent = data.timestamp;
+            timeImageRow.appendChild(timestamp);
+
+            // Message text
+            const messageContent = document.createElement('div');
             const text = document.createElement('strong');
             text.textContent = ` ${data.message}`;
             messageContent.appendChild(text);
+
+            // Append all
+            messageBubble.appendChild(timeImageRow);
             messageBubble.appendChild(messageContent);
             messageWrapper.appendChild(messageBubble);
             chatLog.appendChild(messageWrapper);
             chatLog.scrollTop = chatLog.scrollHeight;
         };
+
 
         chatSocket.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');

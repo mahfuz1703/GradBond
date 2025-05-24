@@ -55,6 +55,21 @@
                     </li>
 
                     {% if user.is_authenticated %}
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-bell fs-5"></i>
+                            <span id="notificationCount"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                                0
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notificationDropdown"
+                            id="notificationList" style="width: fit-content;">
+                            <li><span class="dropdown-header fw-bold">Click for notifications</span></li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
                         <div class="dropdown">
                             <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
@@ -127,6 +142,131 @@
             </div>
         </div>
     </div>
+
+
+    <!-- JS for notification -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropdown = document.getElementById('notificationDropdown');
+        const notificationList = document.getElementById('notificationList');
+        const notificationCount = document.getElementById('notificationCount');
+
+        // 1. On page load, fetch unread count only
+        fetch('/chat/api/notifications/')
+            .then(response => response.json())
+            .then(data => {
+                let unreadCount = 0;
+                if (data.notifications && data.notifications.length > 0) {
+                    unreadCount = data.notifications.length;
+                }
+                updateBadge(unreadCount);
+            })
+            .catch(error => {
+                console.error("Failed to fetch initial notification count:", error);
+            });
+
+        // 2. WebSocket: increment badge in real time
+        const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+        const notificationsSocket = new WebSocket(`${wsProtocol}://${window.location.host}/ws/notifications/`);
+
+        notificationsSocket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (!data.is_read) {
+                // Only increment badge, do not show notification in list yet
+                const currentCount = parseInt(notificationCount.textContent || "0");
+                updateBadge(currentCount + 1);
+            }
+        };
+
+        notificationsSocket.onclose = () => {
+            console.error('Notifications WebSocket closed unexpectedly');
+        };
+
+        // 3. When bell icon is clicked, fetch and show all unread notifications
+        dropdown.addEventListener('click', () => {
+            fetch('/chat/api/notifications/')
+                .then(response => response.json())
+                .then(data => {
+                    notificationList.innerHTML = `
+                        <li><span class="dropdown-header fw-bold">Notifications</span></li>
+                        <li><hr class="dropdown-divider"></li>
+                    `;
+                    let unreadCount = 0;
+
+                    if (data.notifications.length === 0) {
+                        notificationList.innerHTML += `<li class="text-center text-muted">No notifications</li>`;
+                    } else {
+                        data.notifications.forEach(n => {
+                            unreadCount++;
+                            addNotificationToList(n, false);
+                        });
+                    }
+
+                    updateBadge(unreadCount);
+                })
+                .catch(error => {
+                    console.error("Failed to load notifications:", error);
+                });
+        });
+
+        function addNotificationToList(notification, prepend = false) {
+            const li = document.createElement('li');
+            li.className = notification.is_read ? '' : 'bg-warning';
+            li.innerHTML = `<a href="${notification.link}" class="dropdown-item" data-id="${notification.id}">${notification.message}</a>`;
+
+            // Mark as read on click
+            li.querySelector('a').addEventListener('click', function (e) {
+                e.preventDefault();
+                fetch(`/chat/api/notifications/read/${notification.id}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    }
+                }).then(res => {
+                    if (res.ok) {
+                        li.className = ''; // Remove highlight
+                        // Update badge count
+                        let count = parseInt(notificationCount.textContent || "0");
+                        if (count > 0) updateBadge(count - 1);
+                        window.location.href = notification.link; // Redirect after marking as read
+                    }
+                });
+            });
+
+            if (prepend && notificationList.children.length > 2) {
+                notificationList.insertBefore(li, notificationList.children[2]);
+            } else {
+                notificationList.appendChild(li);
+            }
+        }
+
+        function updateBadge(count) {
+            if (count > 0) {
+                notificationCount.textContent = count;
+                notificationCount.classList.remove('d-none');
+            } else {
+                notificationCount.textContent = '';
+                notificationCount.classList.add('d-none');
+            }
+        }
+
+        // Helper to get CSRF token for AJAX requests
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+</script>
 
 
 

@@ -10,6 +10,10 @@ from datetime import datetime
 import os
 from cloudinary.uploader import destroy, upload
 
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from chat.models import Notification
+
 # Create your views here.
 def home(request):
     current_date = datetime.now()
@@ -88,6 +92,31 @@ def add_event(request):
         event = events(user=request.user, title=title, description=description, date=date, time=time, regLink=regLink ,location=location, image=image)
         event.save()
         messages.success(request, 'Event added successfully.')
+
+        students = studentProfile.objects.filter(university=event.user.alumniprofile.university)
+        channel_layer = get_channel_layer()
+
+        for student in students:
+            notification = Notification.objects.create(
+                user=student.user,
+                notification_type='event',
+                message=f"New event: {event.title}",
+                link=f"/event-detail/{event.id}"
+            )
+            async_to_sync(channel_layer.group_send)(
+                f"notifications_{student.user.id}",
+                {
+                    "type": "send_notification",
+                    "notification": {
+                        "id": notification.id,
+                        "message": notification.message,
+                        "type": notification.notification_type,
+                        "link": notification.link,
+                        "is_read": notification.is_read,
+                        "created_at": str(notification.created_at),
+                    }
+                }
+            )
         
         return redirect('profile')
     return render(request, 'core/create_event.html')
@@ -312,6 +341,31 @@ def create_job(request):
         job = Jobs(user=request.user, title=title, company=company, job_link=job_link, job_type=job_type, experience=experience, salary=salary, description=description, deadline=deadline)
         job.save()
         messages.success(request, 'Post your job successfully.')
+
+        # Notify all  users about the new job without creator
+        channel_layer = get_channel_layer()
+        users = User.objects.exclude(id=request.user.id)
+        for user in users:
+            notification = Notification.objects.create(
+                user=user,
+                notification_type='job',
+                message=f"New job posted: {job.title}",
+                link=f"/job-detail/{job.id}"
+            )
+            async_to_sync(channel_layer.group_send)(
+                f"notifications_{user.id}",
+                {
+                    "type": "send_notification",
+                    "notification": {
+                        "id": notification.id,
+                        "message": notification.message,
+                        "type": notification.notification_type,
+                        "link": notification.link,
+                        "is_read": notification.is_read,
+                        "created_at": str(notification.created_at),
+                    }
+                }
+            )
         
         return redirect('profile')
     return render(request, 'core/post_job.html')

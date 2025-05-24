@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import ChatMessage
+from .models import ChatMessage, Notification
 from django.contrib.auth.models import User
 from .utils import get_room_name
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.db.models import Q
 
@@ -86,3 +87,27 @@ def chat_history(request, username):
     ]
 
     return JsonResponse({'messagess': message_data})
+
+@login_required
+def notification_list(request):
+    notifications = Notification.objects.filter(user=request.user).order_by('-created_at').filter(is_read=False)
+    data = [
+        {
+            'id': n.id,
+            'type': n.notification_type,
+            'message': n.message,
+            'link': n.link,
+            'is_read': n.is_read,
+            'created_at': n.created_at.strftime('%Y-%m-%d %H:%M')
+        }
+        for n in notifications
+    ]
+    return JsonResponse({'notifications': data})
+
+
+@login_required
+@require_POST
+def mark_notification_read(request, notification_id):
+    print(f"Marking notification {notification_id} as read for user {request.user}")
+    Notification.objects.filter(id=notification_id, user=request.user).update(is_read=True)
+    return JsonResponse({'success': True})
