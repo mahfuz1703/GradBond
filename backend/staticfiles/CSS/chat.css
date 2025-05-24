@@ -1,0 +1,30 @@
+#chat-log {
+    height: 450px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.user-list {
+    height: 495px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-link {
+    display: block;
+    padding: 8px 0;
+    color: #333;
+    text-decoration: none;
+}
+
+.user-link.active,
+.user-link:hover {
+    font-weight: bold;
+    color: #0d6efd;
+}

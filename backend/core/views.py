@@ -116,7 +116,7 @@ def edit_event(request, id):
                     destroy(public_id)  # Deletes the old image from Cloudinary
             # Assign new image
             result = upload(
-                request.FILES['image'],
+                request.FILES['eventImage'],
                 folder='events',
                 transformation=[
                     {'quality': 'auto'},
@@ -140,6 +140,13 @@ def edit_event(request, id):
 
 def delete_event(request, id):
     event = events.objects.get(id=id)
+
+    # Check if the event has an image and delete it from Cloudinary
+    if event.image:
+        public_id = event.image.public_id
+        if public_id != 'default_cover':
+            destroy(public_id)
+
     event.delete()
     messages.success(request, 'Event deleted successfully.')
     return redirect('profile')

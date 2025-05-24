@@ -9,50 +9,68 @@
 
 {% block content %}
 
-<div class="container-fluid main">
-    <div class="container">
-        <div class="row login-banner">
-
-            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
-                <div class="write text-center">
-                    <h1 class="text-light pt-5">Update an event</h1>
-                </div>
-                <form method="POST" class="ms-5 mt-5 ps-2" enctype="multipart/form-data">
-                    {% csrf_token %}
-
-                    <label for="eventTitle" class="fs-5 fw-bolder text-light">Event Title</label><br>
-                    <input type="text" name="eventTitle" id="eventTitle" class="box" required
-                        placeholder="Enter event title" value="{{ event.title }}"> <br><br>
-
-                    <label for="eventDes" class="fs-5 fw-bolder text-light">Event Description</label><br>
-                    <input type="text" name="eventDes" id="eventDes" class="box" required
-                        placeholder="Enter event description" value="{{ event.description }}"><br><br>
-
-                    <label for="eventDate" class="fs-5 fw-bolder text-light">Event Date</label><br>
-                    <input type="datetime-local" name="eventDate" id="eventDate" class="box"
-                        placeholder="Enter event date" value="{{ event.date|date:'Y-m-d\\TH:i' }}"><br><br>
-
-                    <label for="eventTime" class="fs-5 fw-bolder text-light">Event Time</label><br>
-                    <input type="time" name="eventTime" id="eventTime" class="box" value="{{ event.time|time:'H:i' }}"><br><br>
-
-                    <label for="eventRegLink" class="fs-5 fw-bolder text-light">Event Registration Link</label><br>
-                    <input type="text" name="eventRegLink" id="eventRegLink" class="box" required
-                        value="{{event.regLink}}"><br><br>
-
-                    <label for="eventLocation" class="fs-5 fw-bolder text-light">Event Location</label><br>
-                    <input type="text" name="eventLocation" id="eventLocation" class="box" required
-                        placeholder="Enter event location" value="{{ event.location }}"><br><br>
-
-                    <label for="eventImage" class="fs-5 fw-bolder text-light">Event Cover</label><br>
-                    <input type="file" name="eventImage" id="eventImage"><br><br>
-
-                    <div class="text-center">
-                        <button type="submit" class="btn batonn fs-3 fw-bolder">Update</button>
-                    </div>
-                </form>
-            </div>
+<div class="container-fluid py-5 main" style="background-color: antiquewhite;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-8 col-lg-7 col-md-12 bg-dark text-light rounded-3 shadow p-4">
+        <div class="text-center mb-4">
+          <h1 class="fw-bold">Update an Event</h1>
         </div>
-    </div><br><br>
+        <form method="POST" enctype="multipart/form-data" class="mx-3">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="eventTitle" class="form-label fw-bold">Event Title</label>
+            <input type="text" name="eventTitle" id="eventTitle" class="form-control" required
+                   placeholder="Enter event title" value="{{ event.title }}">
+          </div>
+
+          <div class="mb-3">
+            <label for="eventDes" class="form-label fw-bold">Event Description</label>
+            <input type="text" name="eventDes" id="eventDes" class="form-control" required
+                   placeholder="Enter event description" value="{{ event.description }}">
+          </div>
+
+          <div class="mb-3">
+            <label for="eventDate" class="form-label fw-bold">Event Date & Time</label>
+            <input type="datetime-local" name="eventDate" id="eventDate" class="form-control"
+                   placeholder="Enter event date" value="{{ event.date|date:'Y-m-d\\TH:i' }}">
+          </div>
+
+          <!-- If you want to keep separate eventTime input, otherwise remove this -->
+          <!--
+          <div class="mb-3">
+            <label for="eventTime" class="form-label fw-bold">Event Time</label>
+            <input type="time" name="eventTime" id="eventTime" class="form-control" value="{{ event.time|time:'H:i' }}">
+          </div>
+          -->
+
+          <div class="mb-3">
+            <label for="eventRegLink" class="form-label fw-bold">Event Registration Link</label>
+            <input type="url" name="eventRegLink" id="eventRegLink" class="form-control" required
+                   value="{{ event.regLink }}">
+          </div>
+
+          <div class="mb-3">
+            <label for="eventLocation" class="form-label fw-bold">Event Location</label>
+            <input type="text" name="eventLocation" id="eventLocation" class="form-control" required
+                   placeholder="Enter event location" value="{{ event.location }}">
+          </div>
+
+          <div class="mb-4">
+            <label for="eventImage" class="form-label fw-bold">Event Cover</label>
+            <input type="file" name="eventImage" id="eventImage" class="form-control">
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-light px-4 py-2 fw-bold fs-5 me-3">Update</button>
+            <a href="{% url 'profile' %}" class="btn btn-secondary px-4 py-2 fw-bold fs-5">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 {% endblock %}

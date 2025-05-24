@@ -101,12 +101,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GradBond.wsgi.application'
 
-# ✅ Use PostgreSQL, MySQL, or SQLite from .env
+# Use PostgreSQL, MySQL, or SQLite from .env
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
 
-# ✅ Password Validators
+# sqlite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# Password Validators
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -114,22 +122,22 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ✅ Localization
+# Localization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ✅ Use WhiteNoise for Static Files (DO NOT USE DROPBOX FOR STATICFILES)
+# Use WhiteNoise for Static Files (DO NOT USE DROPBOX FOR STATICFILES)
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# ✅ AutoField
+# AutoField
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ✅ Cloudinary Configuration
+# Cloudinary Configuration
 cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
     api_key=os.getenv("CLOUDINARY_API_KEY"),

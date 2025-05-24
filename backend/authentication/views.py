@@ -20,6 +20,10 @@ def signup(request):
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
 
+        if not userType:
+            messages.warning(request, 'Please select a user type.')
+            return redirect('signup')
+
         if not email or not pass1 or not pass2:
             messages.warning(request, 'Please fill in all the fields.')
             return redirect('signup')
@@ -74,3 +78,7 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect(signin)
+
+
+def custom_404_view(request, exception):
+    return render(request, 'authentication/404.html', status=404)

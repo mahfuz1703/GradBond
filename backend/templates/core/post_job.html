@@ -9,55 +9,71 @@
 
 {% block content %}
 
-<div class="container-fluid main">
+<div class="container-fluid py-5 main" style="background-color: antiquewhite;">
     <div class="container">
-        <div class="row login-banner">
-
-            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
-                <div class="write text-center">
-                    <h1 class="text-light pt-5">Post your job</h1>
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10 col-md-12 bg-dark text-light rounded-3 shadow p-4">
+                <div class="text-center mb-4">
+                    <h1 class="fw-bold">Post Your Job</h1>
                 </div>
-                <form method="POST" class="ms-5 mt-5 ps-2" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
 
-                    <label for="jobTitle" class="fs-5 fw-bolder text-light">Job Title</label><br>
-                    <input type="text" name="jobTitle" id="jobTitle" class="box" required placeholder="Trainee Software Engineer"><br><br>
+                    <div class="mb-3">
+                        <label for="jobTitle" class="form-label">Job Title</label>
+                        <input type="text" name="jobTitle" id="jobTitle" class="form-control" required placeholder="Trainee Software Engineer">
+                    </div>
 
-                    <label for="jobDes" class="fs-5 fw-bolder text-light">Job Short Description</label><br>
-                    <input type="text" name="jobDes" id="jobDes" class="box"><br><br>
+                    <div class="mb-3">
+                        <label for="jobDes" class="form-label">Job Short Description</label>
+                        <input type="text" name="jobDes" id="jobDes" class="form-control">
+                    </div>
 
-                    <label for="companyName" class="fs-5 fw-bolder text-light">Company Name</label><br>
-                    <input type="text" name="companyName" id="companyName" class="box" required placeholder="Apploger Inc."><br><br>
+                    <div class="mb-3">
+                        <label for="companyName" class="form-label">Company Name</label>
+                        <input type="text" name="companyName" id="companyName" class="form-control" required placeholder="Apploger Inc.">
+                    </div>
 
-                    <label for="deadline" class="fs-5 fw-bolder text-light">Application Deadline</label><br>
-                    <input type="date" name="deadline" id="deadline" class="box" required><br><br>
+                    <div class="mb-3">
+                        <label for="deadline" class="form-label">Application Deadline</label>
+                        <input type="date" name="deadline" id="deadline" class="form-control" required>
+                    </div>
 
-                    <label for="jobLink" class="fs-5 fw-bolder text-light">Job Apply Link (source link)</label><br>
-                    <input type="text" name="jobLink" id="jobLink" class="box" required placeholder="https://apploger.com/trainee-software-engineer"><br><br>
+                    <div class="mb-3">
+                        <label for="jobLink" class="form-label">Job Apply Link (source link)</label>
+                        <input type="url" name="jobLink" id="jobLink" class="form-control" required placeholder="https://apploger.com/trainee-software-engineer">
+                    </div>
 
-                    <label for="jobType" class="fs-5 fw-bolder text-light">Job Type</label><br>
-                    <select name="jobType" id="jobType" class="box" required style="padding-left: 10px;">
-                        <option value="" disabled selected>Select job type</option>
-                        <option value="Internship">Internship</option>
-                        <option value="Full-time">Full-time</option>
-                        <option value="Part-time">Part-time</option>
-                        <option value="Contract">Contract</option>
-                    <select><br><br>
+                    <div class="mb-3">
+                        <label for="jobType" class="form-label">Job Type</label>
+                        <select name="jobType" id="jobType" class="form-select" required>
+                            <option value="" disabled selected>Select job type</option>
+                            <option value="Internship">Internship</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Contract">Contract</option>
+                        </select>
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">Experience Needed</label>
+                        <input type="text" name="experience" id="experience" class="form-control" required placeholder="Fresher or number of years">
+                    </div>
 
-                    <label for="experience" class="fs-5 fw-bolder text-light">Experience Needed</label><br>
-                    <input type="text" name="experience" id="experience" class="box" required placeholder="Fresher or number of experience year"><br><br>
+                    <div class="mb-4">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="text" name="salary" id="salary" class="form-control" required placeholder="42500">
+                    </div>
 
-                    <label for="salary" class="fs-5 fw-bolder text-light">Salary</label><br>
-                    <input type="number" name="salary" id="salary" class="box" required placeholder="42500"><br><br>
-
-                    <div class="text-center">
-                        <button type="submit" class="btn batonn fs-3 fw-bolder">Post</button>
+                    <div class="text-center d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-light px-4 fw-bold">Post</button>
+                        <a href="{% url 'profile' %}" class="btn btn-outline-light px-4 fw-bold">Cancel</a>
                     </div>
                 </form>
             </div>
         </div>
-    </div><br><br>
+    </div>
 </div>
+
 
 {% endblock %}

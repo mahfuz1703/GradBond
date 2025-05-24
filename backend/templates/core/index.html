@@ -15,10 +15,10 @@
         <div class="container searchh mt-5 justify-content-center pb-5">
             <form class="d-flex" role="search" action="{% url 'search_alumni' %}" method="GET">
                 {% csrf_token %}
-                <input class="form-control text-dark fs-5 fw-bolder w-75 inputbg" type="text"
+                <input style="height: 70px;" class="form-control text-dark fs-5 fw-semibold  inputbg" type="text"
                     placeholder="Search by University | Department | Company | Job Title" aria-label="Search"
                     id="randomKey" name="randomKey" required>
-                <button class="ms-1 btn btn-success btns" type="submit"> <i class="fa fa-search"></i></button>
+                <button class=" btn btn-success " type="submit"> <i class="fa fa-search"></i></button>
             </form>
         </div><br><br>
     </div>
@@ -26,21 +26,30 @@
 
 <div class="container-fluid bg-light">
     <div class="container mt-3">
-        <div class="d-lg-flex justify-content-around">
-            <div class="col-lg-6 col-md-12 col-12 text-center p-5">
-                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943793/convocation_eekh6j.png" alt="" class="rounded img-fluid w-lg-100 w-md-100 w-100">
+        <div class="row align-items-center">
+            <!-- Image Section -->
+            <div class="col-12 col-lg-6 text-center p-4">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943793/convocation_eekh6j.png"
+                     alt="Convocation"
+                     class="rounded img-fluid w-100" style="max-width: 500px;">
             </div>
-            <div class="col-lg-6 col-md-12 col-12 mt-5 pt-5 ">
-                <h1 class="text-dark fs-3 fw-bolder">The Leading Alumni Finding Website.</h1>
-                <p class="text-dark fs-5 writep">
+
+            <!-- Text Section -->
+            <div class="col-12 col-lg-6 px-4 pb-4">
+                <h1 class="text-dark fs-3 fw-bolder text-center text-lg-start">
+                    The Leading Alumni Finding Website.
+                </h1>
+                <p class="text-dark fs-5 text-center text-lg-start text-justify">
                     GradBond is a platform designed to connect alumni with current students and peers, fostering a
                     strong professional and social network. It enables users to search for alumni by name, graduation
                     year, department, or job title, and facilitates mentoring, career guidance, and event participation.
-                    Perfect for building lasting relationships within the community!</p> <br> <br>
+                    Perfect for building lasting relationships within the community!
+                </p>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="container-fluid my-1">
     <div class="container">
@@ -100,68 +109,82 @@
         <div class="row text-center">
             <h1 class="mt-5 fs-2 fw-bolder resent">Recent Jobs</h1>
         </div>
-        <div class="row mt-2 pb-5 d-flex justify-content-center">
-            <div class="row mt-2 d-flex justify-content-center">
+        <div class="row mt-2 pb-5 justify-content-center">
 
-                {% if jobs %}
+            {% if jobs %}
                 {% for job in jobs %}
-            <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-center">
-                <div class="card border border-dark"
-                    style="min-width: 400px; background-color: #09050f; border-radius: 15px;">
+                <div class="col-lg-4 col-md-6 col-sm-10 col-12 p-3 d-flex justify-content-center">
+                    <div class="card w-100 border border-dark"
+                        style="background-color: #09050f; border-radius: 15px;">
 
-                    <div class="card-body text-center">
-                        <h5 class="card-title" style="color: aliceblue;"> {{job.title}} </h5>
-                        <p style="color: aliceblue;">{{job.company}}</p>
+                        <div class="card-body text-center text-white">
+                            <h5 class="card-title">{{ job.title }}</h5>
+                            <p>{{ job.company }}</p>
 
-                        <div style="text-align: left;">
-                            <p style="color: aliceblue;"> <strong>Deadline:</strong> {{job.deadline | date:"F d, Y"}}
-                            </p>
-                            <p style="color: aliceblue;"> <strong>Job Type:</strong> {{job.job_type}}</p>
-                            <p style="color: aliceblue;"> <strong>Salary:</strong> {{job.salary}} BDT</p>
-                            <p class="card-title" style="color: aliceblue;">Post by <strong> {{job.user.first_name}}
-                                </strong></p>
+                            <div class="text-start">
+                                <p><strong>Deadline:</strong> {{ job.deadline|date:"F d, Y" }}</p>
+                                <p><strong>Job Type:</strong> {{ job.job_type }}</p>
+                                <p><strong>Salary:</strong> {{ job.salary }} BDT</p>
+                                <p>Post by <strong>{{ job.user.first_name }}</strong></p>
+                            </div>
+
+                            {% if user.is_authenticated %}
+                            <a href="{{ job.job_link }}" class="btn btn-primary me-2 mb-2" target="_blank">Apply</a>
+                            {% else %}
+                            <a href="{% url 'signin' %}" class="btn btn-primary me-2 mb-2">Apply</a>
+                            {% endif %}
+
+                            <a href="{% url 'job_detail' job.id %}" class="btn btn-success mb-2">Details</a>
                         </div>
-
-                        {% if user.is_authenticated %}
-                        <a href="{{job.job_link}}" class="btn btn-primary me-3" target="_blank">Apply</a>
-                        {% else %}
-                        <a href="{% url 'signin' %}" class="btn btn-primary me-3">Apply</a>
-                        {% endif %}
-
-                        <a href="{% url 'job_detail' job.id %}" class="mt-2 btn btn-success me-3">
-                            Details</a>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
             {% else %}
-            <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-center">
-                <p style="color: black;">No jobs available at the moment.</p>
-                <a href="{% url 'jobs' %}" style="margin-left: 5px;">Jobs</a>
-            </div>
+                <div class="col-12 text-center mt-4">
+                    <p class="text-dark">No jobs available at the moment.</p>
+                    <a href="{% url 'jobs' %}" class="btn btn-outline-secondary">Go to Jobs</a>
+                </div>
             {% endif %}
 
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid carosolbg pt-4 pb-5" style="background-color: #f3e5f2;">
+    <div class="container">
+        <div class="list-head text-center mb-5">
+            <h1 class="fs-2 fw-bolder">Universities included in GradBond</h1>
+        </div>
+
+        <div class="row justify-content-center align-items-center text-center g-4">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/bubt_k74z2g.png"
+                     class="img-fluid" alt="BUBT Logo">
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/DU_w4zsxo.png"
+                     class="img-fluid" alt="DU Logo">
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/aust_uocu3i.png"
+                     class="img-fluid" alt="AUST Logo">
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943793/jnu_jsweql.png"
+                     class="img-fluid" alt="JNU Logo">
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/NSU_q3b7fo.png"
+                     class="img-fluid" alt="NSU Logo">
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/ju_s82by0.png"
+                     class="img-fluid" alt="JU Logo">
             </div>
         </div>
     </div>
 </div>
 
-<div class="container-fluid carosolbg pt-2" style="background-color: #f3e5f2;"><br><br>
-    <div class="container">
-        <div class="list-head text-center">
-            <h1 class="fs-2 fw-bolder">University that are included in GradBond</h1>
-        </div><br><br><br>
-        <div class="university text-center">
-            <div class="row d-flex justify-content-evenly">
-                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/bubt_k74z2g.png" style="width: 12%; height: 12%;"  alt="...">
-                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/DU_w4zsxo.png" style="width: 12%; height: 12%;"  alt="...">
-                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/aust_uocu3i.png" style="width: 12%; height: 12%;"  alt="...">
-                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943793/jnu_jsweql.png" style="width: 12%; height: 12%;"  alt="...">
-                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/NSU_q3b7fo.png" style="width: 12%; height: 12%;"  alt="...">
-                <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/ju_s82by0.png" style="width: 12%; height: 12%;"  alt="...">
-            </div>
-        </div>
-    </div><br><br><br><br>
-</div>
 
 {% endblock %}

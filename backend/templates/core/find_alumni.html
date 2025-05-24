@@ -9,36 +9,53 @@
 
 {% block content %}
 
-<div class="container-fluid main" style="min-height: 660px;">
+<div class="container-fluid main py-5" style="min-height: 660px;">
     <div class="container">
-        <div class="text-center pt-5"><h1>Find Alumni of Your University</h1></div>
+        <!-- Title -->
+        <div class="row mb-4">
+            <div class="col text-center">
+                <h1 class="fw-bold">Find Alumni of Your University</h1>
+            </div>
+        </div>
+
+        <!-- Form -->
         <form action="{% url 'search_alumni' %}" method="GET">
             {% csrf_token %}
-            <div class="row d-flex justify-content-around pt-5">
-                <div class="col-lg-5 col-md-10 col-10">
-                    <label for="university" class="fs-3 ms-3">University</label><br>
-                    <input type="text" name="university" id="university" class="rounded-4 w-100 p-2 border box">
+            <div class="row g-4">
+                <!-- University -->
+                <div class="col-lg-6 col-md-6 col-12">
+                    <label for="university" class="form-label fs-5">University</label>
+                    <input type="text" name="university" id="university" class="form-control rounded-3 p-2 shadow-sm">
                 </div>
-                <div class="col-lg-5 col-md-10 col-10">
-                    <label for="dept" class="fs-3 ms-3">Department</label><br>
-                    <input type="text" name="dept" id="dept" class="rounded-4 w-100 p-2 border box">
+
+                <!-- Department -->
+                <div class="col-lg-6 col-md-6 col-12">
+                    <label for="dept" class="form-label fs-5">Department</label>
+                    <input type="text" name="dept" id="dept" class="form-control rounded-3 p-2 shadow-sm">
+                </div>
+
+                <!-- Company -->
+                <div class="col-lg-6 col-md-6 col-12">
+                    <label for="company" class="form-label fs-5">Company</label>
+                    <input type="text" name="company" id="company" class="form-control rounded-3 p-2 shadow-sm">
+                </div>
+
+                <!-- Job Title -->
+                <div class="col-lg-6 col-md-6 col-12">
+                    <label for="job_title" class="form-label fs-5">Job Title</label>
+                    <input type="text" name="job_title" id="job_title" class="form-control rounded-3 p-2 shadow-sm">
                 </div>
             </div>
-            <div class="row d-flex justify-content-around pt-3">
-                <div class="col-lg-5 col-md-10 col-10">
-                    <label for="company" class="fs-3 ms-3">Company</label><br>
-                    <input type="text" name="company" id="company" class="rounded-4 w-100 p-2 border box">
+
+            <!-- Button -->
+            <div class="row mt-5">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary px-5 py-2 fs-5 rounded-pill shadow">Find Now</button>
                 </div>
-                <div class="col-lg-5 col-md-10 col-10">
-                    <label for="job_title" class="fs-3 ms-3">Job Title</label><br>
-                    <input type="text" name="job_title" id="job_title" class="rounded-4 w-100 p-2 border box">
-                </div>
-            </div><br>
-            <div class="text-center mt-5">
-                <button type="submit" class="baton">Find Now</button>
-            </div><br><br>
+            </div>
         </form>
     </div>
 </div>
+
 
 {% endblock %}

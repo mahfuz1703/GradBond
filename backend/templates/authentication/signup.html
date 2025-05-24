@@ -9,85 +9,74 @@
 
 {% block content %}
 
-<div class="container-fluid main">
+<div class="container-fluid py-5" style="min-height: 660px; background-color: antiquewhite;">
     <div class="container">
-        <div class="row login-banner">
+        <div class="row shadow-lg rounded-4 overflow-hidden">
+            
+            <!-- lef side signup form -->
+            <div class="col-lg-7 bg-dark text-white p-5">
+                <h2 class="text-center mb-4">Create a New Account</h2>
 
-            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
-                <div class="write text-center">
-                    <h1 class="text-light pt-5">Create a new Account</h1>
-                </div>
-                <form method="POST" class="ms-5 mt-5 ps-2">
+                <form method="POST" novalidate>
                     {% csrf_token %}
-                    <label for="userType" class="fs-5 fw-bolder text-light">I am a/an</label> <br>
-                    <select id="userType" name="userType" onchange="toggleFields()"
-                        class="box form-select form-select-lg" required>
-                        <option selected>Choose your option</option>
-                        <option value="student">Student</option>
-                        <option value="alumni">Alumni</option>
-                    </select><br>
 
-                    <!-- <label for="fullname" class="fs-5 fw-bolder text-light">Full Name</label><br>
-                    <input type="text" name="fullname" id="fullname" class="box" required placeholder="Ex. John Doe"><br><br>
+                    <!-- User Type -->
+                    <div class="mb-3">
+                        <label for="userType" class="form-label fs-5">I am a/an</label>
+                        <select id="userType" name="userType" class="form-select form-select-lg rounded-3" required>
+                            <option selected disabled>Choose your option</option>
+                            <option value="student">Student</option>
+                            <option value="alumni">Alumni</option>
+                        </select>
+                    </div>
 
-                    <label for="university" class="fs-5 fw-bolder text-light">University</label><br>
-                    <input type="text" name="university" id="university" class="box" required placeholder="Ex. Bangladesh University of Business and Technology"><br><br>
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label fs-5">Email</label>
+                        <input type="email" name="email" id="email" class="form-control form-control-lg rounded-3" required placeholder="Ex. example@gmail.com">
+                    </div>
 
-                    <label for="dept" class="fs-5 fw-bolder text-light">Department</label><br>
-                    <input type="text" name="dept" id="dept" class="box" required placeholder="Ex. Computer Science and Engineering"><br><br>
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="pass1" class="form-label fs-5">Password</label>
+                        <input type="password" name="pass1" id="pass1" class="form-control form-control-lg rounded-3" required>
+                    </div>
 
-                    <label for="student_id" class="fs-5 fw-bolder text-light">Student ID 
-                        <span style="font-size: small;">(For user security it will only be used by authority)</span>
-                    </label><br>
-                    <input type="text" name="student_id" id="student_id" class="box" required placeholder="Ex. abcd-1234"><br><br>
-                    -->
+                    <!-- Confirm Password -->
+                    <div class="mb-4">
+                        <label for="pass2" class="form-label fs-5">Confirm Password</label>
+                        <input type="password" name="pass2" id="pass2" class="form-control form-control-lg rounded-3" required>
+                    </div>
 
-                    <label for="email" class="fs-5 fw-bolder text-light">Email</label><br>
-                    <input type="email" name="email" id="email" class="box" required placeholder="Ex. example@gmail.com"><br><br>
-
-
-                    <!-- Extra field for alumni -->
-                    <!-- <div class="extra-fields" style="display: none;" id="alumniFields">
-                        <label for="graduation_year" class="fs-5 fw-bolder text-light">Graduation Year</label>
-                        <input type="text" id="graduation_year" name="graduation_year" class="box" placeholder="Ex. 2024"><br><br>
-
-                        <label for="company" class="fs-5 fw-bolder text-light">Company</label>
-                        <input type="text" id="company" name="company" class="box" placeholder="Ex. Therap BD"><br><br>
-
-                        <label for="job_title" class="fs-5 fw-bolder text-light">Job Title</label>
-                        <input type="text" id="job_title" name="job_title" class="box" placeholder="Ex. Software Engineer"><br><br>
-
-                        <label for="linkedin" class="fs-5 fw-bolder text-light">LinkedIn Url</label>
-                        <input type="text" id="linkedin" name="linkedin" class="box" placeholder="Ex. https://www.linkedin.com/in/John-Doe/"><br><br>
-                    </div> -->
-
-
-                    <label for="pass1" class="fs-5 fw-bolder text-light">Password</label><br>
-                    <input type="password" name="pass1" id="pass1" class="box"><br>
-                    <br>
-                    <label for="pass2" class="fs-5 fw-bolder text-light">Confirm Password</label><br>
-                    <input type="password" name="pass2" id="pass2" class="box"><br>
-                    <br>
-
+                    <!-- Submit -->
                     <div class="text-center">
-                        <button type="submit" class="btn batonn fs-3 fw-bolder">Sign up</button>
+                        <button type="submit" class="btn btn-warning text-dark fs-5 fw-semibold px-4 py-2 rounded-pill shadow-sm">
+                            Sign Up
+                        </button>
+                    </div>
+
+                    <!-- Login Link -->
+                    <div class="text-center mt-3">
+                        <p class="fs-6">Already have an account? <a href="{% url 'signin' %}" class="text-warning">Login here</a></p>
                     </div>
                 </form>
             </div>
-        </div>
-    </div><br><br>
-</div>
 
-<!-- <script>
-    function toggleFields() {
-        var userType = document.getElementById('userType').value;
-        var alumniFields = document.getElementById('alumniFields');
-        if (userType === 'alumni') {
-            alumniFields.style.display = 'block';
-        } else {
-            alumniFields.style.display = 'none';
-        }
-    }
-</script> -->
+
+            <!-- right side banner with centered shadow box -->
+            <div class="col-lg-5 d-none d-lg-block"
+                style="background: url('https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/Mask_mahobo.png') center center / cover no-repeat;">
+
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="bg-dark bg-opacity-50 p-4 rounded-4 text-white text-center w-75">
+                        <h2 class="fw-semibold fs-1 display-5 mb-2">Find Alumni</h2>
+                        <p class="fs-4 text-white-50 mb-4">Of your university</p>
+                        <a href="{% url 'signin' %}" class="btn btn-warning text-white fs-5 px-4 py-2 rounded-3 shadow">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

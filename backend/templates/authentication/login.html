@@ -9,51 +9,53 @@
 
 {% block content %}
 
-<div class="container-fluid main">
+<div class="container-fluid main py-5" style="min-height: 660px; background-color: antiquewhite;">
     <div class="container">
-        <div class="row">
-            <div class="col-xl-4 col-lg-5 col-md-9 col-12 p-4">
-                <div class="over col-lg-4 col-md-6 col-12 ms-md-5">
-                    <h3 class="fs-1 fw-bolder head">Find Alumni</h3>
-                    <p class="fs-2">Of Your University</p>
-                    <a style="color: white;" href="{% url 'signup' %}" class="btn btn-danger btn-outline-warning fs-3 rounded-3 size">Sign up</a>
+        <div class="row shadow-lg rounded-4 overflow-hidden">
+            <!-- Left side with background image -->
+            <div class="col-xl-4 col-lg-5 col-md-12 text-white d-flex flex-column justify-content-center align-items-start p-5"
+                 style="background: url('https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943794/Mask_mahobo.png') no-repeat center center; background-size: cover;">
+                <div class="bg-dark bg-opacity-50 p-4 rounded-4 w-100">
+                    <h2 class="fw-semibold fs-3 display-5 mb-2">Welcome Back</h2>
+                    <p class="fs-4 text-white-50 mb-4">Don't have an account?</p>
+                    <a href="{% url 'signup' %}" class="btn btn-warning text-white fs-5 px-4 py-2 rounded-3 shadow">Sign Up</a>
                 </div>
             </div>
-            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
-                <div class="write text-center">
-                    <h1 class="text-light pt-5">Log in to your Account</h1>
-                </div>
-                <form method="POST" class="ms-5 mt-5 ps-2">
+
+            <!-- Right side (Login Form) -->
+            <div class="col-xl-8 col-lg-7 col-md-12 bg-dark text-white p-5">
+                <h2 class="text-center mb-4">Log in to your Account</h2>
+                <form method="POST" class="mx-auto" style="max-width: 500px;">
                     {% csrf_token %}
-                    <label for="email" class="fs-3 fw-bolder text-light"> Email Address</label><br>
-                    <input type="email" name="email" id="email" class="box"><br> <br>
-                    <label for="pass" class="fs-3 fw-bolder text-light">Password</label><br>
-                    <input type="password" name="pass" id="pass" class="box"><br>
-                    <!-- <a href="#" class="text-warning fs-5">Forgot Password</a><br><br> -->
-                    <div class="text-center pt-4">
-                        <button type="submit" class="btn batonn fs-3 fw-bolder">Login</button>
+                    <div class="mb-4">
+                        <label for="email" class="form-label fs-5">Email Address</label>
+                        <input type="email" name="email" id="email" class="form-control rounded-3 p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="pass" class="form-label fs-5">Password</label>
+                        <input type="password" name="pass" id="pass" class="form-control rounded-3 p-2">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary fs-5 px-4 py-2 rounded-pill shadow">Login</button>
                     </div>
                 </form>
-                <!-- <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-12 ms-5 ">
-                            <div class="or-separator text-light fs-3">Or</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container ps-5 pe-5">
-                    <div class="d-xl-flex d-lg-flex d-md-flex justify-content-around">
-                        <div>
-                            <a href="https://www.google.com/" class="btn baton p-3">
-                                <i class="fa-brands fa-google"></i>
-                                <samp class="ms-1">Login with Google</samp>
-                            </a>
-                        </div>
-                    </div>
+
+                <!-- Separator -->
+                <!-- <div class="text-center my-4">
+                    <span class="fs-5">— OR —</span>
+                </div> -->
+
+                <!-- Google login -->
+                <!-- <div class="d-flex justify-content-center">
+                    <a href="https://www.google.com/" class="btn btn-outline-light px-4 py-2 fs-5 rounded-pill shadow d-flex align-items-center">
+                        <i class="fa-brands fa-google me-2"></i> Login with Google
+                    </a>
                 </div> -->
             </div>
         </div>
-    </div><br><br>
+    </div>
 </div>
+
+
 
 {% endblock %}

@@ -15,24 +15,32 @@
 
         <div class="row">
             <form action="{% url 'jobs' %}" method="GET">
-                <div class="d-flex justify-content-center gap-3 mt-4">
-                    <input onchange="this.form.submit()" type="text" name="titleCompany" class="form-control"
-                        placeholder="Search by title or company" value="{{ request.GET.search }}"
-                        style="padding: 10px; border-radius: 5px; width: 300px;">
-                    <select onchange="this.form.submit()" name="jobType" id="jobType" class="box"
-                        style="padding: 10px; border-radius: 5px;">
-                        <option value="" disabled selected>Select job type</option>
-                        <option value="Internship">Internship</option>
-                        <option value="Full-time">Full-time</option>
-                        <option value="Part-time">Part-time</option>
-                        <option value="Contract">Contract</option>
-                    <select>
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-4">
+                <input onchange="this.form.submit()" 
+                        type="text" name="titleCompany" 
+                        class="form-control" 
+                        placeholder="Search by title or company" 
+                        value="{{ request.GET.search }}"
+                        style="padding: 10px; border-radius: 5px; max-width: 300px; width: 100%;">
+                        
+                <select onchange="this.form.submit()" 
+                        name="jobType" id="jobType" 
+                        class="form-select" 
+                        style="padding: 10px; border-radius: 5px; max-width: 200px; width: 100%;">
+                    <option value="" disabled selected>Select job type</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Contract">Contract</option>
+                </select>
 
-                    <!-- reset buttont -->
-                    <a href="{% url 'jobs' %}" class="btn btn-primary" style="padding-top: 10px;">Reset</a>
+                <a href="{% url 'jobs' %}" class="btn btn-primary" style="padding: 10px 20px; white-space: nowrap;">
+                    Reset
+                </a>
                 </div>
             </form>
         </div>
+
 
         <div class="row">
             {% if jobs %}
@@ -43,45 +51,41 @@
         </div>
 
         <div class="row d-flex justify-content-center mt-1">
-
             {% for job in jobs %}
-            <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-center">
-                <div class="card border border-dark"
-                    style="min-width: 400px; background-color: #09050f; border-radius: 15px;">
+                <div class="col-lg-4 col-md-6 col-sm-10 col-12 p-3 d-flex justify-content-center">
+                    <div class="card w-100 border border-dark"
+                        style="background-color: #09050f; border-radius: 15px;">
 
-                    <div class="card-body text-center">
-                        <h5 class="card-title" style="color: aliceblue;"> {{job.title}} </h5>
-                        <p style="color: aliceblue;">{{job.company}}</p>
+                        <div class="card-body text-center text-white">
+                            <h5 class="card-title">{{ job.title }}</h5>
+                            <p>{{ job.company }}</p>
 
-                        <div style="text-align: left;">
-                            <p style="color: aliceblue;"> <strong>Deadline:</strong> {{job.deadline | date:"F d, Y"}}
-                            </p>
-                            <p style="color: aliceblue;"> <strong>Job Type:</strong> {{job.job_type}}</p>
-                            <p style="color: aliceblue;"> <strong>Salary:</strong> {{job.salary}} BDT</p>
-                            
+                            <div class="text-start">
+                                <p><strong>Deadline:</strong> {{ job.deadline|date:"F d, Y" }}</p>
+                                <p><strong>Job Type:</strong> {{ job.job_type }}</p>
+                                <p><strong>Salary:</strong> {{ job.salary }} BDT</p>
+                                {% if user.is_authenticated %}
+                                <p class="card-title" style="color: aliceblue;">Post by <strong> 
+                                    <a href="{% url 'about' job.user.id %}" style="text-decoration: none;">{{job.user.first_name}}</a>
+                                    </strong></p>
+                                {% else %}
+                                <p class="card-title" style="color: aliceblue;">Post by <strong> 
+                                    <a href="{% url 'signin' %}" style="text-decoration: none;">{{job.user.first_name}}</a>
+                                    </strong></p>
+                                {% endif %}
+                            </div>
+
                             {% if user.is_authenticated %}
-                            <p class="card-title" style="color: aliceblue;">Post by <strong> 
-                                <a href="{% url 'about' job.user.id %}" style="text-decoration: none;">{{job.user.first_name}}</a>
-                                </strong></p>
+                            <a href="{{ job.job_link }}" class="btn btn-primary me-2 mb-2" target="_blank">Apply</a>
                             {% else %}
-                            <p class="card-title" style="color: aliceblue;">Post by <strong> 
-                                <a href="{% url 'signin' %}" style="text-decoration: none;">{{job.user.first_name}}</a>
-                                </strong></p>
+                            <a href="{% url 'signin' %}" class="btn btn-primary me-2 mb-2">Apply</a>
                             {% endif %}
+
+                            <a href="{% url 'job_detail' job.id %}" class="btn btn-success mb-2">Details</a>
                         </div>
-
-                        {% if user.is_authenticated %}
-                        <a href="{{job.job_link}}" class="btn btn-primary me-3" target="_blank">Apply</a>
-                        {% else %}
-                        <a href="{% url 'signin' %}" class="btn btn-primary me-3">Apply</a>
-                        {% endif %}
-
-                        <a href="{% url 'job_detail' job.id %}" class="mt-2 btn btn-success me-3">
-                            Details</a>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
 
         </div>
     </div><br><br><br>

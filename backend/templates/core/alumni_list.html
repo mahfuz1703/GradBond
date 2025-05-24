@@ -9,52 +9,60 @@
 
 {% block content %}
 
-<div class="container-fluid main">
-    <div class="container main" style="min-height: 660px;">
-        {% if alumni_list %}
-        <div class="row text-center pt-5 fw-bolder">
-            <h1 class="writeh1">Alumni List</h1>
+<div class="container-fluid main py-5" style="min-height: 660px; background-color: antiquewhite;">
+  <div class="container">
+    {% if alumni_list %}
+    <div class="row pt-2 ps-4 mb-4">
+        <div class="col-12">
+            <h4 class="fw-bold ms-2">
+            Found {{ alumni_list.count }} alumni based on your keywords.
+            </h4>
         </div>
-        <div class="row mt-3 d-flex justify-content-center">
-            {% for alumni in alumni_list %}
-            <div class="col-lg-4 col-md-12 col-12 p-4 d-flex justify-content-evenly">
-                <div class="card rounded-4 pic" style="background-color: #3D2462; width: 350px;">
-                    <img src="{{alumni.image.url}}" class="card-img-top pt-3 ps-3 pe-3" alt="{{alumni.full_name}}" height="250px">
-                    <div class="card-body text-center">
-                        <h1 class="card-title text-light fs-3 fw-semibold">{{alumni.full_name}}</h1>
-                        <h4 class="card-title text-light fs-6 fw-semibold">{{alumni.job_title}}
-                            <span class="fs-6">({{alumni.company}})</span>
-                        </h4>
-                        <h4 class="card-text text-light fs-6">{{alumni.university}}</h4>
-                        <p class="card-text text-light fs-6">{{alumni.dept}}</p>
-                        
-                        {% if user.is_authenticated %}
-                        <div class="row d-flex justify-content-around">
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="{% url 'about' alumni.user.id %}" class="btn btn-outline-primary w-75 rounded-3 fs-6 fw-semibold">About Me</a>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <!-- <a href="{{alumni.linkedin}}" class="btn btn-outline-primary w-75 rounded-3 fs-5 fw-bolder mt-1" target="_blank">Linkedin</a> -->
-                                <a href="{% url 'chat_with_user' alumni.user.id %}" class="btn btn-outline-success  rounded-3 fs-6 fw-semibold">Message</a>
-                            </div>
-                        </div><br><br>
-                        {% else %}
-                        <div class="row d-flex justify-content-around">
-                            <div class="col-lg-6 col-md-6 col-10">
-                                <a href="{% url 'signin' %}" class="btn btn-outline-success rounded-3 fs-6 fw-semibold" >Say Hello!!</a>
-                            </div>
-                        </div><br><br>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% else %}
-        <div class="row fw-semibold d-flex justify-content-center"> 
-            <h1 style="padding-bottom: 100px; padding-top: 100px;">We could not find any alumni matching your criteria. Kindly refine your search parameters and try again.</h1> <br> <br> <br>
-        {% endif %}
     </div>
+
+
+    <div class="row justify-content-center g-4">
+      {% for alumni in alumni_list %}
+      <div class="col-lg-4 col-md-6 col-sm-8 col-12 d-flex justify-content-center">
+        <div class="card rounded-4" style="background-color: #3D2462; width: 100%; max-width: 350px;">
+
+          <div class="p-3">
+            <img src="{{ alumni.image.url }}" alt="{{ alumni.full_name }}" 
+                 class="rounded" 
+                 style="width: 100%; height: 250px; object-fit: cover;">
+          </div>
+
+          <div class="card-body text-center px-3">
+            <h2 class="card-title text-light fs-4 fw-semibold">{{ alumni.full_name }}</h2>
+            <h5 class="text-light fs-6 fw-semibold mb-1">{{ alumni.job_title }}
+              <span class="fs-6">({{ alumni.company }})</span>
+            </h5>
+            <p class="text-light fs-6 mb-1">{{ alumni.university }}</p>
+            <p class="text-light fs-6 mb-3">{{ alumni.dept }}</p>
+
+            {% if user.is_authenticated %}
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+              <a href="{% url 'about' alumni.user.id %}" class="btn btn-outline-primary flex-fill rounded-3 fs-6 fw-semibold">About Me</a>
+              <a href="{% url 'chat_with_user' alumni.user.id %}" class="btn btn-outline-success flex-fill rounded-3 fs-6 fw-semibold">Message</a>
+            </div>
+            {% else %}
+            <a href="{% url 'signin' %}" class="btn btn-outline-success rounded-3 fs-6 fw-semibold w-75 mx-auto d-block">Say Hello!!</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="row justify-content-center">
+      <h3 class="text-center fw-semibold py-5 px-3">
+        We could not find any alumni matching your criteria. Kindly refine your search parameters and try again.
+      </h3>
+    </div>
+    {% endif %}
+  </div>
 </div>
+
+
 
 {% endblock %}

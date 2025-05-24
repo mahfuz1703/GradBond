@@ -10,91 +10,80 @@
 
 {% block content %}
 
-    <section style="background-color: antiquewhite; min-height: 660px;">
-        <div class="container" style="padding-top: 40px;">
-            <div class="row">
-                <!-- Left: User list/history -->
-                <div class="col-md-4">
-                    <h4 style="color: #16525c; font-weight: bolder;">GradBondSpace</h4>
-                    <div class="user-list d-flex flex-row">
-                        <ul>
-                            {% for user in users %}
-                            <li class="d-inline-flex align-items-center">
+    <section class="py-5" style="background-color: antiquewhite; min-height: 660px;">
+    <div class="container">
+        <div class="row">
+            <!-- User List -->
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h4 class="text-primary fw-bold mb-3">GradBondSpace</h4>
+                <div class="bg-white rounded shadow-sm p-3" style="max-height: 350px; overflow-y: auto;">
+                    <ul class="list-unstyled mb-0">
+                        {% for user in users %}
+                        <li class="mb-2">
+                            <a href="{% url 'chat_with_user' user.id %}" class="d-flex align-items-center text-decoration-none p-2 rounded {% if selected_user and user.id == selected_user.id %}bg-dark text-white bg-opacity-10{% endif %}">
                                 {% if user.alumniprofile %}
-                                <img src="{{ user.alumniprofile.image.url }}" alt="" width="25" height="25"
-                                    class="rounded-circle">
+                                <img src="{{ user.alumniprofile.image.url }}" alt="Profile Image" width="35" height="35" class="rounded-circle me-2">
+                                <span class="text-dark">{{ user.alumniprofile.full_name }}</span>
                                 {% else %}
-                                <img src="{{ user.studentprofile.image.url }}" alt="" width="25" height="25"
-                                    class="rounded-circle">
+                                <img src="{{ user.studentprofile.image.url }}" alt="Profile Image" width="35" height="35" class="rounded-circle me-2">
+                                <span class="text-dark">{{ user.studentprofile.full_name }}</span>
                                 {% endif %}
-                                <a href="{% url 'chat_with_user' user.id %}"
-                                    class="user-link {% if selected_user and user.id == selected_user.id %}active{% endif %} ms-2">
-                                    {% if user.alumniprofile %}
-                                    {{ user.alumniprofile.full_name }}
-                                    {% else %}
-                                    {{ user.studentprofile.full_name }}
-                                    {% endif %}
-                                </a>
-                            </li> <br>
-                            {% empty %}
-                            <span>No chats yet.</span>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="text-muted">No chats yet.</li>
+                        {% endfor %}
+                    </ul>
                 </div>
-                <!-- Right: Chat area -->
-                <div class="col-md-8">
+            </div>
+
+            <!-- Chat Box -->
+            <div class="col-md-8">
+                <div class="bg-white rounded shadow-sm p-4" style="min-height: 550px;">
                     {% if selected_user %}
-                    <h4>Chat with
-                        {% if selected_user.alumniprofile %}
-                        <a href="{% url 'about' selected_user.id %}" style="text-decoration: none;">{{ selected_user.alumniprofile.full_name }}</a>
-                        {% else %}
-                        <a href="{% url 'about' selected_user.id %}" style="text-decoration: none;">{{ selected_user.studentprofile.full_name }}</a>
-                        {% endif %}
-                    </h4>
-                    <div id="chat-log">
+                    <h5 class="mb-3">Chat with 
+                        <a href="{% url 'about' selected_user.id %}" class="text-decoration-none">
+                            {% if selected_user.alumniprofile %}
+                            {{ selected_user.alumniprofile.full_name }}
+                            {% else %}
+                            {{ selected_user.studentprofile.full_name }}
+                            {% endif %}
+                        </a>
+                    </h5>
+                    <div id="chat-log" class="mb-3" style="height: 380px; overflow-y: auto;">
                         {% for msg in messagess %}
-                        <div
-                            class="d-flex {% if msg.sender == request.user %}justify-content-end{% else %}justify-content-start{% endif %} mb-2">
-                            <div class="p-2 rounded 
-                                            {% if msg.sender == request.user %}
-                                                bg-success text-white
-                                            {% else %}
-                                                bg-primary text-white
-                                            {% endif %}">
-
-                                <div>
-                                    {% if msg.sender != request.user %}
-                                    {% if msg.sender.alumniprofile %}
-                                    <img src="{{ msg.sender.alumniprofile.image.url }}" alt="" width="25" height="25"
-                                        class="rounded-circle">
-                                    {% else %}
-                                    <img src="{{ msg.sender.studentprofile.image.url }}" alt="" width="25" height="25"
-                                        class="rounded-circle">
-                                    {% endif %}
-                                    {% endif %}
-                                    <strong> {{ msg.message }} </strong>
+                            <div class="d-flex mb-2 {% if msg.sender == request.user %}justify-content-end{% else %}justify-content-start{% endif %}">
+                                <div class="position-relative p-2 rounded {% if msg.sender == request.user %}bg-success{% else %}bg-primary{% endif %} text-white message-container">
+                                    <!-- Show time above message -->
+                                    <small class="text-muted mb-1" style="font-size: 0.75rem;">
+                                        {% if msg.sender.alumniprofile %}
+                                            <img src="{{ msg.sender.alumniprofile.image.url }}" alt="Sender Image" width="22" height="22" class="rounded-circle me-2">
+                                        {% else %}
+                                            <img src="{{ msg.sender.studentprofile.image.url }}" alt="Sender Image" width="22" height="22" class="rounded-circle me-2">
+                                        {% endif %}
+                                        {{ msg.timestamp|date:"M d, Y h:i A" }}
+                                    </small>
+                                    <div class="d-flex align-items-center">
+                                        <strong>{{ msg.message }}</strong>
+                                    </div>
                                 </div>
-
                             </div>
-                        </div>
                         {% endfor %}
                     </div>
-                    <input type="text" id="chat-message-input" class="form-control mt-2"
-                        placeholder="Type a message and press Enter...">
+                    <input type="text" id="chat-message-input" class="form-control" placeholder="Type a message and press Enter...">
                     {% else %}
-                    <h4>Select a user to start chatting</h4>
-                    <div id="chat-log" class="text-muted d-flex justify-content-center align-items-center"
-                        style="height: 400px;">
+                    <h5 class="mb-3">Select a user to start chatting</h5>
+                    <div class="text-muted d-flex justify-content-center align-items-center" style="height: 380px;">
                         No chat selected.
                     </div>
-                    <input type="text" id="chat-message-input" class="form-control mt-2"
-                        placeholder="Type a message and press Enter..." disabled>
+                    <input type="text" id="chat-message-input" class="form-control mt-2" placeholder="Type a message and press Enter..." disabled>
                     {% endif %}
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
     
     {% if selected_user and room_name %}
     <script>

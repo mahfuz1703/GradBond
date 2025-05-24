@@ -10,222 +10,154 @@
 
 {% block content %}
 
-<section class="profile" style="min-height: 660px;">
-    <div class="container">
-        <div class="main-body">
+<section class="profile py-5" style="min-height: 660px;">
+  <div class="container">
+    <div class="main-body">
 
-            <div class="row gutters-sm">
+      <div class="row g-4">
 
-                <!-- profile -->
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{details.image.url}}" alt="{{details.full_name}}"
-                                    class="rounded-circle" width="200px" height="200">
-                                <div class="mt-3">
-                                    <h4>{{details.full_name}}</h4>
-                                    <p class="text-secondary mb-1">{{details.job_title}}</p>
-                                    <p class="text-muted font-size-sm">{{details.company}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="card mt-3">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-github mr-2 icon-inline">
-                                        <path
-                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                                        </path>
-                                    </svg>Github</h6>
-                                <span class="text-secondary">bootdey</span>
-                            </li>
-                        </ul>
-                    </div> -->
-                </div>
-
-                <div class="col-lg-8">
-
-                    <!-- profile information -->
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Name</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{details.full_name}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">University</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{details.university}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Department</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{details.dept}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Student ID</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{details.student_id}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{details.email}}
-                                </div>
-                            </div>
-                            <hr>
-                            {% if isAlumni %}
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Graduation Year</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{details.graduation_year}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Company</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{details.company}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Job Title</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{details.job_title}}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">LinkedIn</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <a href="{{details.linkedin}}" target="_blank">{{details.linkedin}}</a>
-                                </div>
-                            </div>
-                            <hr>
-                            {% endif %}
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="btn btn-success" href="{% url 'update_profile' %}">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {% if isAlumni %}
-                    <!-- events -->
-                    <div class="card mb-3 p-5">
-                        <div class="event_head d-flex justify-content-around">
-                            {% if events %}
-                            <h3 class="text-center me-2">My Events</h3>
-                            {% else %}
-                            <h3 class="text-center me-2">You have no events</h3>
-                            {% endif %}
-                            
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="btn btn-info " href="{% url 'add-event' %}">Create
-                                        Event</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row d-flex justify-content-center">
-
-                            {% for event in events %}
-                            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
-                                <div class="card border border-dark" style="width: 22rem;">
-                                    {% if event.image %}
-                                    <img src="{{event.image.url}}" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}" height="300px">
-                                    {% else %}
-                                    <img src="/media/events/default.png" class="card-img-top pt-2 ps-2 pe-2" alt="{{event.title}}">
-                                    {% endif %}
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title"> {{event.title}} </h5>
-                                        <p>{{event.date | date:"F d, Y"}}</p>
-                                        <a href="{% url 'edit_event' event.id %}" class="btn btn-success me-3">Edit</a>
-                                        <a href="{% url 'delete_event' event.id %}" class="btn btn-danger">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% if isAlumni %}
-                    <!-- Job Posts -->
-                    <div class="card mb-3 p-5">
-                        <div class="event_head d-flex justify-content-around">
-                            {% if jobs %}
-                            <h3 class="text-center me-2">My Jobs</h3>
-                            {% else %}
-                            <h3 class="text-center me-2">You have no jobs</h3>
-                            {% endif %}
-                            
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="btn btn-info " href="{% url 'create_job' %}">Post Job</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row d-flex justify-content-center">
-
-                            {% for job in jobs %}
-                            <div class="col-lg-6 p-3 col-md-12 col-12 d-flex justify-content-center">
-                                <div class="card border border-dark" style="width: 22rem;">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title"> {{job.title}} </h5>
-                                        <p>{{job.deadline | date:"F d, Y"}}</p>
-                                        <a href="{% url 'edit_job' job.id %}" class="btn btn-success me-3">Edit</a>
-                                        <a href="{% url 'delete_job' job.id %}" class="btn btn-danger">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-
-                        </div>
-                    </div>
-                    {% endif %}
-                </div>
+        <!-- Profile Sidebar -->
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <img src="{{details.image.url}}" alt="{{details.full_name}}"
+                   class="rounded-circle img-fluid" style="width: 180px; height: 180px; object-fit: cover;">
+              <div class="mt-3">
+                <h4 class="fw-semibold">{{details.full_name}}</h4>
+                <p class="text-secondary mb-1">{{details.job_title}}</p>
+                <p class="text-muted">{{details.company}}</p>
+              </div>
+              <a href="{% url 'update_profile' %}" class="btn btn-success mt-3">Edit Profile</a>
             </div>
+          </div>
+        </div>
+
+        <!-- Profile Details -->
+        <div class="col-md-8">
+
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white text-center">
+              <h4 class="mb-0">Personal Information</h4>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">Name</div>
+                <div class="col-sm-8 text-secondary">{{details.full_name}}</div>
+              </div>
+              <hr>
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">University</div>
+                <div class="col-sm-8 text-secondary">{{details.university}}</div>
+              </div>
+              <hr>
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">Department</div>
+                <div class="col-sm-8 text-secondary">{{details.dept}}</div>
+              </div>
+              <hr>
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">Email</div>
+                <div class="col-sm-8 text-secondary">{{details.email}}</div>
+              </div>
+              <hr>
+              {% if isAlumni %}
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">Graduation Year</div>
+                <div class="col-sm-8 text-secondary">{{details.graduation_year}}</div>
+              </div>
+              <hr>
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">Company</div>
+                <div class="col-sm-8 text-secondary">{{details.company}}</div>
+              </div>
+              <hr>
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">Job Title</div>
+                <div class="col-sm-8 text-secondary">{{details.job_title}}</div>
+              </div>
+              <hr>
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">LinkedIn</div>
+                <div class="col-sm-8">
+                    <a href="{{ details.linkedin }}" target="_blank" class="text-decoration-none text-primary" rel="noopener">
+                        {{ details.linkedin }}
+                    </a>
+                </div>
+              </div>
+              <hr>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if isAlumni %}
+          <!-- Active Events -->
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white text-center d-flex justify-content-between align-items-center">
+            {% if events %}
+                <h4 class="mb-0">My Events</h4>
+            {% else %}
+                <h4 class="mb-0">You have no events</h4>
+            {% endif %}
+                <a class="btn btn-light text-success fw-semibold" href="{% url 'add-event' %}">+ Add Event</a>
+            </div>
+            <div class="card-body">
+              <div class="row gy-4 justify-content-center">
+                {% for event in events %}
+                <div class="col-lg-6 col-md-12 d-flex justify-content-center">
+                  <div class="card border border-secondary shadow-sm" style="width: 100%; max-width: 350px;">
+                    {% if event.image %}
+                    <img src="{{event.image.url}}" alt="{{event.title}}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <img src="/media/events/default.png" alt="{{event.title}}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body text-center">
+                      <h5 class="card-title">{{event.title}}</h5>
+                      <p class="text-muted">{{event.date | date:"F d, Y"}}</p>
+                      <a href="{% url 'edit_event' event.id %}" class="btn btn-success me-2">Edit</a>
+                      <a href="{% url 'delete_event' event.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Jobs -->
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white text-center d-flex justify-content-between align-items-center">
+            {% if events %}
+                <h4 class="mb-0">My Jobs</h4>
+            {% else %}
+                <h4 class="mb-0">You have no jobs</h4>
+            {% endif %}
+                <a class="btn btn-light text-success fw-semibold" href="{% url 'create_job' %}">+ Add Job</a>
+            </div>
+            <div class="card-body">
+              <div class="row gy-4 justify-content-center">
+                {% for job in jobs %}
+                <div class="col-lg-6 col-md-12 d-flex justify-content-center">
+                  <div class="card border border-secondary shadow-sm" style="width: 100%; max-width: 350px;">
+                    <div class="card-body text-center">
+                      <h5 class="card-title">{{job.title}}</h5>
+                      <p class="text-muted">Deadline: {{job.deadline | date:"F d, Y"}}</p>
+                      <a href="{% url 'edit_job' job.id %}" class="btn btn-success me-2">Edit</a>
+                      <a href="{% url 'delete_job' job.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
 
         </div>
+      </div>
+
     </div>
+  </div>
 </section>
+
 
 {% endblock %}

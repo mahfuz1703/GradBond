@@ -9,68 +9,73 @@
 
 {% block content %}
 
-<div class="container-fluid main">
+<div class="container-fluid py-5 main">
     <div class="container">
-        <div class="row login-banner">
-
-            <div class="col-xl-8 col-lg-7 col-md-12 col-12 bgcolor">
-                <div class="write text-center">
-                    <h1 class="text-light pt-5">Update your profile</h1>
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10 col-md-12 bg-dark text-light rounded-3 shadow p-4">
+                <div class="text-center mb-4">
+                    <h1 class="fw-bold">Update Your Profile</h1>
                 </div>
-                <form method="POST" class="ms-5 mt-5 ps-2" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
 
+                    <!-- Common Fields -->
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name" required value="{{ details.full_name }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="university" class="form-label">University</label>
+                        <input type="text" class="form-control" id="university" name="university" value="{{ details.university }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dept" class="form-label">Department</label>
+                        <input type="text" class="form-control" id="dept" name="dept" required value="{{ details.dept }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="student_id" class="form-label">Student ID</label>
+                        <input type="text" class="form-control" id="student_id" name="student_id" required value="{{ details.student_id }}">
+                    </div>
+
                     {% if isAlumni %}
-                    <label for="full_name" class="fs-5 fw-bolder text-light">Name</label><br>
-                    <input type="text" name="full_name" id="full_name" class="box" required value="{{ details.full_name }}"> <br><br>
+                        <div class="mb-3">
+                            <label for="graduation_year" class="form-label">Graduation Year</label>
+                            <input type="text" class="form-control" id="graduation_year" name="graduation_year" required value="{{ details.graduation_year }}">
+                        </div>
 
-                    <label for="university" class="fs-5 fw-bolder text-light">University</label><br>
-                    <input type="text" name="university" id="university" class="box" value="{{ details.university }}"><br><br>
+                        <div class="mb-3">
+                            <label for="company" class="form-label">Company</label>
+                            <input type="text" class="form-control" id="company" name="company" required value="{{ details.company }}">
+                        </div>
 
-                    <label for="dept" class="fs-5 fw-bolder text-light">Department</label><br>
-                    <input type="text" name="dept" id="dept" class="box" required value="{{ details.dept }}"><br><br>
+                        <div class="mb-3">
+                            <label for="job_title" class="form-label">Job Title</label>
+                            <input type="text" class="form-control" id="job_title" name="job_title" required value="{{ details.job_title }}">
+                        </div>
 
-                    <label for="student_id" class="fs-5 fw-bolder text-light">Student ID</label><br>
-                    <input type="text" name="student_id" id="student_id" class="box" required value="{{ details.student_id }}"><br><br>
-
-                    <label for="graduation_year" class="fs-5 fw-bolder text-light">Graduation Year</label><br>
-                    <input type="text" name="graduation_year" id="graduation_year" class="box" required value="{{ details.graduation_year }}"><br><br>
-
-                     <label for="company" class="fs-5 fw-bolder text-light">Company</label><br>
-                    <input type="text" name="company" id="company" class="box" required value="{{ details.company }}"><br><br>
-
-                    <label for="job_title" class="fs-5 fw-bolder text-light">Job Title</label><br>
-                    <input type="text" name="job_title" id="job_title" class="box" required value="{{ details.job_title }}"><br><br>
-
-                    <label for="linkedin" class="fs-5 fw-bolder text-light">LinkedIn</label><br>
-                    <input type="text" name="linkedin" id="linkedin" class="box" required  value="{{ details.linkedin }}"><br><br>
-
-                    <label for="image" class="fs-5 fw-bolder text-light">Profile Picture</label><br>
-                    <input type="file" name="image" id="image" class="box"><br><br>
-                    {% else %}
-                    <label for="full_name" class="fs-5 fw-bolder text-light">Name</label><br>
-                    <input type="text" name="full_name" id="full_name" class="box" required value="{{ details.full_name }}"> <br><br>
-
-                    <label for="university" class="fs-5 fw-bolder text-light">University</label><br>
-                    <input type="text" name="university" id="university" class="box" value="{{ details.university }}"><br><br>
-
-                    <label for="dept" class="fs-5 fw-bolder text-light">Department</label><br>
-                    <input type="text" name="dept" id="dept" class="box" required value="{{ details.dept }}"><br><br>
-
-                    <label for="student_id" class="fs-5 fw-bolder text-light">Student ID</label><br>
-                    <input type="text" name="student_id" id="student_id" class="box" required value="{{ details.student_id }}"><br><br>
-
-                    <label for="image" class="fs-5 fw-bolder text-light">Profile Picture</label><br>
-                    <input type="file" name="image" id="image" class="box"><br><br>
+                        <div class="mb-3">
+                            <label for="linkedin" class="form-label">LinkedIn</label>
+                            <input type="url" class="form-control" id="linkedin" name="linkedin" required value="{{ details.linkedin }}">
+                        </div>
                     {% endif %}
 
-                    <div class="text-center">
-                        <button type="submit" class="btn batonn fs-3 fw-bolder">Update</button>
+                    <div class="mb-4">
+                        <label for="image" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="image" name="image">
+                    </div>
+
+                    <div class="text-center d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-light px-4 py-2 fw-bold">Update</button>
+                        <a href="{% url 'profile' %}" class="btn btn-outline-light px-4 py-2 fw-bold">Cancel</a>
                     </div>
                 </form>
             </div>
         </div>
-    </div><br><br>
+    </div>
 </div>
+
 
 {% endblock %}

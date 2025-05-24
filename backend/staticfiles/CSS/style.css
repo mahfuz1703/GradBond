@@ -3,7 +3,7 @@
 }
 
 .search {
-    background-image: url('../images/baground.png');
+    background-image: url('https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943790/banner_baground.png');
 }
 
 .btns {
@@ -80,5 +80,5 @@
 }
 
 .footp {
-    margin-top: 50px;
+    margin-top: 35px;
 }
