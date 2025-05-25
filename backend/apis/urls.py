@@ -10,4 +10,7 @@ urlpatterns = [
     path('events/', views.eventsApi, name='eventsApi'),
     path('event/<int:id>/', views.event_detailApi, name='event_detailApi'),
 
+    path('jobs/', views.jobsApi, name='jobsApi'),
+    path('job/<int:id>/', views.job_detailApi, name='job_detailApi'),
+
 ]

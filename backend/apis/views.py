@@ -2,7 +2,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from core.models import *
 from authentication.models import alumniProfile, studentProfile
+from django.utils import timezone
 from datetime import datetime, timedelta
+from django.utils.formats import date_format
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 import json
@@ -111,7 +113,6 @@ def UserSignup(request):
             'redirect': '/api/login/'
         }, status=200)
     
-
 def UserLogout(request):
     # Clear the JWT cookie
     response = JsonResponse({
@@ -129,9 +130,8 @@ def UserLogout(request):
     )
     return response
 
-
 def eventsApi(request):
-    current_date = datetime.now()
+    current_date = timezone.now()
     all_events = events.objects.filter(date__gte=current_date)
 
     if all_events.exists():
@@ -158,7 +158,6 @@ def eventsApi(request):
             'message': 'No events found'
         }, status = 404)
 
-
 def event_detailApi(request, id):
     event = events.objects.get(id=id)
 
@@ -183,3 +182,86 @@ def event_detailApi(request, id):
             'status': '404',
             'message': 'Event not found'
         }, status=404)
+
+def jobsApi(request):
+    if request.method != 'GET':
+        return JsonResponse({
+            'status': 400,
+            'message': 'Invalid request method',
+        }, status=400)
+
+    # Get current timezone-aware datetime
+    current_date = timezone.now()
+    
+    try:
+        all_jobs = Jobs.objects.filter(deadline__gte=current_date)
+
+        try:
+            body = json.loads(request.body)
+            job_types = body.get('job_types')
+            titleCompany = body.get('titleCompany')
+            
+            if job_types:
+                all_jobs = all_jobs.filter(jobType=job_types)
+            if titleCompany:
+                all_jobs = all_jobs.filter(title__icontains=titleCompany) | all_jobs.filter(company__icontains=titleCompany)
+
+        except json.JSONDecodeError:
+            pass  # If no body is sent or it's not JSON, skip filtering
+
+        # Serialize queryset to JSON
+        jobs_json = list(all_jobs.values())  # Or use serializers if needed
+
+        if jobs_json:
+            return JsonResponse({
+                'status': 200,
+                'jobs': jobs_json
+            }, status=200)
+        else:
+            return JsonResponse({
+                'status': 404,
+                'message': 'No jobs found'
+            }, status=404)
+
+    except Exception as e:
+        return JsonResponse({
+            'status': 500,
+            'message': str(e),
+        }, status=500)
+    
+
+def job_detailApi(request, id):
+    if request.method != 'GET':
+        return JsonResponse({
+            'status': 400,
+            'message': 'Invalid request method. Use GET.'
+        }, status=400)
+
+    try:
+        job = Jobs.objects.get(id=id)
+
+        job_detail = {
+            'id': job.id,
+            'title': job.title,
+            'company': job.company,
+            'description': job.description,
+            'jobType': job.job_type,
+            'deadline': date_format(job.deadline, 'c'),  # ISO 8601 format
+        }
+
+        return JsonResponse({
+            'status': 200,
+            'job': job_detail
+        }, status=200)
+
+    except Jobs.DoesNotExist:
+        return JsonResponse({
+            'status': 404,
+            'message': 'Job not found'
+        }, status=404)
+
+    except Exception as e:
+        return JsonResponse({
+            'status': 500,
+            'message': f'Unexpected error: {str(e)}'
+        }, status=500)

@@ -5,6 +5,7 @@ from GradBond import settings
 from authentication.models import alumniProfile, studentProfile
 from .models import events, Jobs
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime
 import os
@@ -79,6 +80,7 @@ def view_events(request):
     all_events = events.objects.filter(date__gte=current_date)
     return render(request, 'core/event.html', {'events': all_events})
 
+@login_required(login_url='signin')
 def add_event(request):
     if request.method == 'POST':
         title = request.POST.get('eventTitle')
@@ -121,6 +123,7 @@ def add_event(request):
         return redirect('profile')
     return render(request, 'core/create_event.html')
 
+@login_required(login_url='signin')
 def edit_event(request, id):
     event = events.objects.get(id=id)
     if request.method == 'POST':
@@ -167,6 +170,7 @@ def edit_event(request, id):
         return redirect('profile')
     return render(request, 'core/edit_event.html', {'event': event})
 
+@login_required(login_url='signin')
 def delete_event(request, id):
     event = events.objects.get(id=id)
 
@@ -187,6 +191,7 @@ def event_detail(request, id):
 def alumni_list(request):
     return render(request, 'core/alumni_list.html')
 
+@login_required(login_url='signin')
 def profile(request):
     user = request.user
     
@@ -208,7 +213,7 @@ def profile(request):
         details = studentProfile.objects.get(user=user)
         return render(request, 'core/user_profile.html', {'details': details})
 
-
+@login_required(login_url='signin')
 def about_user(request, id):
     user = User.objects.get(id=id)
     isAlumni = False
@@ -223,6 +228,7 @@ def about_user(request, id):
         details = studentProfile.objects.get(user=user)
         return render(request, 'core/about_user.html', {'details': details, 'isAlumni': isAlumni})
 
+@login_required(login_url='signin')
 def update_profile(request):
     user = request.user
     email = user.email
@@ -305,7 +311,6 @@ def update_profile(request):
 
     return render(request, 'core/update_profile.html')
 
-
 def view_jobs(request):
     # get all jobs that deadline is greater than current date
     current_date = datetime.now()
@@ -324,6 +329,7 @@ def view_jobs(request):
             all_jobs = all_jobs.filter(job_type__icontains=jobType)
     return render(request, 'core/jobs.html', {'jobs': all_jobs})
 
+@login_required(login_url='signin')
 def create_job(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -370,7 +376,7 @@ def create_job(request):
         return redirect('profile')
     return render(request, 'core/post_job.html')
 
-
+@login_required(login_url='signin')
 def edit_job(request, id):
     job = Jobs.objects.get(id=id)
     if request.method == 'POST':
@@ -410,6 +416,7 @@ def edit_job(request, id):
         return redirect('profile')
     return render(request, 'core/edit_job.html', {'job': job})
 
+@login_required(login_url='signin')
 def delete_job(request, id):
     job = Jobs.objects.get(id=id)
     job.delete()
