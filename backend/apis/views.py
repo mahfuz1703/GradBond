@@ -131,57 +131,78 @@ def UserLogout(request):
     return response
 
 def eventsApi(request):
-    current_date = timezone.now()
-    all_events = events.objects.filter(date__gte=current_date)
+    if request.method != 'GET':
+        return JsonResponse({
+            'status': 400,
+            'message': 'Invalid request method',
+        }, status=400)
 
-    if all_events.exists():
-        events_list = []
-        for event in all_events:
-            events_list.append({
-                'id': event.id,
-                'name': event.title,
-                'description': event.description,
-                'date': event.date.strftime('%Y-%m-%d'),
-                'time': event.time.strftime('%H:%M'),
-                'registration_link': event.regLink,
-                'location': event.location,
-                'image_url': event.image.url if event.image else None,
-                'created_by': event.user.first_name if event.user else None,
-            })
+    try:
+        current_date = timezone.now().date()
+        upcoming_events = events.objects.filter(date__gte=current_date)
+
+        if upcoming_events.exists():
+            events_list = []
+            for event in upcoming_events:
+                events_list.append({
+                    'id': event.id,
+                    'name': event.title,
+                    'description': event.description,
+                    'date': event.date.strftime('%Y-%m-%d') if event.date else None,
+                    'time': event.time.strftime('%H:%M') if event.time else None,
+                    'registration_link': event.regLink,
+                    'location': event.location,
+                    'image_url': event.image.url if event.image and hasattr(event.image, 'url') else None,
+                    'created_by': str(event.user) if event.user else None,
+                })
+            return JsonResponse({
+                'status': 200,
+                'events': events_list
+            }, status=200)
+        else:
+            return JsonResponse({
+                'status': 404,
+                'message': 'No events found'
+            }, status=404)
+
+    except Exception as e:
         return JsonResponse({
-            'status': '200',
-            'events': events_list
-        }, status = 200)
-    else:
-        return JsonResponse({
-            'status': '404',
-            'message': 'No events found'
-        }, status = 404)
+            'status': 500,
+            'message': f'Server error: {str(e)}'
+        }, status=500)
 
 def event_detailApi(request, id):
-    event = events.objects.get(id=id)
+    try:
+        event = events.objects.get(id=id)
 
-    if event:
         event_detail = {
             'id': event.id,
             'name': event.title,
             'description': event.description,
-            'date': event.date.strftime('%Y-%m-%d'),
-            'time': event.time.strftime('%H:%M'),
+            'date': event.date.strftime('%Y-%m-%d') if event.date else None,
+            'time': event.time.strftime('%H:%M') if event.time else None,
             'registration_link': event.regLink,
             'location': event.location,
-            'image_url': event.image.url if event.image else None,
+            'image_url': event.image.url if event.image and hasattr(event.image, 'url') else None,
             'created_by': event.user.first_name if event.user else None,
         }
+
         return JsonResponse({
-            'status': '200',
+            'status': 200,
             'event': event_detail
-            }, status=200)
-    else:
+        }, status=200)
+
+    except events.DoesNotExist:
         return JsonResponse({
-            'status': '404',
+            'status': 404,
             'message': 'Event not found'
         }, status=404)
+
+    except Exception as e:
+        return JsonResponse({
+            'status': 500,
+            'message': f'Server error: {str(e)}'
+        }, status=500)
 
 def jobsApi(request):
     if request.method != 'GET':
