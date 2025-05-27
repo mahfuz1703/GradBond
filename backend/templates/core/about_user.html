@@ -27,6 +27,7 @@
                 <p class="text-secondary mb-1">{{details.job_title}}</p>
                 <p class="text-muted">{{details.company}}</p>
               </div>
+              <a href="{% url 'chat_with_user' details.user.id %}" class="btn btn-success mt-3">Message</a>
             </div>
           </div>
         </div>

@@ -18,6 +18,10 @@ class alumniProfile(models.Model):
 
     def __str__(self):
         return self.user.first_name
+    
+    class Meta:
+        verbose_name = 'Alumni Profile'
+        verbose_name_plural = 'Alumni Profiles'
 
 class studentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -30,3 +34,7 @@ class studentProfile(models.Model):
 
     def __str__(self):
         return self.user.first_name
+    
+    class Meta:
+        verbose_name = 'Student Profile'
+        verbose_name_plural = 'Student Profiles'

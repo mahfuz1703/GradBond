@@ -108,6 +108,8 @@ def notification_list(request):
 @login_required
 @require_POST
 def mark_notification_read(request, notification_id):
-    print(f"Marking notification {notification_id} as read for user {request.user}")
+    # print(f"Marking notification {notification_id} as read for user {request.user}")
     Notification.objects.filter(id=notification_id, user=request.user).update(is_read=True)
+    # when notification is marked as read, we also delete it from the database
+    Notification.objects.filter(id=notification_id, user=request.user).delete()
     return JsonResponse({'success': True})

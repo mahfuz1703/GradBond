@@ -21,6 +21,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             sender_full_name = sender.alumniprofile.full_name
         elif hasattr(sender, 'studentprofile'):
             sender_full_name = sender.studentprofile.full_name
+        else:
+            sender_full_name = sender.get_full_name() or sender.username
 
         notification = Notification.objects.create(
             user=receiver,

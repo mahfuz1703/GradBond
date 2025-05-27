@@ -24,3 +24,6 @@ class Notification(models.Model):
     link = models.URLField(blank=True, null=True)
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.notification_type} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"

@@ -23,6 +23,11 @@ class events(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = 'Event'
+        verbose_name_plural = 'Events'
+        ordering = ['-date', '-time']
     
 class Jobs(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -37,4 +42,9 @@ class Jobs(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.title}"
+    
+    class Meta:
+        verbose_name = 'Job'
+        verbose_name_plural = 'Jobs'
+        ordering = ['-deadline']
 

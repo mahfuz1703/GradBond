@@ -14,11 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 CSRF_TRUSTED_ORIGINS = [
     "https://gradbond.up.railway.app",
-    "https://gradbond.vercel.app",
 ]
 
 SECRET_KEY = os.getenv("SECRET_KEY")
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'gradbond.up.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'gradbond.up.railway.app']
 DEBUG = False
 
 INSTALLED_APPS = [
@@ -31,6 +30,7 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'cloudinary',
+    'import_export',
 
     # custom apps
     'authentication',
