@@ -286,3 +286,65 @@ def job_detailApi(request, id):
             'status': 500,
             'message': f'Unexpected error: {str(e)}'
         }, status=500)
+    
+
+def searchAlumniApi(request):
+    if request.method != 'GET':
+        return JsonResponse({
+            'status': 400,
+            'message': 'Invalid request method',
+        }, status=400)
+
+    try:
+        body = json.loads(request.body)
+        university = body.get('university')
+        department = body.get('department')
+        company = body.get('company')
+        job_title = body.get('job_title')
+
+        # make sure user at least one field is provided
+        if not any([university, department, company, job_title]):
+            return JsonResponse({
+                'status': 400,
+                'message': 'Please provide at least one search field.'
+            }, status=400)
+        
+        alumni_profiles = alumniProfile.objects.all()
+        if university:
+            alumni_profiles = alumni_profiles.filter(university__icontains=university)
+        if department:
+            alumni_profiles = alumni_profiles.filter(dept__icontains=department)
+        if company:
+            alumni_profiles = alumni_profiles.filter(company__icontains=company)
+        if job_title:
+            alumni_profiles = alumni_profiles.filter(job_title__icontains=job_title)
+        if alumni_profiles.exists():
+            alumni_list = []
+            for alumni in alumni_profiles:
+                alumni_list.append({
+                    'id': alumni.id,
+                    'name': alumni.full_name,
+                    'email': alumni.email,
+                    'university': alumni.university,
+                    'department': alumni.dept,
+                    'studentId': alumni.student_id,
+                    'graduationYear': alumni.graduation_year,
+                    'company': alumni.company,
+                    'jobTitle': alumni.job_title,
+                    'linkedin': alumni.linkedin,
+                    'Profile Picture': alumni.image.url if alumni.image and hasattr(alumni.image, 'url') else None,
+                })
+            return JsonResponse({
+                'status': 200,
+                'alumni': alumni_list
+            }, status=200)
+        else:
+            return JsonResponse({
+                'status': 404,
+                'message': 'No alumni found matching the criteria.'
+            }, status=404)
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'status': 400,
+            'message': 'Invalid JSON format.'
+        }, status=400)

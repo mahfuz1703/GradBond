@@ -13,4 +13,6 @@ urlpatterns = [
     path('jobs/', views.jobsApi, name='jobsApi'),
     path('job/<int:id>/', views.job_detailApi, name='job_detailApi'),
 
+    path('find-alumni/', views.searchAlumniApi, name='findAlumniApi'),
+
 ]
