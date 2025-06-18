@@ -296,7 +296,7 @@ def job_detailApi(request, id):
             'message': f'Unexpected error: {str(e)}'
         }, status=500)
     
-
+@csrf_exempt
 def searchAlumniApi(request):
     if request.method != 'GET':
         return JsonResponse({
