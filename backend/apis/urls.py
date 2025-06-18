@@ -15,4 +15,6 @@ urlpatterns = [
 
     path('find-alumni/', views.searchAlumniApi, name='findAlumniApi'),
 
+    path('profile/', views.profileApi, name='profileApi'),
+
 ]

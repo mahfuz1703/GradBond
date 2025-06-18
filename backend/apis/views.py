@@ -121,13 +121,22 @@ def UserLogout(request):
         'redirect': '/'
     }, status=200)
 
-    # Set an expired date to invalidate the token cookie
+    # Set an expired date to invalidate the token cookie also delete csrf token cookie
+    
     response.delete_cookie(
         key='token',
         path='/',             # Make sure the path matches where you set it
         domain=None,          # If you set a domain while creating, add it here too
         samesite='None',
     )
+
+    # Also delete the CSRF cookie if it exists
+    if 'csrftoken' in request.COOKIES:
+        response.delete_cookie('csrftoken', path='/')  # Adjust path if necessary
+    
+    if 'sessionid' in request.COOKIES:
+        response.delete_cookie('sessionid', path='/')
+
     return response
 
 def eventsApi(request):
@@ -348,3 +357,95 @@ def searchAlumniApi(request):
             'status': 400,
             'message': 'Invalid JSON format.'
         }, status=400)
+
+
+@jwt_required
+def profileApi(request):
+    if request.method != 'GET':
+        return JsonResponse({
+            'status': 400,
+            'message': 'Invalid request method',
+        }, status=400)
+
+    user = request.user
+    email = user.email
+
+    if not user.is_authenticated:
+        return JsonResponse({
+            'status': 401,
+            'message': 'User not authenticated'
+        }, status=401)
+
+    my_events = events.objects.filter(user=user)
+    my_jobs = Jobs.objects.filter(user=user)
+    my_events_list = []
+    my_jobs_list = []
+    for event in my_events:
+        my_events_list.append({
+            'id': event.id,
+            'name': event.title,
+            'description': event.description,
+            'date': event.date.strftime('%Y-%m-%d') if event.date else None,
+            'time': event.time.strftime('%H:%M') if event.time else None,
+            'registration_link': event.regLink,
+            'location': event.location,
+            'image_url': event.image.url if event.image and hasattr(event.image, 'url') else None,
+            'created_by': str(event.user) if event.user else None,
+        })
+    for job in my_jobs:
+        my_jobs_list.append({
+            'id': job.id,
+            'title': job.title,
+            'company': job.company,
+            'description': job.description,
+            'jobType': job.job_type,
+            'deadline': job.deadline.strftime('%Y-%m-%d') if job.deadline else None,
+        })
+
+
+    try:
+        if alumniProfile.objects.filter(email=email).exists():
+            profile = alumniProfile.objects.get(user=user)
+            profile_data = {
+                'userType': 'alumni',
+                'id': profile.id,
+                'name': profile.full_name,
+                'email': profile.email,
+                'university': profile.university,
+                'department': profile.dept,
+                'studentId': profile.student_id,
+                'graduationYear': profile.graduation_year,
+                'company': profile.company,
+                'jobTitle': profile.job_title,
+                'linkedin': profile.linkedin,
+                'profilePicture': profile.image.url if profile.image and hasattr(profile.image, 'url') else None,
+            }
+        elif studentProfile.objects.filter(email=email).exists():
+            profile = studentProfile.objects.get(user=user)
+            profile_data = {
+                'userType': 'student',
+                'id': profile.id,
+                'name': profile.full_name,
+                'email': profile.email,
+                'university': profile.university,
+                'department': profile.dept,
+                'studentId': profile.student_id,
+                'profilePicture': profile.image.url if profile.image and hasattr(profile.image, 'url') else None,
+            }
+        else:
+            return JsonResponse({
+                'status': 404,
+                'message': 'Profile not found'
+            }, status=404)
+
+        return JsonResponse({
+            'status': 200,
+            'profile': profile_data,
+            'my_events': my_events_list,
+            'my_jobs': my_jobs_list
+        }, status=200)
+    except Exception as e:
+        return JsonResponse({
+            'status': 500,
+            'message': f'Server error: {str(e)}'
+        }, status=500)
