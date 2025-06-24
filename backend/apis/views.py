@@ -10,57 +10,39 @@ from django.contrib.auth import authenticate, login
 import json
 import jwt
 from .jwt_required import jwt_required
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # Create your views here.
 @csrf_exempt
 def UserLogin(request):
     if request.method != 'POST':
-        return JsonResponse({
-            'status': 400,
-            'message': 'Invalid request method',
-        }, status=400)
+        return JsonResponse({'status': 400, 'message': 'Invalid request method'}, status=400)
 
     try:
         body = json.loads(request.body)
         email = body.get('email')
         password = body.get('password')
-    except Exception as e:
+    except Exception:
         return JsonResponse({'status': 400, 'message': 'Invalid JSON'}, status=400)
 
     user = authenticate(username=email, password=password)
 
     if user is not None:
-        login(request, user)
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
 
-        payload = {
-            'user_id': user.id,
-            'email': user.email,
-            'exp': datetime.utcnow() + timedelta(seconds=settings.JWT_EXP_DELTA_SECONDS),
-            'iat': datetime.utcnow()
-        }
-
-        token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
-
-        response = JsonResponse({
+        return JsonResponse({
             'status': 200,
             'message': 'Login successful',
-            'token': token,
-            'redirect': '/api/profile/'
+            'token': access_token,
+            'refresh': str(refresh),
+            'redirect': '/api/profile/',
         })
-
-        response.set_cookie(
-            'token',
-            token,
-            httponly=True,
-            secure=True,           # Required for SameSite=None
-            samesite='None'        # Allows cross-site cookies
-        )        
-        return response
 
     return JsonResponse({
         'status': 401,
-        'message': 'Invalid credentials'
+        'message': 'Invalid credentials',
     }, status=401)
 
 @csrf_exempt

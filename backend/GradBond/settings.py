@@ -20,6 +20,13 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALLOWED_HOSTS = ['127.0.0.1', 'gradbond.up.railway.app']
 DEBUG = False
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,6 +38,7 @@ INSTALLED_APPS = [
     # Third-party apps
     'cloudinary',
     'import_export',
+    'rest_framework',
 
     # custom apps
     'authentication',
