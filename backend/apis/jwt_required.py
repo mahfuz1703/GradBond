@@ -2,6 +2,7 @@ import jwt
 from django.conf import settings
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import AccessToken, TokenError
 from functools import wraps
 import logging
 
@@ -9,45 +10,52 @@ logger = logging.getLogger(__name__)
 
 def jwt_required(view_func):
     """
-    Decorator to check if the user is authenticated with a valid JWT token from cookies.
+    Decorator for verifying DRF SimpleJWT Access Tokens.
     """
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        logger.info(f"JWT_SECRET_KEY: {settings.JWT_SECRET_KEY}")
-        token = request.COOKIES.get('token')  # Retrieve token from cookies
-        if not token:
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            logger.warning("Missing or malformed Authorization header.")
             return JsonResponse({
                 'status': 401,
-                'message': 'Token not provided in cookies',
-                'redirect': '/api/login/'
+                'message': 'Authorization header missing or invalid',
+                'redirect': '/api/login/',
             }, status=401)
 
+        token = auth_header.split(' ')[1]
+
         try:
-            # Decode the token
-            decoded_data = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
-            user_id = decoded_data.get('user_id')
-
+            access_token = AccessToken(token)  # Will validate exp, signature, etc.
+            user_id = access_token.get('user_id')
             if not user_id:
-                raise jwt.InvalidTokenError("User ID not found in token")
+                logger.error("user_id not found in access token.")
+                return JsonResponse({
+                    'status': 401,
+                    'message': 'Invalid token',
+                    'redirect': '/api/login/',
+                }, status=401)
 
-            # Get the actual user instance
             user = User.objects.get(id=user_id)
             request.user = user
 
-        except jwt.ExpiredSignatureError:
+        except TokenError as e:
+            logger.warning(f"Token error: {str(e)}")
             return JsonResponse({
                 'status': 401,
-                'message': 'Token has expired',
-                'redirect': '/api/login/'
+                'message': 'Invalid or expired token',
+                'redirect': '/api/login/',
             }, status=401)
-        except (jwt.InvalidTokenError, User.DoesNotExist) as e:
-            logger.error(f"JWT Error: {str(e)}")
+
+        except User.DoesNotExist:
+            logger.error(f"User with id {user_id} not found.")
             return JsonResponse({
                 'status': 401,
-                'message': 'Invalid token or user not found',
-                'redirect': '/api/login/'
+                'message': 'User not found',
+                'redirect': '/api/login/',
             }, status=401)
 
         return view_func(request, *args, **kwargs)
 
     return _wrapped_view
+
