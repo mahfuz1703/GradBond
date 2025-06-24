@@ -351,16 +351,10 @@ def profileApi(request):
     user = request.user
     email = user.email
 
-    if not user.is_authenticated:
-        return JsonResponse({
-            'status': 401,
-            'message': 'User not authenticated'
-        }, status=401)
-
     my_events = events.objects.filter(user=user)
     my_jobs = Jobs.objects.filter(user=user)
+
     my_events_list = []
-    my_jobs_list = []
     for event in my_events:
         my_events_list.append({
             'id': event.id,
@@ -373,6 +367,8 @@ def profileApi(request):
             'image_url': event.image.url if event.image and hasattr(event.image, 'url') else None,
             'created_by': str(event.user) if event.user else None,
         })
+
+    my_jobs_list = []
     for job in my_jobs:
         my_jobs_list.append({
             'id': job.id,
@@ -382,7 +378,6 @@ def profileApi(request):
             'jobType': job.job_type,
             'deadline': job.deadline.strftime('%Y-%m-%d') if job.deadline else None,
         })
-
 
     try:
         if alumniProfile.objects.filter(email=email).exists():
@@ -425,6 +420,7 @@ def profileApi(request):
             'my_events': my_events_list,
             'my_jobs': my_jobs_list
         }, status=200)
+
     except Exception as e:
         return JsonResponse({
             'status': 500,
