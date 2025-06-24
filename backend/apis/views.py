@@ -305,11 +305,10 @@ def searchAlumniApi(request):
         }, status=400)
 
     try:
-        body = json.loads(request.body)
-        university = body.get('university')
-        department = body.get('department')
-        company = body.get('company')
-        job_title = body.get('job_title')
+        university = request.GET.get('university', '')
+        department = request.GET.get('department', '')
+        company = request.GET.get('company', '')
+        job_title = request.GET.get('job_title', '')
 
         # make sure user at least one field is provided
         if not any([university, department, company, job_title]):
