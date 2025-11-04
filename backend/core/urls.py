@@ -23,4 +23,7 @@ urlpatterns = [
     path('edit-job/<int:id>', views.edit_job, name='edit_job'),
     path('delete-job/<int:id>', views.delete_job, name='delete_job'),
 
+    path('leaderboard', views.leaderboard, name='leaderboard'),
+    path('contributions-count/', views.contributions_count_api, name='contrib_count'),
+
 ]

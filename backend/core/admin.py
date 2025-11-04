@@ -1,7 +1,7 @@
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
-from .models import events, Jobs
+from .models import events, Jobs, University
 
 # Events model resources for import/export functionality
 class EventsResources(resources.ModelResource):
@@ -30,3 +30,15 @@ class JobsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = JobsResources
 
 admin.site.register(Jobs, JobsAdmin)
+
+# University model resources for import/export functionality
+class UniversityResources(resources.ModelResource):
+    class Meta:
+        model = University
+        fields = ('id', 'name', 'short_name', 'location', 'website')
+
+class UniversityAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('name', 'short_name', 'location', 'website')
+    search_fields = ('name', 'short_name', 'location')
+    resource_class = UniversityResources
+admin.site.register(University, UniversityAdmin)

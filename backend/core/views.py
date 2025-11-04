@@ -1,19 +1,23 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from GradBond import settings
 from authentication.models import alumniProfile, studentProfile
-from .models import events, Jobs
+from .models import events, Jobs, University
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime
+from django.conf import settings
 import os
 from cloudinary.uploader import destroy, upload
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from chat.models import Notification
+from django.db.models import Q, F
+from django.db.models.functions import Lower
+
 
 # Create your views here.
 def home(request):
@@ -35,17 +39,24 @@ def search_alumni(request):
         dept = request.GET.get('dept')
         company = request.GET.get('company')
         job_title = request.GET.get('job_title')
+        name = request.GET.get('name')
+        graduation_year = request.GET.get('graduation_year')
         randomKey = request.GET.get('randomKey') # bubt
 
         # make sure user at least enter one field
-        if not university and not dept and not company and not job_title and not randomKey:
+        if not university and not dept and not company and not job_title and not randomKey  and not name and not graduation_year:
             messages.error(request, 'Please enter at least one field to search.')
             return redirect('find-alumni')
         
-        alumni = alumniProfile.objects.all()
+        # alumni = alumniProfile.objects.select_related('user', 'university').all()
+        alumni = alumniProfile.objects.select_related('user', 'university').all().order_by(Lower('full_name'))
         
         if university:
-            alumni = alumni.filter(university__icontains=university)
+            try:
+                uni_id = int(university)
+                alumni = alumni.filter(university__id=uni_id)
+            except (ValueError, TypeError):
+                alumni = alumni.filter(university__name__icontains=university)
         
         if dept:
             alumni = alumni.filter(dept__icontains=dept)
@@ -56,24 +67,46 @@ def search_alumni(request):
         if job_title:
             alumni = alumni.filter(job_title__icontains=job_title)
 
-        if randomKey:
-            if alumni.filter(university__icontains=randomKey).exists():
-                alumni = alumni.filter(university__icontains=randomKey)
-            
-            if alumni.filter(dept__icontains=randomKey).exists():
-                alumni = alumni.filter(dept__icontains=randomKey)
-            
-            if alumni.filter(company__icontains=randomKey).exists():
-                alumni = alumni.filter(company__icontains=randomKey)
+        if name:
+            alumni = alumni.filter(
+                Q(full_name__icontains=name) |
+                Q(user__first_name__icontains=name) |
+                Q(user__last_name__icontains=name)
+            )
+        
+        # safely handle graduation_year (must be numeric)
+        if graduation_year:
+            try:
+                gy = int(graduation_year)
+                alumni = alumni.filter(graduation_year=gy)
+            except (ValueError, TypeError):
+                pass
 
-            if alumni.filter(job_title__icontains=randomKey).exists():
-                alumni = alumni.filter(job_title__icontains=randomKey)
+        if randomKey:
+            # apply OR across multiple fields (search within already filtered queryset)
+            random_q = (
+                Q(university__name__icontains=randomKey) |
+                Q(university__short_name__icontains=randomKey) |
+                Q(dept__icontains=randomKey) |
+                Q(company__icontains=randomKey) |
+                Q(job_title__icontains=randomKey) |
+                Q(full_name__icontains=randomKey) |
+                Q(user__first_name__icontains=randomKey) |
+                Q(user__last_name__icontains=randomKey)
+            )
+            if randomKey.isdigit():
+                try:
+                    random_q = random_q | Q(graduation_year=int(randomKey))
+                except (ValueError, TypeError):
+                    pass
+            alumni = alumni.filter(random_q)
         
         return render(request, 'core/alumni_list.html', {'alumni_list': alumni})
     return render(request, 'core/find_alumni.html')
 
 def find_alumni(request):
-    return render(request, 'core/find_alumni.html')
+    university_list = University.objects.all()
+    return render(request, 'core/find_alumni.html', {'universities': university_list})
 
 def view_events(request):
     current_date = datetime.now()
@@ -93,7 +126,14 @@ def add_event(request):
         
         event = events(user=request.user, title=title, description=description, date=date, time=time, regLink=regLink ,location=location, image=image)
         event.save()
-        messages.success(request, 'Event added successfully.')
+
+        try:
+            if alumniProfile.objects.filter(user=request.user).exists():
+                alumniProfile.objects.filter(user=request.user).update(contributions_count=F('contributions_count') + 1)
+        except Exception:
+            pass
+
+        messages.success(request, 'Event added successfully. and You won 1 contribution point!')
 
         students = studentProfile.objects.filter(university=event.user.alumniprofile.university)
         channel_layer = get_channel_layer()
@@ -233,6 +273,7 @@ def update_profile(request):
     user = request.user
     email = user.email
     isAlumni = False
+    university_list = University.objects.all()
 
     if alumniProfile.objects.filter(email=email).exists():
         isAlumni = True
@@ -240,7 +281,17 @@ def update_profile(request):
 
         if request.method == 'POST':
             details.full_name = request.POST.get('full_name')
-            details.university = request.POST.get('university')
+            university = request.POST.get('university', '').strip()
+            uni_obj = None
+            if university:
+                try:
+                    uni_id = int(university)
+                    uni_obj = University.objects.filter(pk=uni_id).first()
+                except (ValueError, TypeError):
+                    uni_obj, _ = University.objects.get_or_create(name=university)
+            else:
+                uni_obj = None
+            details.university = uni_obj
             details.dept = request.POST.get('dept')
             details.student_id = request.POST.get('student_id')
             details.email = details.email
@@ -273,14 +324,24 @@ def update_profile(request):
             messages.success(request, 'Profile updated successfully.')
             return redirect('profile')
 
-        return render(request, 'core/update_profile.html', {'details': details, 'isAlumni': isAlumni})
+        return render(request, 'core/update_profile.html', {'details': details, 'isAlumni': isAlumni, 'universities': university_list})
 
     else:
         details = studentProfile.objects.get(user=user)
 
         if request.method == 'POST':
             details.full_name = request.POST.get('full_name')
-            details.university = request.POST.get('university')
+            university = request.POST.get('university', '').strip()
+            uni_obj = None
+            if university:
+                try:
+                    uni_id = int(university)
+                    uni_obj = University.objects.filter(pk=uni_id).first()
+                except (ValueError, TypeError):
+                    uni_obj, _ = University.objects.get_or_create(name=university)
+            else:
+                uni_obj = None
+            details.university = uni_obj
             details.dept = request.POST.get('dept')
             details.student_id = request.POST.get('student_id')
             details.email = details.email
@@ -307,9 +368,9 @@ def update_profile(request):
             messages.success(request, 'Profile updated successfully.')
             return redirect('profile')
 
-        return render(request, 'core/update_profile.html', {'details': details, 'isAlumni': isAlumni})
+        return render(request, 'core/update_profile.html', {'details': details, 'isAlumni': isAlumni, 'universities': university_list})
 
-    return render(request, 'core/update_profile.html')
+    return render(request, 'core/update_profile.html', {'universities': university_list})
 
 def view_jobs(request):
     # get all jobs that deadline is greater than current date
@@ -346,7 +407,14 @@ def create_job(request):
 
         job = Jobs(user=request.user, title=title, company=company, job_link=job_link, job_type=job_type, experience=experience, salary=salary, description=description, deadline=deadline)
         job.save()
-        messages.success(request, 'Post your job successfully.')
+
+        try:
+            if alumniProfile.objects.filter(user=request.user).exists():
+                alumniProfile.objects.filter(user=request.user).update(contributions_count=F('contributions_count') + 1)
+        except Exception:
+            pass
+
+        messages.success(request, 'Post your job successfully. and You won 1 contribution point.')
 
         # Notify all  users about the new job without creator
         channel_layer = get_channel_layer()
@@ -426,3 +494,20 @@ def delete_job(request, id):
 def job_detail(request, id):
     job = Jobs.objects.get(id=id)
     return render(request, 'core/job_details.html', {'job': job})
+
+
+@login_required(login_url='signin')
+def contributions_count_api(request):
+    try:
+        profile = alumniProfile.objects.get(user=request.user)
+        return JsonResponse({'contributions_count': profile.contributions_count})
+    except alumniProfile.DoesNotExist:
+        return JsonResponse({'contributions_count': 0})
+
+
+# Leaderboard HTML view (authenticated users)
+@login_required(login_url='signin')
+def leaderboard(request):
+    # return top contributors ordered by contributions_count
+    top_alumni = alumniProfile.objects.select_related('user', 'university').order_by('-contributions_count')[:100]
+    return render(request, 'core/leaderboard.html', {'alumni_list': top_alumni})

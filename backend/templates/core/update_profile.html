@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<title>{% block title %}Signup | GradBond{% endblock %}</title>
+<title>{% block title %}Profile Update | GradBond{% endblock %}</title>
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'CSS/login.css' %}">
@@ -27,7 +27,27 @@
 
                     <div class="mb-3">
                         <label for="university" class="form-label">University</label>
-                        <input type="text" class="form-control" id="university" name="university" value="{{ details.university }}">
+                        <select id="university" name="university" class="form-control" required>
+                            {% if details.university %}
+                                <option value="{{ details.university.id|default:details.university }}" selected>
+                                    {{ details.university.name|default:details.university }}
+                                </option>
+                            {% else %}
+                                <option value="" disabled selected>Select university</option>
+                            {% endif %}
+
+                            {% for uni in universities %}
+                                {% if details.university %}
+                                    {% if details.university.id == uni.id or details.university == uni.id or details.university == uni.name %}
+                                        {# already shown as selected above, skip duplicate #}
+                                    {% else %}
+                                        <option value="{{ uni.id }}">{{ uni.name }}</option>
+                                    {% endif %}
+                                {% else %}
+                                    <option value="{{ uni.id }}">{{ uni.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
                     </div>
 
                     <div class="mb-3">

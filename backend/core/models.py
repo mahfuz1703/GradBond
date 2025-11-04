@@ -48,3 +48,13 @@ class Jobs(models.Model):
         verbose_name_plural = 'Jobs'
         ordering = ['-deadline']
 
+class University(models.Model):
+    name = models.CharField(max_length=200)
+    short_name = models.CharField(max_length=50, blank=True, null=True)
+    logo = CloudinaryField('image', folder='university', default='default_university_logo', blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, null=True)
+    website = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.short_name if self.short_name else self.name
+

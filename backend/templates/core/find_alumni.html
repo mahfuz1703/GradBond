@@ -25,7 +25,14 @@
                 <!-- University -->
                 <div class="col-lg-6 col-md-6 col-12">
                     <label for="university" class="form-label fs-5">University</label>
-                    <input type="text" name="university" id="university" class="form-control rounded-3 p-2 shadow-sm">
+                    <select name="university" id="university" class="form-select rounded-3 p-2 shadow-sm">
+                        <option value="">-- Select University --</option>
+                        {% for university in universities %}
+                            <option value="{{ university.id }}">{{ university.name }}</option>
+                        {% empty %}
+                            <option value="">No universities available</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <!-- Department -->
@@ -44,6 +51,18 @@
                 <div class="col-lg-6 col-md-6 col-12">
                     <label for="job_title" class="form-label fs-5">Job Title</label>
                     <input type="text" name="job_title" id="job_title" class="form-control rounded-3 p-2 shadow-sm">
+                </div>
+
+                <!-- Name -->
+                <div class="col-lg-6 col-md-6 col-12">
+                    <label for="job_title" class="form-label fs-5">Name</label>
+                    <input type="text" name="name" id="name" class="form-control rounded-3 p-2 shadow-sm">
+                </div>
+
+                <!-- Graduation Year -->
+                <div class="col-lg-6 col-md-6 col-12">
+                    <label for="job_title" class="form-label fs-5">Graduation Year</label>
+                    <input type="text" name="graduation_year" id="graduation_year" class="form-control rounded-3 p-2 shadow-sm">
                 </div>
             </div>
 

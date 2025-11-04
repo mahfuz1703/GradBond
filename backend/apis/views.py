@@ -96,30 +96,32 @@ def UserSignup(request):
         }, status=200)
     
 def UserLogout(request):
-    # Clear the JWT cookie
-    response = JsonResponse({
-        'status': 200,
-        'message': 'Logged out successfully',
-        'redirect': '/'
-    }, status=200)
+    """
+    Logout user by blacklisting their refresh token.
+    """
+    try:
+        import json
+        body = json.loads(request.body)
+        refresh_token = body.get("refresh")
+        if not refresh_token:
+            return JsonResponse({
+                'status': 400,
+                'message': 'Refresh token is required for logout.'
+            }, status=400)
 
-    # Set an expired date to invalidate the token cookie also delete csrf token cookie
-    
-    response.delete_cookie(
-        key='token',
-        path='/',             # Make sure the path matches where you set it
-        domain=None,          # If you set a domain while creating, add it here too
-        samesite='None',
-    )
+        token = RefreshToken(refresh_token)
+        token.blacklist()
 
-    # Also delete the CSRF cookie if it exists
-    if 'csrftoken' in request.COOKIES:
-        response.delete_cookie('csrftoken', path='/')  # Adjust path if necessary
-    
-    if 'sessionid' in request.COOKIES:
-        response.delete_cookie('sessionid', path='/')
+        return JsonResponse({
+            'status': 200,
+            'message': 'Logged out successfully. Token invalidated.'
+        }, status=200)
 
-    return response
+    except Exception as e:
+        return JsonResponse({
+            'status': 400,
+            'message': f'Error while logging out: {str(e)}'
+        }, status=400)
 
 def eventsApi(request):
     if request.method != 'GET':

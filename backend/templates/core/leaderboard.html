@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Leaderboard — GradBond{% endblock %}
+
+{% block extra_css %}
+<style>
+  .lb-avatar { width:44px; height:44px; object-fit:cover; border-radius:50%; }
+  .lb-row { vertical-align: middle; }
+  .lb-table th, .lb-table td { vertical-align: middle; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="min-height: 660px;">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Top Contributors</h2>
+    <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-secondary">My Profile</a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table mb-0 lb-table">
+          <thead class="table-light">
+            <tr>
+              <th style="width:56px">#</th>
+              <th>Alumni</th>
+              <th>University</th>
+              <th style="width:160px">Contributions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for alum in alumni_list %}
+            <tr class="lb-row">
+              <td>{{ forloop.counter }}</td>
+
+              <td>
+                <div class="d-flex align-items-center gap-3">
+                  {% if alum.image %}
+                    {% if alum.image.url %}
+                      <img src="{{ alum.image.url }}" alt="avatar" class="lb-avatar">
+                    {% else %}
+                      <img src="{{ alum.image }}" alt="avatar" class="lb-avatar">
+                    {% endif %}
+                  {% else %}
+                    <img src="{% static 'images/default_avatar.png' %}" alt="avatar" class="lb-avatar">
+                  {% endif %}
+
+                  <div>
+                    <div class="fw-bold">
+                      <a href="{% url 'about' alum.user.id %}" class="text-decoration-none text-dark">
+                        {{ alum.full_name|default:alum.user.get_full_name }}
+                      </a>
+                    </div>
+                    <div class="text-muted small">{{ alum.user.email }}</div>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                {% if alum.university %}
+                  {{ alum.university.name }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+
+              <td>
+                <span class="badge bg-success">{{ alum.contributions_count }}</span>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="text-center py-4">No contributors yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

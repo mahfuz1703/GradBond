@@ -70,6 +70,19 @@
                         </ul>
                     </li>
 
+                    {% if user.is_authenticated and user.alumniprofile %}
+                    <li class="nav-item dropdown me-4">
+                        <!-- rewards chip (keeps current design, updates in realtime) -->
+                        <a class="nav-link d-flex align-items-center" href="{% url 'leaderboard' %}" title="Rewards">
+                            <span class="badge-reward d-inline-flex align-items-center px-3 py-1 rounded"
+                                style="background:#0b1102f0;color:#1cc05b;font-weight:600;">
+                                <i class="fa fa-gem me-2" aria-hidden="true"></i>
+                                <span id="rewardsCount">{{ rewards_count|default:"0" }}</span>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+
                     <li class="nav-item">
                         <div class="dropdown">
                             <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
@@ -80,6 +93,14 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'chat_home' %}">Inbox</a></li>
+
+                                {% if user.studentprofile %}
+                                <li class="nav-item">
+                                    <a class="dropdown-item" aria-current="page"
+                                        href="{% url 'leaderboard' %}">Leaderboard</a>
+                                </li>
+                                {% endif %}
+
                                 <li><a class="dropdown-item" href="{% url 'signout' %}">Sign out</a></li>
                             </ul>
                         </div>
@@ -265,6 +286,35 @@
             }
             return cookieValue;
         }
+
+        // Rewards count updater (polls endpoint and updates the navbar badge)
+        (function () {
+            const REWARDS_EL_ID = 'rewardsCount';
+            const POLL_INTERVAL_MS = 5000; // adjust as needed
+
+            function updateRewardsCount() {
+                try {
+                    fetch("{% url 'contrib_count' %}", { credentials: 'same-origin' })
+                        .then(resp => {
+                            if (!resp.ok) throw new Error('Network response not ok');
+                            return resp.json();
+                        })
+                        .then(data => {
+                            const el = document.getElementById(REWARDS_EL_ID);
+                            if (!el) return;
+                            const count = (data && typeof data.contributions_count !== 'undefined') ? data.contributions_count : 0;
+                            el.textContent = count;
+                        })
+                        .catch(() => {
+                            // silent fail — do not break navbar if endpoint missing
+                        });
+                } catch (e) { /* ignore */ }
+            }
+
+            // initial update then periodic polling
+            updateRewardsCount();
+            setInterval(updateRewardsCount, POLL_INTERVAL_MS);
+        })();
     });
 </script>
 
