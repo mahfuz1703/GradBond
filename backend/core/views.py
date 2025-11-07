@@ -11,6 +11,8 @@ from datetime import datetime
 from django.conf import settings
 import os
 from cloudinary.uploader import destroy, upload
+from django.views.decorators.http import require_http_methods
+from django.core.serializers import serialize
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
@@ -511,3 +513,52 @@ def leaderboard(request):
     # return top contributors ordered by contributions_count
     top_alumni = alumniProfile.objects.select_related('user', 'university').order_by('-contributions_count')[:100]
     return render(request, 'core/leaderboard.html', {'alumni_list': top_alumni})
+
+
+@login_required(login_url='signin')
+def university_upload(request):
+    """Admin-only view to create/upload a University. Supports GET (form) and POST (multipart form with optional logo)."""
+    # Only allow staff or superuser
+    if not (request.user.is_staff or request.user.is_superuser):
+        messages.error(request, 'You do not have permission to access this page.')
+        return redirect('home')
+
+    if request.method == 'POST':
+        name = request.POST.get('name', '').strip()
+        short_name = request.POST.get('short_name', '').strip() or None
+        location = request.POST.get('location', '').strip() or None
+        website = request.POST.get('website', '').strip() or None
+        logo = request.FILES.get('logo')
+
+        # validate name or website uniqueness
+        if University.objects.filter(name=name).exists():
+            messages.error(request, 'University with this name already exists.')
+            return render(request, 'core/university_upload.html')
+        
+        if website and University.objects.filter(website=website).exists():
+            messages.error(request, 'University with this website already exists.')
+            return render(request, 'core/university_upload.html')
+
+        if not name:
+            messages.error(request, 'University name is required.')
+            return render(request, 'core/university_upload.html')
+
+        uni = University(name=name, short_name=short_name, location=location, website=website)
+        if logo:
+            uni.logo = logo
+        uni.save()
+        messages.success(request, 'University created successfully.')
+        return redirect('university-list')
+
+    return render(request, 'core/university_upload.html')
+
+
+def university_list(request):
+    """Render a page that lists all universities."""
+    # Only allow staff or superuser
+    if not (request.user.is_staff or request.user.is_superuser):
+        messages.error(request, 'You do not have permission to access this page.')
+        return redirect('home')
+    
+    universities = University.objects.all().order_by('name')
+    return render(request, 'core/university_list.html', {'universities': universities})

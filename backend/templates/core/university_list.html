@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Universities | GradBond{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/list_alumni.css' %}">
+<style>
+    .uni-card{border:1px solid #eee;padding:16px;border-radius:8px;background:#fff}
+    .uni-logo{max-height:80px;object-fit:contain}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Universities</h2>
+        {% if user.is_staff or user.is_superuser %}
+        <a class="btn btn-primary" href="{% url 'university_upload' %}">Add University</a>
+        {% endif %}
+    </div>
+
+    {% if universities %}
+    <div class="row g-3">
+        {% for uni in universities %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="uni-card d-flex gap-3 align-items-center">
+                <div style="width:90px;flex:0 0 90px;">
+                    {% if uni.logo and uni.logo.url %}
+                    <img src="{{ uni.logo.url }}" alt="{{ uni.name }} logo" class="uni-logo img-fluid">
+                    {% elif uni.logo %}
+                    <img src="{{ uni.logo }}" alt="{{ uni.name }} logo" class="uni-logo img-fluid">
+                    {% else %}
+                    <img src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943792/default_university_logo.png" alt="default" class="uni-logo img-fluid">
+                    {% endif %}
+                </div>
+                <div class="flex-grow-1">
+                    <h5 class="mb-1">{{ uni.short_name|default:uni.name }}</h5>
+                    <small class="text-muted">{{ uni.name }}</small>
+                    <div class="mt-1">
+                        {% if uni.location %}<span class="me-2"><i class="fa fa-map-marker"></i> {{ uni.location }}</span>{% endif %}
+                        {% if uni.website %}<a target="_blank" href="{{ uni.website }}" class="ms-2">Visit</a>{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No universities found.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Upload University | GradBond{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+<style>
+    .upload-card{max-width:720px;margin:30px auto;padding:24px;border-radius:8px;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,0.06)}
+    .preview-logo{max-height:120px;object-fit:contain}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="upload-card">
+        <h3 class="mb-3">Upload University</h3>
+        <p class="text-muted">Only administrators can create new university entries.</p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Full university name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Short name</label>
+                <input type="text" name="short_name" class="form-control" placeholder="e.g. MIT (optional)">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Location</label>
+                <input type="text" name="location" class="form-control" placeholder="City, Country (optional)">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Website</label>
+                <input type="url" name="website" class="form-control" placeholder="https://example.edu">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Logo (image)</label>
+                <input type="file" name="logo" accept="image/*" class="form-control">
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" type="submit">Create University</button>
+                <a class="btn btn-outline-secondary" href="{% url 'university-list' %}">Back to list</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -26,4 +26,8 @@ urlpatterns = [
     path('leaderboard', views.leaderboard, name='leaderboard'),
     path('contributions-count/', views.contributions_count_api, name='contrib_count'),
 
+    # University management (admin upload + listing)
+    path('university/upload/', views.university_upload, name='university_upload'),
+    path('universities/', views.university_list, name='university-list'),
+
 ]
