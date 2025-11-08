@@ -85,6 +85,18 @@
                 </div>
               </div>
               <hr>
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-semibold">Transcript</div>
+                <div class="col-sm-8">
+                    {% if details.transcript %}
+                    <a href="{{ details.transcript.url }}" target="_blank" class="text-decoration-none text-primary" rel="noopener">
+                        View Transcript
+                    </a>
+                    {% else %}
+                    <span class="text-muted">No transcript uploaded.</span>
+                    {% endif %}
+                </div>
+              </div>
               {% endif %}
             </div>
           </div>

@@ -303,6 +303,24 @@ def update_profile(request):
             details.linkedin = request.POST.get('linkedin')
             user.first_name = details.full_name
 
+            # Handle transcript upload
+            if 'transcript' in request.FILES:
+                # Delete old transcript from Cloudinary if exists
+                if details.transcript and hasattr(details.transcript, 'public_id'):
+                    public_id = details.transcript.public_id
+                    destroy(public_id)
+
+                # Upload new transcript to Cloudinary
+                result = upload(
+                    request.FILES['transcript'],
+                    folder='transcripts',
+                    transformation=[
+                        {'quality': 'auto'},
+                        {'fetch_format': 'auto'}
+                    ]
+                )
+                details.transcript = result['public_id']  # or result['secure_url']
+
             if 'image' in request.FILES:
                 # Delete old image from Cloudinary if not default
                 if details.image and hasattr(details.image, 'public_id'):

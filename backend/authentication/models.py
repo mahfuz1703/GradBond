@@ -16,6 +16,7 @@ class alumniProfile(models.Model):
     job_title = models.CharField(max_length=100, blank=True, null=True)
     linkedin = models.URLField(blank=True, null=True)
     image = CloudinaryField('image', folder='alumni', default='default_alumni', blank=True, null=True)
+    transcript = CloudinaryField('transcript', folder='transcripts', blank=True, null=True)
     contributions_count = models.IntegerField(default=0)
 
     def __str__(self):
