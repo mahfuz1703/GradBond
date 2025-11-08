@@ -7,7 +7,7 @@ from .models import events, Jobs, University
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.conf import settings
 import os
 from cloudinary.uploader import destroy, upload
@@ -111,9 +111,48 @@ def find_alumni(request):
     return render(request, 'core/find_alumni.html', {'universities': university_list})
 
 def view_events(request):
-    current_date = datetime.now()
-    all_events = events.objects.filter(date__gte=current_date)
-    return render(request, 'core/event.html', {'events': all_events})
+    # Filters: q (search title/description), location, organizer (user's first/last name),
+    # sort (asc/desc by date), dateRange (all/upcoming/week/month)
+    q = request.GET.get('q')
+    location = request.GET.get('location')
+    organizer = request.GET.get('organizer')
+    sort = request.GET.get('sort')
+    date_range = request.GET.get('dateRange', 'upcoming')
+
+    now = datetime.now()
+    # Base queryset: include upcoming by default, or all if date_range == 'all'
+    if date_range == 'all':
+        qs = events.objects.all()
+    else:
+        # upcoming or specific ranges
+        if date_range == 'week':
+            end = now + timedelta(days=7)
+            qs = events.objects.filter(date__gte=now, date__lte=end)
+        elif date_range == 'month':
+            end = now + timedelta(days=30)
+            qs = events.objects.filter(date__gte=now, date__lte=end)
+        else:
+            # default upcoming
+            qs = events.objects.filter(date__gte=now)
+
+    # search filters
+    if q:
+        qs = qs.filter(title__icontains=q) | qs.filter(description__icontains=q)
+
+    if location:
+        qs = qs.filter(location__icontains=location)
+
+    if organizer:
+        # match first or last name of the user
+        qs = qs.filter(Q(user__first_name__icontains=organizer) | Q(user__last_name__icontains=organizer))
+
+    # ordering
+    if sort == 'asc':
+        qs = qs.order_by('date')
+    elif sort == 'desc':
+        qs = qs.order_by('-date')
+
+    return render(request, 'core/event.html', {'events': qs})
 
 @login_required(login_url='signin')
 def add_event(request):
@@ -400,6 +439,8 @@ def view_jobs(request):
     if request.method == 'GET':
         titleComapny = request.GET.get('titleCompany')
         jobType = request.GET.get('jobType')
+        sort = request.GET.get('sort')
+        salary_range = request.GET.get('salaryRange')
 
         # filter jobs based on title or company
         if titleComapny:
@@ -408,6 +449,64 @@ def view_jobs(request):
         # filter jobs based on job type
         if jobType:
             all_jobs = all_jobs.filter(job_type__icontains=jobType)
+
+        # apply ordering by deadline if requested
+        if sort == 'asc':
+            all_jobs = all_jobs.order_by('deadline')
+        elif sort == 'desc':
+            all_jobs = all_jobs.order_by('-deadline')
+
+        # filter by salary range (salary stored as text) - do best-effort numeric parsing
+        if salary_range and salary_range != 'all':
+            # salary_range format examples: '0-20000', '20001-50000', '50001-100000', '100001+'
+            import re
+
+            def parse_salary(s):
+                if not s:
+                    return None
+                # remove commas and currency words, then extract the first number
+                cleaned = re.sub(r'[.,]', '', str(s))
+                nums = re.findall(r'\d+', cleaned)
+                if not nums:
+                    return None
+                try:
+                    return int(''.join(nums))
+                except Exception:
+                    return None
+
+            # build numeric min/max
+            min_val = None
+            max_val = None
+            if salary_range.endswith('+'):
+                try:
+                    min_val = int(salary_range.rstrip('+'))
+                except Exception:
+                    min_val = None
+            else:
+                parts = salary_range.split('-')
+                if len(parts) == 2:
+                    try:
+                        min_val = int(parts[0])
+                        max_val = int(parts[1])
+                    except Exception:
+                        min_val = None
+                        max_val = None
+
+            # filter in Python because salary is a CharField
+            filtered = []
+            for job in all_jobs:
+                sval = parse_salary(job.salary)
+                if sval is None:
+                    continue
+                ok = True
+                if min_val is not None and sval < min_val:
+                    ok = False
+                if max_val is not None and sval > max_val:
+                    ok = False
+                if ok:
+                    filtered.append(job)
+            # use the filtered list for rendering
+            all_jobs = filtered
     return render(request, 'core/jobs.html', {'jobs': all_jobs})
 
 @login_required(login_url='signin')
@@ -478,7 +577,12 @@ def edit_job(request, id):
         deadline = request.POST.get('deadline')
 
         if deadline:
-            deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M")
+            try:
+                deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M")
+                job.deadline = deadline
+            except Exception:
+                # if parsing fails, ignore and keep existing deadline
+                pass
 
         if title:
             job.title = title

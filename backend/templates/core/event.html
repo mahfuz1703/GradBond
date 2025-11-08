@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<div class="container-fluid my" style="min-height: 660px;">
+<div class="container-fluid my" style="min-height: 800px;">
     <div class="container">
         <div class="row text-center">
             {% if events %}
@@ -18,7 +18,36 @@
             <h1 class="mt-5 fs-2 fw-bolder resent">Recent events not found</h1>
             {% endif %}
         </div>
-        <div class="row  d-flex justify-content-center">
+
+        <!-- Filters (search, sort, date range) -->
+        <div class="row">
+            <form action="{% url 'events' %}" method="GET">
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-4">
+                    <input onchange="this.form.submit()" type="text" name="q" class="form-control" placeholder="Search by title or description" value="{{ request.GET.q }}" style="padding:10px; border-radius:5px; max-width:360px;">
+
+                    <input onchange="this.form.submit()" type="text" name="location" class="form-control" placeholder="Location" value="{{ request.GET.location }}" style="padding:10px; border-radius:5px; max-width:240px;">
+
+                    <input onchange="this.form.submit()" type="text" name="organizer" class="form-control" placeholder="Organizer name" value="{{ request.GET.organizer }}" style="padding:10px; border-radius:5px; max-width:220px;">
+
+                    <select onchange="this.form.submit()" name="sort" class="form-select" style="max-width:180px;">
+                        <option value="" {% if not request.GET.sort %}selected{% endif %}>Sort by date</option>
+                        <option value="asc" {% if request.GET.sort == 'asc' %}selected{% endif %}>Date ↑ (earliest)</option>
+                        <option value="desc" {% if request.GET.sort == 'desc' %}selected{% endif %}>Date ↓ (latest)</option>
+                    </select>
+
+                    <select onchange="this.form.submit()" name="dateRange" class="form-select" style="max-width:200px;">
+                        <option value="upcoming" {% if not request.GET.dateRange or request.GET.dateRange == 'upcoming' %}selected{% endif %}>Upcoming</option>
+                        <option value="week" {% if request.GET.dateRange == 'week' %}selected{% endif %}>Next 7 days</option>
+                        <option value="month" {% if request.GET.dateRange == 'month' %}selected{% endif %}>Next 30 days</option>
+                        <option value="all" {% if request.GET.dateRange == 'all' %}selected{% endif %}>All events</option>
+                    </select>
+
+                    <a href="{% url 'events' %}" class="btn btn-primary" style="padding: 10px 20px; white-space: nowrap;">Reset</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="row d-flex justify-content-center">
             
             {% for event in events %}
             <div class="col-lg-4 p-3 col-md-12 col-12 d-flex justify-content-evenly">
