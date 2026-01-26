@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime, timedelta
-from django.conf import settings
+from django.shortcuts import get_object_or_404
 import os
 from cloudinary.uploader import destroy, upload
 from django.views.decorators.http import require_http_methods
@@ -176,30 +176,34 @@ def add_event(request):
 
         messages.success(request, 'Event added successfully. and You won 1 contribution point!')
 
-        students = studentProfile.objects.filter(university=event.user.alumniprofile.university)
-        channel_layer = get_channel_layer()
+        try:
+            if hasattr(request.user, 'alumniprofile') and request.user.alumniprofile.university:
+                students = studentProfile.objects.filter(university=request.user.alumniprofile.university)
+                channel_layer = get_channel_layer()
 
-        for student in students:
-            notification = Notification.objects.create(
-                user=student.user,
-                notification_type='event',
-                message=f"New event: {event.title}",
-                link=f"/event-detail/{event.id}"
-            )
-            async_to_sync(channel_layer.group_send)(
-                f"notifications_{student.user.id}",
-                {
-                    "type": "send_notification",
-                    "notification": {
-                        "id": notification.id,
-                        "message": notification.message,
-                        "type": notification.notification_type,
-                        "link": notification.link,
-                        "is_read": notification.is_read,
-                        "created_at": str(notification.created_at),
-                    }
-                }
-            )
+                for student in students:
+                    notification = Notification.objects.create(
+                        user=student.user,
+                        notification_type='event',
+                        message=f"New event: {event.title}",
+                        link=f"/event-detail/{event.id}"
+                    )
+                    async_to_sync(channel_layer.group_send)(
+                        f"notifications_{student.user.id}",
+                        {
+                            "type": "send_notification",
+                            "notification": {
+                                "id": notification.id,
+                                "message": notification.message,
+                                "type": notification.notification_type,
+                                "link": notification.link,
+                                "is_read": notification.is_read,
+                                "created_at": str(notification.created_at),
+                            }
+                        }
+                    )
+        except Exception as e:
+            print("Error sending notifications for new event: ", e)
         
         return redirect('profile')
     return render(request, 'core/create_event.html')
@@ -266,7 +270,7 @@ def delete_event(request, id):
     return redirect('profile')
 
 def event_detail(request, id):
-    event = events.objects.get(id=id)
+    event = get_object_or_404(events, id=id)
     return render(request, 'core/event_details.html', {'event': event})
 
 def alumni_list(request):
@@ -535,30 +539,34 @@ def create_job(request):
 
         messages.success(request, 'Post your job successfully. and You won 1 contribution point.')
 
+        
         # Notify all  users about the new job without creator
-        channel_layer = get_channel_layer()
-        users = User.objects.exclude(id=request.user.id)
-        for user in users:
-            notification = Notification.objects.create(
-                user=user,
-                notification_type='job',
-                message=f"New job posted: {job.title}",
-                link=f"/job-detail/{job.id}"
-            )
-            async_to_sync(channel_layer.group_send)(
-                f"notifications_{user.id}",
-                {
-                    "type": "send_notification",
-                    "notification": {
-                        "id": notification.id,
-                        "message": notification.message,
-                        "type": notification.notification_type,
-                        "link": notification.link,
-                        "is_read": notification.is_read,
-                        "created_at": str(notification.created_at),
+        try:
+            channel_layer = get_channel_layer()
+            users = User.objects.exclude(id=request.user.id)
+            for user in users:
+                notification = Notification.objects.create(
+                    user=user,
+                    notification_type='job',
+                    message=f"New job posted: {job.title}",
+                    link=f"/job-detail/{job.id}"
+                )
+                async_to_sync(channel_layer.group_send)(
+                    f"notifications_{user.id}",
+                    {
+                        "type": "send_notification",
+                        "notification": {
+                            "id": notification.id,
+                            "message": notification.message,
+                            "type": notification.notification_type,
+                            "link": notification.link,
+                            "is_read": notification.is_read,
+                            "created_at": str(notification.created_at),
+                        }
                     }
-                }
-            )
+                )
+        except Exception as e:
+            print("Error sending notifications for new job: ", e)
         
         return redirect('profile')
     return render(request, 'core/post_job.html')
@@ -616,7 +624,7 @@ def delete_job(request, id):
     return redirect('profile')
 
 def job_detail(request, id):
-    job = Jobs.objects.get(id=id)
+    job = get_object_or_404(Jobs, id=id)
     return render(request, 'core/job_details.html', {'job': job})
 
 

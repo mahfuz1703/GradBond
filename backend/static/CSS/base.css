@@ -3,16 +3,32 @@
 }
 
 .dropdown>.dropdown-toggle:active {
-    /*Without this, clicking will make it sticky*/
     pointer-events: none;
 }
 
-.footer{
-    position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: red;
-  color: white;
-  text-align: center;
+/* Sticky footer solution */
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: antiquewhite; /* Match page background */
+}
+
+.content-wrapper {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: antiquewhite; /* Match page background */
+}
+
+.footer {
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: auto;
 }

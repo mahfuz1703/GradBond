@@ -29,123 +29,124 @@
 </head>
 
 <body>
-    <!-- Navbar part start -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container p-2">
-            <a href="{% url 'home' %}"><img
-                    src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943791/gradbond_logo.png" alt=""></a>
-            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item me-5">
-                        <a class="nav-link fs-5 fw-bolder" aria-current="page" href="{% url 'find-alumni' %}">Find
-                            Alumni</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'events' %}">Events</a>
-                    </li>
+    <div class="content-wrapper">
+        <!-- Navbar part start -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container p-2">
+                <a href="{% url 'home' %}"><img
+                        src="https://res.cloudinary.com/dzfy6yteb/image/upload/v1747943791/gradbond_logo.png" alt=""></a>
+                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item me-5">
+                            <a class="nav-link fs-5 fw-bolder" aria-current="page" href="{% url 'find-alumni' %}">Find
+                                Alumni</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'events' %}">Events</a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'jobs' %}">Jobs</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'jobs' %}">Jobs</a>
+                        </li>
 
-                    {% if user.is_authenticated %}
-                    <li class="nav-item dropdown me-4">
-                        <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-bell fs-5"></i>
-                            <span id="notificationCount"
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
-                                0
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notificationDropdown"
-                            id="notificationList" style="width: fit-content;">
-                            <li><span class="dropdown-header fw-bold">Click for notifications</span></li>
-                        </ul>
-                    </li>
-
-                    {% if user.is_authenticated and user.alumniprofile %}
-                    <li class="nav-item dropdown me-4">
-                        <!-- rewards chip (keeps current design, updates in realtime) -->
-                        <a class="nav-link d-flex align-items-center" href="{% url 'leaderboard' %}" title="Rewards">
-                            <span class="badge-reward d-inline-flex align-items-center px-3 py-1 rounded"
-                                style="background:#0b1102f0;color:#1cc05b;font-weight:600;">
-                                <i class="fa fa-gem me-2" aria-hidden="true"></i>
-                                <span id="rewardsCount">{{ rewards_count|default:"0" }}</span>
-                            </span>
-                        </a>
-                    </li>
-                    {% endif %}
-
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
-                                class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-mdb-toggle="dropdown" aria-expanded="false">
-                                Dashboard
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                                <li><a class="dropdown-item" href="{% url 'chat_home' %}">Inbox</a></li>
-
-                                {% if user.studentprofile %}
-                                <li class="nav-item">
-                                    <a class="dropdown-item" aria-current="page"
-                                        href="{% url 'leaderboard' %}">Leaderboard</a>
-                                </li>
-                                {% endif %}
-
-                                <li><a class="dropdown-item" href="{% url 'signout' %}">Sign out</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown me-4">
+                            <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-bell fs-5"></i>
+                                <span id="notificationCount"
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                                    0
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notificationDropdown"
+                                id="notificationList" style="width: fit-content;">
+                                <li><span class="dropdown-header fw-bold">Click for notifications</span></li>
                             </ul>
-                        </div>
-                        <!-- <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'signin' %}">{{user.username}}</a> -->
-                    </li>
-                    <li class="nav-item">
-                        <!-- <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'signout' %}">Signout</a> -->
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'signin' %}">Login</a>
-                    </li>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="{% url 'signup' %}"><button type="button"
-                                class="btn btn-danger btn-outline-warning fs-5 fw-bolder">Sign up</button></a>
-                    </li>
-                    {% endif %}
+                        {% if user.is_authenticated and user.alumniprofile %}
+                        <li class="nav-item dropdown me-4">
+                            <!-- rewards chip (keeps current design, updates in realtime) -->
+                            <a class="nav-link d-flex align-items-center" href="{% url 'leaderboard' %}" title="Rewards">
+                                <span class="badge-reward d-inline-flex align-items-center px-3 py-1 rounded"
+                                    style="background:#0b1102f0;color:#1cc05b;font-weight:600;">
+                                    <i class="fa fa-gem me-2" aria-hidden="true"></i>
+                                    <span id="rewardsCount">{{ rewards_count|default:"0" }}</span>
+                                </span>
+                            </a>
+                        </li>
+                        {% endif %}
 
-                </ul>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
+                                    class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-mdb-toggle="dropdown" aria-expanded="false">
+                                    Dashboard
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'chat_home' %}">Inbox</a></li>
+
+                                    {% if user.studentprofile %}
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" aria-current="page"
+                                            href="{% url 'leaderboard' %}">Leaderboard</a>
+                                    </li>
+                                    {% endif %}
+
+                                    <li><a class="dropdown-item" href="{% url 'signout' %}">Sign out</a></li>
+                                </ul>
+                            </div>
+                            <!-- <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'signin' %}">{{user.username}}</a> -->
+                        </li>
+                        <li class="nav-item">
+                            <!-- <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'signout' %}">Signout</a> -->
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link me-5 fs-5 fw-bolder" aria-current="page" href="{% url 'signin' %}">Login</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{% url 'signup' %}"><button type="button"
+                                    class="btn btn-danger btn-outline-warning fs-5 fw-bolder">Sign up</button></a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <!-- End navbar -->
+        </nav>
+        <!-- End navbar -->
 
 
-    <!-- Error message start -->
-    <div class="container" style="text-align: center;">
-        {% if messages %}
-        {% for message in messages%}
-        <div class="alert alert-{{message.tags}}">
-            <strong>{{message}}</strong>
+        <!-- Error message start -->
+        <div class="container" style="text-align: center;">
+            {% if messages %}
+            {% for message in messages%}
+            <div class="alert alert-{{message.tags}}">
+                <strong>{{message}}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
         </div>
-        {% endfor %}
-        {% endif %}
+        <script>
+            $(document).ready(function () { setTimeout(() => { $(".alert").alert("close"); }, 2500); });
+        </script>
+        <!-- Error message end -->
+
+        {% block content %}
+
+        {% endblock %}
     </div>
-    <script>
-        $(document).ready(function () { setTimeout(() => { $(".alert").alert("close"); }, 2500); });
-    </script>
-    <!-- Error message end -->
-
-    {% block content %}
-
-    {% endblock %}
-
 
     <!-- Start footer -->
     <div class="footer" style="background-color: #3d2462;">

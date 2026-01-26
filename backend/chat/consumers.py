@@ -33,74 +33,90 @@ class ChatConsumer(AsyncWebsocketConsumer):
         return notification
 
     async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = f"chat_{self.room_name}"
+        try:
+            self.room_name = self.scope['url_route']['kwargs']['room_name']
+            self.room_group_name = f"chat_{self.room_name}"
 
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
+            await self.channel_layer.group_add(
+                self.room_group_name,
+                self.channel_name
+            )
 
-        await self.accept()
+            await self.accept()
+        except Exception as e:
+            print(f"Error in ChatConsumer connect: {e}")
+            await self.close()
 
     async def disconnect(self, close_code):
-        await self.channel_layer.group_discard(
-            self.room_group_name,
-            self.channel_name
-        )
+        try:
+            if hasattr(self, 'room_group_name'):
+                await self.channel_layer.group_discard(
+                    self.room_group_name,
+                    self.channel_name
+                )
+        except Exception as e:
+            print(f"Error in ChatConsumer disconnect: {e}")
 
     async def receive(self, text_data):
-        data = json.loads(text_data)
-        message = data['message']
-        sender_username = data['sender']
-        receiver_username = data['receiver']
+        try:
+            data = json.loads(text_data)
+            message = data['message']
+            sender_username = data['sender']
+            receiver_username = data['receiver']
 
-        # for notification
-        sender = await self.get_user(sender_username)
-        receiver = await self.get_user(receiver_username)
-        notification = await self.create_notification(sender, receiver, message)
-        channel_layer = get_channel_layer()
-        await channel_layer.group_send(
-            f"notifications_{receiver.id}",
-            {
-                "type": "send_notification",
-                "notification": {
-                    "id": notification.id,
-                    "message": notification.message,
-                    "type": notification.notification_type,
-                    "link": notification.link,
-                    "is_read": notification.is_read,
-                    "created_at": str(notification.created_at),
+            # for notification
+            sender = await self.get_user(sender_username)
+            receiver = await self.get_user(receiver_username)
+
+            if sender and receiver:
+                notification = await self.create_notification(sender, receiver, message)
+
+                # Send notification via WebSocket if receiver is connected
+                try:
+                    await self.channel_layer.group_send(
+                        f"notifications_{receiver.id}",
+                        {
+                            "type": "send_notification",
+                            "notification": {
+                                "id": notification.id,
+                                "message": notification.message,
+                                "type": notification.notification_type,
+                                "link": notification.link,
+                                "is_read": notification.is_read,
+                                "created_at": str(notification.created_at),
+                            }
+                        }
+                    )
+                except Exception as e:
+                    print(f"Error sending notification: {e}")
+
+            await self.save_message(sender_username, receiver_username, message, self.room_name)
+
+            sender_image_url = await self.get_sender_image_url(sender_username)
+
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'chat_message',
+                    'message': message,
+                    'sender': sender_username,
+                    'sender_image_url': sender_image_url,
+                    'timestamp': timezone.now().strftime('%Y-%m-%d %H:%M'),
                 }
-            }
-        )
-
-        # Save the message
-        await self.save_message(sender_username, receiver_username, message, self.room_name)
-
-        # Get sender image URL
-        sender_image_url = await self.get_sender_image_url(sender_username)
-
-        # Broadcast message
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message,
-                'sender': sender_username,
-                'receiver': receiver_username,
-                'timestamp': timezone.now().strftime('%b %d, %Y %I:%M %p'),
-                'sender_image_url': sender_image_url if sender_image_url else '',
-            }
-        )
+            )
+        except Exception as e:
+            print(f"Error in ChatConsumer receive: {e}")
 
     async def chat_message(self, event):
-        await self.send(text_data=json.dumps({
-            'message': event['message'],
-            'sender': event['sender'],
-            'sender_image_url': event['sender_image_url'],
-            'timestamp': event['timestamp'],
-        }))
+        try:
+            await self.send(text_data=json.dumps({
+                'message': event['message'],
+                'sender': event['sender'],
+                'sender_image_url': event['sender_image_url'],
+                'timestamp': event['timestamp'],
+            }))
+        except Exception as e:
+            print(f"Error in chat_message: {e}")
 
     @database_sync_to_async
     def save_message(self, sender_username, receiver_username, message, room_name):
@@ -128,21 +144,32 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        if self.scope["user"].is_anonymous:
+        try:
+            if self.scope["user"].is_anonymous:
+                await self.close()
+            else:
+                self.group_name = f"notifications_{self.scope['user'].id}"
+                await self.channel_layer.group_add(self.group_name, self.channel_name)
+                await self.accept()
+        except Exception as e:
+            print(f"Error in NotificationConsumer connect: {e}")
             await self.close()
-        else:
-            self.group_name = f"notifications_{self.scope['user'].id}"
-            await self.channel_layer.group_add(self.group_name, self.channel_name)
-            await self.accept()
 
     async def disconnect(self, close_code):
-        await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        try:
+            if hasattr(self, 'group_name'):
+                await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        except Exception as e:
+            print(f"Error in NotificationConsumer disconnect: {e}")
 
     async def receive(self, text_data):
         pass  # No need to handle incoming messages from client
 
     async def send_notification(self, event):
-        await self.send(text_data=json.dumps(event["notification"]))
+        try:
+            await self.send(text_data=json.dumps(event["notification"]))
+        except Exception as e:
+            print(f"Error sending notification: {e}")
 
     @database_sync_to_async
     def get_unread_count(self):
