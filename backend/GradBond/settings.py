@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 
 ASGI_APPLICATION = 'GradBond.asgi.application'
 
-# Use Redis for production---------
+# Use Redis for production------------
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
